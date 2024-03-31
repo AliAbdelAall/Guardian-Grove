@@ -27,7 +27,7 @@
 
 - As an admin, I want to oversee psychologists qualifications and user reviews, so I can uphold standards of service.
 - As an admin, I want to receive reports and feedback from users, so I can address issues promptly and improve the user experience.
-- As an admin, I want tobe able to delete users, so I can ensure the platform's integrity.
+- As an admin, I want to be able to delete users, so I can ensure the platform's integrity.
 
 <br><br>
 <!-- Tech stack -->

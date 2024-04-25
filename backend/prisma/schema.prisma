@@ -16,13 +16,14 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
 
-  username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  roleId    Int
-  role      Role     @relation(fields: [roleId], references: [id])
-  profile   Profile?
+  username      String          @unique
+  password      String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  roleId        Int
+  role          Role            @relation(fields: [roleId], references: [id])
+  profile       Profile?
+  PasswordReset PasswordReset[]
 }
 
 model Role {
@@ -51,4 +52,13 @@ model Child {
   dob      DateTime
   parent   Profile  @relation(fields: [parentId], references: [id])
   parentId Int
+}
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  otp       String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }

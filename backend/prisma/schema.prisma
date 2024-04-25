@@ -58,7 +58,7 @@ model PasswordReset {
   id        Int      @id @default(autoincrement())
   userId    Int
   otp       String   @unique
-  createdAt DateTime @default(now())
+  createdAt DateTime
   expiresAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 }

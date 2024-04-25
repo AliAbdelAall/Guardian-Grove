@@ -7,4 +7,21 @@
   width: 516px;
   min-width: 350px;
   padding: 50px;
+  border-radius: 15px;
+  border: 2px solid var(--input-bor-col);
+  gap: 35px;
+}
+
+.input-wrapper{
+  width: 100%;
+  gap: 13px;
+}
+
+.login-wrapper{
+  gap: 25px;
+}
+
+.auth-switch:hover{
+  cursor: pointer;
+  opacity: 0.8;
 }

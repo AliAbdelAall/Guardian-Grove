@@ -4,11 +4,11 @@ import React from 'react'
 import "./style.css"
 
 
-const LoginInput = ({text, handleClick}) => {
+const LoginButton = ({text, handleClick}) => {
   return (
 
-    <button className='login-btn white bold text-sm bg-primary' onClick={handleClick}>{text}</button>
+    <button className='login-btn  white bg-primary' onClick={handleClick}>{text}</button>
   )
 }
 
-export default LoginInput
+export default LoginButton

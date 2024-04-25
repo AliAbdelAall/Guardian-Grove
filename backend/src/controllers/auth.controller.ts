@@ -18,29 +18,33 @@ export const signup = async (req:Request, res:Response) => {
       return res.json({error: "User already exist!"})
     }
 
-    const newUser = await prismaClient.user.create({
+    await prismaClient.user.create({
       data:{
         username,
         password: hashSync(password, 10),
         roleId,
-        
+        profile:{
+          create:{
+            firstName,
+            lastName,
+            email,
+            dob: null,
+            speciality: null,
+            yearsOfExperience: null,
+            school: null,
+            
+          }
+        }
       }  
     })
+    
+    user = await prismaClient.user.findFirst({where: {username}, include:{profile:true }})
 
-    const profile = await prismaClient.profile.create({
-      data:{
-        userId: newUser.id,
-        firstName,
-        lastName,
-        email,
-        dob: null,
-        speciality: null,
-        yearsOfExperience: null,
-        school: null
-      }
-    })
-    return res.json({...newUser, profile,})
+    return res.json({user})
   } catch (error) {
+    console.error("Error:", error)
     return res.status(500).json({error: "Internal server error!"})
   }
 }
+
+

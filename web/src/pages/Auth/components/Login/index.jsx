@@ -30,7 +30,31 @@ const Login = () => {
     setCredetials({...credentials, [field]: e.target.value})
   }
 
-  
+  const handleLoginValidation = () => {
+    const { username, password } = credentials
+
+    if(username.length < 3 || username.length > 20){
+      toast.error('Username must be 3->20 charachters')
+      console.log('Username must be 3->20 charachters')
+      return
+    }
+    if(password.length < 6){
+      toast.error('Password must be at least 6 characters long')
+      console.log('Password must be at least 6 characters long')
+      return
+    }
+    sendRequest(requestMethods.POST, "/api/auth/login", {
+      ...credentials,
+    }).then((response) => {
+      if(response.status === 201){
+        setLocalUser(response.data.token)
+        console.log(response.data)
+        navigate("/")
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
 
   return (
     <div className='flex column align-center login-container'>

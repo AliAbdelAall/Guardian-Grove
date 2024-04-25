@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 // assets
 import fullLogo from "../../../../assets/logo/full-logo.png"
@@ -7,7 +8,28 @@ import fullLogo from "../../../../assets/logo/full-logo.png"
 import LoginInput from '../../../../components/LoginInput'
 import LoginButton from '../../../../components/LoginButton'
 
+// Tools
+import { useSendRequest } from '../../../../core/tools/remote/request'
+
 const Signup = () => {
+
+  const navigate  = useNavigate()
+  const sendRequest = useSendRequest()
+
+  const [credentials, setCredetials] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: ""
+  })
+
+  console.log(credentials)
+
+  const handleInputChange = (e, field) => {
+    setCredetials({...credentials, [field]: e.target.value})
+  }
+
   return (
     <div className='flex column align-center login-container'>
       <img src={fullLogo} width={100} height={120} alt="logo" />
@@ -20,14 +42,14 @@ const Signup = () => {
           id={"first-name-input"}
           label={"First name"}
           placeholder={"Jhon"}
-          // handleChange={}
+          handleChange={(e) => handleInputChange(e, "firstName")}
           />
           
           <LoginInput
           id={"last-name-input"}
           label={"Last name"}
           placeholder={"Doe"}
-          // handleChange={}
+          handleChange={(e) => handleInputChange(e, "lastName")}
           />
         </div>
 
@@ -35,21 +57,22 @@ const Signup = () => {
         id={"username-input"}
         label={"Username"}
         placeholder={"JhonDoe"}
-        // handleChange={}
+        handleChange={(e) => handleInputChange(e, "username")}
         />
 
         <LoginInput
         id={"email-input"}
         label={"email"}
         placeholder={"jhondoe@gmail.com"}
-        // handleChange={}
+        handleChange={(e) => handleInputChange(e, "email")}
         />
 
         <LoginInput
         id={"password-input"}
         label={"Password"}
         placeholder={"********"}
-        // handleChange={}
+        type={"password"}
+        handleChange={(e) => handleInputChange(e, "password")}
         />
 
 
@@ -61,7 +84,13 @@ const Signup = () => {
         // handleClick={}
         />
 
-        <p className='text-acient'>Don't have an account? <span className='font-medium text-primary auth-switch'>Sign up</span></p>
+        <p className='text-acient'>
+          Have an account? 
+          <span 
+            className='font-medium text-primary auth-switch' 
+            onClick={() => navigate("/")}
+          >Log in</span>
+        </p>
       </div>
 
     </div>

@@ -3,7 +3,7 @@ import { prismaClient } from ".."
 import { hashSync, compareSync } from "bcryptjs"
 import jwt from "jsonwebtoken"
 
-//  Adjust query for user 
+
 export const signup = async (req:Request, res:Response) => {
   try {
     const { firstName, lastName, username, email, password, roleId } = req.body
@@ -49,6 +49,7 @@ export const signup = async (req:Request, res:Response) => {
   }
 }
 
+
 export const login = async (req:Request, res:Response) => {
   try {
     const { username, password } = req.body
@@ -72,7 +73,3 @@ export const login = async (req:Request, res:Response) => {
     return res.status(500).json({error: "Internal server error!"})
   }
 }
-
-
-
-

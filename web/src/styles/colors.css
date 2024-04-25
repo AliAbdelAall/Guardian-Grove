@@ -8,6 +8,10 @@
   color: var( --secondary-col);
 }
 
+.text-acient{
+  color: var(--acients-col);
+}
+
 .text-error{
   color: var(--error-col);
 }

@@ -1,0 +1,10 @@
+.auth-container{
+  width: 100vw;
+  height: 100vh;
+}
+
+.login-container{
+  width: 516px;
+  min-width: 350px;
+  padding: 50px;
+}

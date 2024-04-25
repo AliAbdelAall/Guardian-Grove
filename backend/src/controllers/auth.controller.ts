@@ -32,7 +32,6 @@ export const signup = async (req:Request, res:Response) => {
             speciality: null,
             yearsOfExperience: null,
             school: null,
-            
           }
         }
       }  

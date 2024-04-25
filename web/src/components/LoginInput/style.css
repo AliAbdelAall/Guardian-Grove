@@ -1,6 +1,6 @@
 .login-input{
   width: 100%;
-  
+  min-width: 100px;
 }
 
 .login-input > input{
@@ -9,11 +9,14 @@
   border-radius: 5px;
   border: 1px solid var(--input-bor-col);
   outline-color: var(--input-bor-col);
+  color: var(--acients-col);
+  font-weight: var(--font-weight-regular);
 
 }
 
 .login-input > input::placeholder{
-  color: var(--acients-col);
+  color: var(--input-bor-col);
+  font-weight: var(--font-weight-light);
 }
 
 .login-input > label{

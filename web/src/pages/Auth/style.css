@@ -25,3 +25,7 @@
   cursor: pointer;
   opacity: 0.8;
 }
+
+.first-last-name-input{
+  gap: 15px
+}

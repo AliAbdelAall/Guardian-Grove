@@ -27,6 +27,11 @@ const Signup = () => {
     roleId: 0
   })
 
+  const [error, setError] = useState({
+    status: false,
+    message: ""
+  })
+
   console.log(credentials)
 
   const handleInputChange = (e, field) => {
@@ -34,28 +39,38 @@ const Signup = () => {
   }
 
   const handleSignupValidation = () => {
-    const { firstName, lastName, username, email, password } = credentials
+    const { firstName, lastName, username, email, password, roleId } = credentials
+    const regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+    
     if (firstName.length < 3){
-      console.log("First Name must be at least 3 characters")
+      setError({...error, status: true, message: "First Name must be at least 3 characters"})
       return
     }
     if (lastName.length < 3){
-      console.log("Last Name must be 3->20 characters")
+      setError({...error, status: true, message: "Last Name must be at least 3 characters"})
       return
     }
     if(!regex.test(email)){
-      console.log("Invalid email")
+      setError({...error, status: true, message: "Invalid email"})
       return
     }
     if (username.length < 3  || username.length > 20){
-      console.log("Username must be 3->20 charachters")
+      setError({...error, status: true, message: "Username must be 3->20 charachters"})
       return
     }
     
     if (password.length < 8){
-      console.log("Password must be at least 8 characters long")
+      setError({...error, status: true, message: "Password must be at least 8 characters long"})
       return
     }
+
+    if(roleId !== 2 && roleId!== 3){
+      setError({...error, status: true, message: "please select teacher/psychologist"})
+      return
+    }
+
+    setError({status: false, message: ""})
+
     sendRequest(requestMethods.POST, "/api/auth/signup", {
       ...credentials,
     }).then((response) => {
@@ -65,20 +80,25 @@ const Signup = () => {
         navigate("/")
       }
     }).catch((error) => {
-      console.error(error)
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
     })
   }
 
   const handleRoleChange = (e) => {
-    const { value } = e.target;
-    setCredentials({ ...credentials, roleId: parseInt(value) });
-  };
+    const { value } = e.target
+    setCredentials({ ...credentials, roleId: parseInt(value) })
+    setError({status: false, message: ""})
+  }
 
   return (
     <div className='flex column align-center login-container'>
       <img src={fullLogo} width={100} height={120} alt="logo" />
 
       <div className='flex column input-wrapper'>
+        
+        {error.status &&<p className='text-sm text-error'>{error.message}</p>}
 
         <div className='flex first-last-name-input'>
           
@@ -157,7 +177,10 @@ const Signup = () => {
         <p className='text-acient'>
           Have an account? <span 
             className='font-medium text-primary auth-switch' 
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate("/")
+              setError({status: false, message: ""})
+            }}
           >Log in</span>
         </p>
       </div>

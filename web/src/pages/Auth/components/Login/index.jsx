@@ -50,7 +50,7 @@ const Login = () => {
     sendRequest(requestMethods.POST, "/api/auth/login", {
       ...credentials,
     }).then((response) => {
-      if(response.status === 201){
+      if(response.status === 200){
         setLocalUser(response.data.token)
         console.log(response.data)
         navigate("/")
@@ -97,7 +97,10 @@ const Login = () => {
         <p className='text-acient'>
           Don't have an account? <span 
             className='font-medium text-primary auth-switch' 
-            onClick={() => navigate("/signup")}
+            onClick={() => {
+              navigate("/signup")
+              setError({status: false, message: ""})
+            }}
           >Sign up</span>
         </p>
       </div>

@@ -4,7 +4,7 @@
   --primary-col: #75AB19;
   --secondary-col: #007dc5;
   --acients-col: #677294;
-  
+
 
   --error-col: #dc2626;
   --error-light-col: #fee2e2;
@@ -21,6 +21,11 @@
   --font-size-3xl: 1.875rem;
   --font-size-4xl: 2rem;
   --font-size-5xl: 2.5rem;
+
+  --font-weight-light: 300;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
 
   --line-height-xsm: 0.75rem;
   --line-height-sm: 1rem;

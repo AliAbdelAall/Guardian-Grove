@@ -10,6 +10,8 @@ import LoginButton from '../../../../components/LoginButton'
 
 // Tools
 import { useSendRequest } from '../../../../core/tools/remote/request'
+import { requestMethods } from '../../../../core/enums/requestMethods'
+import { setLocalUser } from '../../../../core/tools/local/user'
 
 const Signup = () => {
 
@@ -28,6 +30,22 @@ const Signup = () => {
 
   const handleInputChange = (e, field) => {
     setCredetials({...credentials, [field]: e.target.value})
+  }
+
+  const handleSignupValidation = () => {
+    const { firstName, lastName, username, email, password } = credentials
+    sendRequest(requestMethods.POST, "/api/auth/signup", {
+      ...credentials,
+      roleId: 3
+    }).then((response) => {
+      if(response.status === 201){
+        setLocalUser(response.data.token)
+        console.log(response.data)
+        navigate("/")
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
   }
 
   return (
@@ -80,8 +98,8 @@ const Signup = () => {
 
       <div className='flex column center full-width login-wrapper'>
         <LoginButton
-        text={"Log in"}
-        // handleClick={}
+        text={"Sign up"}
+        handleClick={handleSignupValidation}
         />
 
         <p className='text-acient'>

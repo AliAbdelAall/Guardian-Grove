@@ -56,7 +56,7 @@ export const login = async (req:Request, res:Response) => {
     const user = await prismaClient.user.findFirst({where: {username}})
 
     if(!user){
-      return res.status(400).json({error: "User already exist!"})
+      return res.status(400).json({error: "Incorrect username/password!"})
     }
 
     if (!compareSync(password, user.password)){

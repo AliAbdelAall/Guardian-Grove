@@ -24,23 +24,27 @@ const Login = () => {
     password: ""
   })
 
+  const [error, setError] = useState({
+    status: false,
+    message: ""
+  })
+
   console.log(credentials)
 
   const handleInputChange = (e, field) => {
     setCredetials({...credentials, [field]: e.target.value})
+    setError({ status: false, message: ""})
   }
 
   const handleLoginValidation = () => {
     const { username, password } = credentials
 
     if(username.length < 3 || username.length > 20){
-      toast.error('Username must be 3->20 charachters')
-      console.log('Username must be 3->20 charachters')
+      setError({...error, status: true, message: 'Username must be 3->20 charachters'})
       return
     }
     if(password.length < 6){
-      toast.error('Password must be at least 6 characters long')
-      console.log('Password must be at least 6 characters long')
+      setError({...error, status: true, message: 'Password must be at least 6 characters long'})
       return
     }
     sendRequest(requestMethods.POST, "/api/auth/login", {
@@ -52,7 +56,9 @@ const Login = () => {
         navigate("/")
       }
     }).catch((error) => {
-      console.error(error)
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
     })
   }
 
@@ -61,6 +67,9 @@ const Login = () => {
       <img src={fullLogo} width={100} height={120} alt="logo" />
 
       <div className='flex column input-wrapper'>
+
+        {error.status &&<p className='text-sm text-error'>{error.message}</p>}
+
         <LoginInput
         id={"username-input"}
         label={"Username"}

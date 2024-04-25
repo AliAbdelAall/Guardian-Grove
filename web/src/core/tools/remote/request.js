@@ -32,6 +32,8 @@ export const useSendRequest = () => {
           navigate("/");
         }
       }
+      console.error(error);
+      throw error;
     }
   }
   return sendRequest;

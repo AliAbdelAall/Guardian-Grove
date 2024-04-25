@@ -86,8 +86,7 @@ const Login = () => {
         />
 
         <p className='text-acient'>
-          Don't have an account? 
-          <span 
+          Don't have an account? <span 
             className='font-medium text-primary auth-switch' 
             onClick={() => navigate("/signup")}
           >Sign up</span>

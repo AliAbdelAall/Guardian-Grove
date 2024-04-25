@@ -18,25 +18,46 @@ const Signup = () => {
   const navigate  = useNavigate()
   const sendRequest = useSendRequest()
 
-  const [credentials, setCredetials] = useState({
+  const [credentials, setCredentials] = useState({
     firstName: "",
     lastName: "",
     username: "",
     email: "",
-    password: ""
+    password: "",
+    roleId: 0
   })
 
   console.log(credentials)
 
   const handleInputChange = (e, field) => {
-    setCredetials({...credentials, [field]: e.target.value})
+    setCredentials({...credentials, [field]: e.target.value})
   }
 
   const handleSignupValidation = () => {
     const { firstName, lastName, username, email, password } = credentials
+    if (firstName.length < 3){
+      console.log("First Name must be at least 3 characters")
+      return
+    }
+    if (lastName.length < 3){
+      console.log("Last Name must be 3->20 characters")
+      return
+    }
+    if(!regex.test(email)){
+      console.log("Invalid email")
+      return
+    }
+    if (username.length < 3  || username.length > 20){
+      console.log("Username must be 3->20 charachters")
+      return
+    }
+    
+    if (password.length < 8){
+      console.log("Password must be at least 8 characters long")
+      return
+    }
     sendRequest(requestMethods.POST, "/api/auth/signup", {
       ...credentials,
-      roleId: 3
     }).then((response) => {
       if(response.status === 201){
         setLocalUser(response.data.token)
@@ -47,6 +68,11 @@ const Signup = () => {
       console.error(error)
     })
   }
+
+  const handleRoleChange = (e) => {
+    const { value } = e.target;
+    setCredentials({ ...credentials, roleId: parseInt(value) });
+  };
 
   return (
     <div className='flex column align-center login-container'>
@@ -93,8 +119,34 @@ const Signup = () => {
         handleChange={(e) => handleInputChange(e, "password")}
         />
 
+        <div className="flex role-selection">
+          <label>
+            <input
+              className='custom-radio'
+              type="radio"
+              name="role"
+              value="2"
+              checked={credentials.roleId === 2}
+              onChange={handleRoleChange}
+            />
+            Teacher
+          </label>
+          <label>
+            <input
+            className='custom-radio'
+              type="radio"
+              name="role"
+              value="3"
+              checked={credentials.roleId === 3}
+              onChange={handleRoleChange}
+            />
+            Psychologist
+          </label>
+        </div>
 
       </div>
+
+      
 
       <div className='flex column center full-width login-wrapper'>
         <LoginButton
@@ -103,8 +155,7 @@ const Signup = () => {
         />
 
         <p className='text-acient'>
-          Have an account? 
-          <span 
+          Have an account? <span 
             className='font-medium text-primary auth-switch' 
             onClick={() => navigate("/")}
           >Log in</span>

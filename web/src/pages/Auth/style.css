@@ -29,3 +29,22 @@
 .first-last-name-input{
   gap: 15px
 }
+
+.role-selection{
+  gap: 10px;
+}
+
+.custom-radio{
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-col);
+  /* outline: none; */
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.custom-radio:checked {
+  background-color: var(--primary-col);
+}

@@ -85,7 +85,7 @@ const Login = () => {
         handleChange={(e) => handleInputChange(e, "password")}
         />
 
-        <p className='text-acient font-medium'>Forgot password?</p>
+        <p className='text-acient font-medium' onClick={() => navigate("/reset-password")}>Forgot password?</p>
       </div>
 
       <div className='flex column center full-width login-wrapper'>

@@ -12,6 +12,7 @@ import Auth from "./pages/Auth"
 // Components
 import Login from "./pages/Auth/components/Login"
 import Signup from "./pages/Auth/components/Signup"
+import ResetPassword from "./pages/Auth/components/ResetPassword"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Auth/>}>
           <Route index element={<Login/>}/>
           <Route path="signup" element={<Signup/>}/>
+          <Route path="reset-password" element={<ResetPassword/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

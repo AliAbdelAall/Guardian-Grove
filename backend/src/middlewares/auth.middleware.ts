@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { prismaClient } from ".."
 import jwt from "jsonwebtoken"
-import { userInfo } from "os"
+
 
 declare global {
   namespace Express {
@@ -19,7 +19,7 @@ const authMiddleware = async (req:Request, res:Response, next:NextFunction) => {
     if (!token) {
       return res.status(401).send("Unauthorized");
     }
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number }
 
     if (decoded) {
       const user = await prismaClient.user.findFirst({

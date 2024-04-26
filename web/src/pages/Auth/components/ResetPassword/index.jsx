@@ -6,6 +6,7 @@ import fullLogo from "../../../../assets/logo/full-logo.png"
 // components
 import LoginInput from '../../../../components/LoginInput'
 import LoginButton from '../../../../components/LoginButton'
+import SmallButton from '../../../../components/SmallButton'
 
 const ResetPassword = () => {
   return (
@@ -30,7 +31,7 @@ const ResetPassword = () => {
       </div>
 
       <div className='flex column center full-width login-wrapper'>
-        <LoginButton
+        <SmallButton
         text={"Log in"}
         // handleClick={handleLoginValidation}
         />

@@ -15,6 +15,22 @@ import { requestMethods } from '../../../../core/enums/requestMethods'
 
 const VerifyOTP = () => {
 
+  const navigate = useNavigate()
+  const sendRequest = useSendRequest()
+
+  const [otp, setOtp] = useState("")
+
+  const [error, setError] = useState({
+    status: false,
+    message: ""
+  })
+
+  const handleInputChange = (e) => {
+    setOtp(e.target.value)
+    setError({ status: false, message: ""})
+  }
+  
+
   return (
     <div className='flex column align-center login-container'>
       <img src={fullLogo} width={100} height={120} alt="logo" />
@@ -31,7 +47,7 @@ const VerifyOTP = () => {
         id={"otp-input"}
         label={"otp"}
         placeholder={"1234"}
-        // handleChange={(e) => handleInputChange(e)}
+        handleChange={(e) => handleInputChange(e)}
         />
 
       </div>

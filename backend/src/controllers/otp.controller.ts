@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { prismaClient } from ".."
 import { hashSync, compareSync } from "bcryptjs"
 import nodemailer from "nodemailer"
+import { error } from "console"
 
 
 export const SaveAndSendOTP =  async (req:Request, res:Response) => {
@@ -57,6 +58,32 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
 
   } catch (error) {
     return res.status(500).json({error: "Internal server error!"})
+  }
+}
+
+export const verifyOTP = async (req:Request, res:Response) => {
+  try {
+    const { id } = req.user!
+    const { userOTP } = req.body
+    const otp = await prismaClient.passwordReset.findFirst({where:{userId: id}})
+    if(!otp){
+      return res.status(400).json({error: "OTP does not exist"})
+    }
+
+    const currentTime = new Date().getTime();
+    const expirationTime = otp.expiresAt.getTime();
+
+    if(expirationTime < currentTime){
+      return res.status(400).json({error: "OTP Expired"})
+    }
+    if(!compareSync(userOTP, otp.otp)){
+      return res.status(400).json({error: "OTP Invalid"})
+    }
+
+    return res.status(200).json({message: "OTP verification successful"})
+
+  } catch (error) {
+    return res.status(500).json({error: "internal server error!"})
   }
 }
 

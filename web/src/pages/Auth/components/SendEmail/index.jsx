@@ -42,12 +42,13 @@ const SendEmail = () => {
       return
     }
 
-    sendRequest(requestMethods.POST, "api/user/reset-password",{
+    sendRequest(requestMethods.POST, "api/otp/send-otp",{
       email,
     }).then((response) => {
-      if(response.status === 200){
-        toast.success("OTP sent to your Email!")
-        navigate("/verify")
+      if(response.status === 201){
+        toast.success(response.data.message)
+        localStorage.setItem("id", JSON.stringify(response.data.userId))
+        navigate("/verify-otp")
       }
     }).catch((error) => {
       if(error.response.status === 400){

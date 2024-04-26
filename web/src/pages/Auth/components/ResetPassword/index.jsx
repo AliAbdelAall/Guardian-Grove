@@ -45,12 +45,15 @@ const ResetPassword = () => {
       setError({...error, status: true, message: "Password don't match"})
       return
     }
-
-    sendRequest(requestMethods.POST, "api/user/reset-password",{
-      password,
+    const id = JSON.parse(localStorage.getItem("id"))
+    sendRequest(requestMethods.POST, "api/otp/reset-password",{
+      id,
+      newPassword: password,
+      confirmNewPassword: confirmPassword
     }).then((response) => {
       if(response.status === 200){
         toast.success("Reset password success!")
+        localStorage.removeItem("id")
         navigate("/")
       }
     }).catch((error) => {

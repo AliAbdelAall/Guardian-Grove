@@ -56,6 +56,7 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
     return res.status(201).json({
       status: "PENDING",
       message: "Verification OTP email sent",
+      userId: profile.userId,
       otp,
     })
 
@@ -67,6 +68,9 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
 export const verifyOTP = async (req:Request, res:Response) => {
   try {
     const { id, userOTP } = req.body
+    if(!userOTP || userOTP.length < 4){
+      return res.status(400).json({error: "OTP Invalid"})
+    }
     const otp = await prismaClient.passwordReset.findFirst({where:{userId: id}, orderBy: {createdAt: 'desc'}})
     if(!otp){
       return res.status(400).json({error: "OTP does not exist"})

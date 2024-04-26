@@ -29,6 +29,28 @@ const VerifyOTP = () => {
     setOtp(e.target.value)
     setError({ status: false, message: ""})
   }
+
+  const handleOtpVerification = () => {
+    const id = JSON.parse(localStorage.getItem("id"))
+
+    if(!otp || otp.length > 4){
+      setError({...error, status: true, message: 'Invalid OTP'})
+    }
+
+    sendRequest(requestMethods.POST, "api/otp/verify-otp",{
+      id,
+      userOTP: otp,
+    }).then((response) => {
+      if(response.status === 200){
+        toast.success(response.data.message)
+        navigate("/reset-password")
+      }
+    }).catch((error) => {
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
+    })
+  }
   
 
   return (
@@ -55,7 +77,7 @@ const VerifyOTP = () => {
       <div className='flex column center full-width login-wrapper'>
         <SmallButton
         text={"Next"}
-        // handleClick={handleOtpVerification}
+        handleClick={handleOtpVerification}
         />
 
       </div>

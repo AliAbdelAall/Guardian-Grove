@@ -14,7 +14,7 @@ const ResetPassword = () => {
       <img src={fullLogo} width={100} height={120} alt="logo" />
 
       <div className='flex column center input-wrapper'>
-        <div className='flex column center'>
+        <div className='flex column center info-wrapper'>
           <h3>Enter your email</h3>
           <p className='text-acient'>A secret code will be sent to your email</p>
         </div>
@@ -32,7 +32,7 @@ const ResetPassword = () => {
 
       <div className='flex column center full-width login-wrapper'>
         <SmallButton
-        text={"Log in"}
+        text={"Next"}
         // handleClick={handleLoginValidation}
         />
 

@@ -48,3 +48,7 @@
 .custom-radio:checked {
   background-color: var(--primary-col);
 }
+
+.info-wrapper{
+  margin-bottom: 25px;
+}

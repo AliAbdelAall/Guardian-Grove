@@ -70,6 +70,10 @@
   justify-content: start;
 }
 
+.justify-end{
+  justify-content: end;
+}
+
 .space-around{
   justify-content: space-around;
 }

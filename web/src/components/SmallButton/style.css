@@ -1,0 +1,14 @@
+.small-btn{
+  font-weight: 500;
+  width: 90px;
+  font-size: var(--font-size-base);
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.small-btn:hover{
+  cursor: pointer;
+  opacity: 0.8;
+}

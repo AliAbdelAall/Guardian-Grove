@@ -20,6 +20,7 @@ import Signup from "./pages/Auth/components/Signup"
 import ResetPassword from "./pages/Auth/components/ResetPassword"
 import SendEmail from "./pages/Auth/components/SendEmail"
 import VerifyOTP from "./pages/Auth/components/VerifyOTP"
+import Clients from "./pages/Main/components/Clients";
 
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
           <Route path="reset-password" element={<ResetPassword/>}/>
         </Route>
         <Route path="/main" element={<Main/>}>
-          
+          <Route index element={<Clients/>}/>
         </Route>
 
       </Routes>

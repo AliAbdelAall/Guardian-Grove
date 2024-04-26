@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Layouts
 import Auth from "./pages/Auth"
+import Main from "./pages/Main";
 
 // Components
 import Login from "./pages/Auth/components/Login"
@@ -19,6 +20,7 @@ import Signup from "./pages/Auth/components/Signup"
 import ResetPassword from "./pages/Auth/components/ResetPassword"
 import SendEmail from "./pages/Auth/components/SendEmail"
 import VerifyOTP from "./pages/Auth/components/VerifyOTP"
+
 
 function App() {
   return (
@@ -43,6 +45,10 @@ function App() {
           <Route path="verify-otp" element={<VerifyOTP/>}/>
           <Route path="reset-password" element={<ResetPassword/>}/>
         </Route>
+        <Route path="/main" element={<Main/>}>
+          
+        </Route>
+
       </Routes>
     </BrowserRouter>
   )

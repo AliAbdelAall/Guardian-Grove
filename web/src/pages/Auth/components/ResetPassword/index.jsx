@@ -34,7 +34,31 @@ const ResetPassword = () => {
     setError({ status: false, message: ""})
   }
 
-  
+  const handleResetPassword = () => {
+    const { password, confirmPassword} = credentials
+
+    if(password.length < 8 ){
+      setError({...error, status: true, message: 'Password must be at least 8 characters long'})
+      return
+    }
+    if(password !== confirmPassword){
+      setError({...error, status: true, message: "Password don't match"})
+      return
+    }
+
+    sendRequest(requestMethods.POST, "api/user/reset-password",{
+      password,
+    }).then((response) => {
+      if(response.status === 200){
+        toast.success("Reset password success!")
+        navigate("/")
+      }
+    }).catch((error) => {
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
+    })
+  }
 
 
   return (
@@ -66,7 +90,7 @@ const ResetPassword = () => {
       <div className='flex column center full-width login-wrapper'>
         <LoginButton
         text={"Confirm"}
-        // handleClick={handleChangePassword}
+        handleClick={handleResetPassword}
         />
 
       </div>

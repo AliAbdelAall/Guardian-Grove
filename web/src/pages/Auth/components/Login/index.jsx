@@ -43,8 +43,8 @@ const Login = () => {
       setError({...error, status: true, message: 'Username must be 3->20 charachters'})
       return
     }
-    if(password.length < 6){
-      setError({...error, status: true, message: 'Password must be at least 6 characters long'})
+    if(password.length < 8){
+      setError({...error, status: true, message: 'Password must be at least 8 characters long'})
       return
     }
     sendRequest(requestMethods.POST, "/api/auth/login", {

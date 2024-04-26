@@ -13,6 +13,7 @@ import Auth from "./pages/Auth"
 import Login from "./pages/Auth/components/Login"
 import Signup from "./pages/Auth/components/Signup"
 import ResetPassword from "./pages/Auth/components/ResetPassword"
+import SendEmail from "./pages/Auth/components/SendEmail"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Auth/>}>
           <Route index element={<Login/>}/>
           <Route path="signup" element={<Signup/>}/>
+          <Route path="send-email" element={<SendEmail/>}/>
           <Route path="reset-password" element={<ResetPassword/>}/>
         </Route>
       </Routes>

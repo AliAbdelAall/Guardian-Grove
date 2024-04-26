@@ -13,7 +13,7 @@ import { toast } from "react-toastify"
 import { useSendRequest } from '../../../../core/tools/remote/request'
 import { requestMethods } from '../../../../core/enums/requestMethods'
 
-const ResetPassword = () => {
+const SendEmail = () => {
 
   const navigate = useNavigate()
   const sendRequest = useSendRequest()
@@ -32,6 +32,30 @@ const ResetPassword = () => {
     setCredetials({...credentials, [field]: e.target.value})
     setError({ status: false, message: ""})
   }
+
+  const handleSendEmail = () => {
+    const { email } = credentials
+    const regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+
+    if(!regex.test(email)){
+      setError({...error, status: true, message: "Invalid email"})
+      return
+    }
+
+    sendRequest(requestMethods.POST, "api/user/reset-password",{
+      email,
+    }).then((response) => {
+      if(response.status === 200){
+        toast.success("OTP sent to your Email!")
+        navigate("/verify")
+      }
+    }).catch((error) => {
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
+    })
+  }
+  
 
   return (
     <div className='flex column align-center login-container'>
@@ -57,7 +81,7 @@ const ResetPassword = () => {
       <div className='flex column center full-width login-wrapper'>
         <SmallButton
         text={"Next"}
-        // handleClick={handleLoginValidation}
+        handleClick={handleSendEmail}
         />
 
       </div>
@@ -66,4 +90,4 @@ const ResetPassword = () => {
   )
 }
 
-export default ResetPassword
+export default SendEmail

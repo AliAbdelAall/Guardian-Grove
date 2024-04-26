@@ -14,30 +14,25 @@ const ResetPassword = () => {
       <img src={fullLogo} width={100} height={120} alt="logo" />
 
       <div className='flex column center input-wrapper'>
+        <div className='flex column center info-wrapper'>
+          <h3>Enter your email</h3>
+          <p className='text-acient'>A secret code will be sent to your email</p>
+        </div>
 
         {/* {error.status &&<p className='text-sm text-error'>{error.message}</p>} */}
 
         <LoginInput
-        id={"password-input"}
-        label={"New password"}
-        placeholder={"********"}
-        type={"password"}
-        handleChange={(e) => handleInputChange(e, "password")}
-        />
-
-      <LoginInput
-        id={"password-input"}
-        label={"Confirm new password"}
-        placeholder={"********"}
-        type={"password"}
-        // handleChange={(e) => handleInputChange(e, "confirmPassword")}
+        id={"email-input"}
+        label={"email"}
+        placeholder={"jhondoe@gmail.com"}
+        // handleChange={(e) => handleInputChange(e, "email")}
         />
 
       </div>
 
       <div className='flex column center full-width login-wrapper'>
-        <LoginButton
-        text={"Confirm"}
+        <SmallButton
+        text={"Next"}
         // handleClick={handleLoginValidation}
         />
 

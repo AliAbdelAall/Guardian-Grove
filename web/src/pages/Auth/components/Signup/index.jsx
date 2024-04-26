@@ -77,7 +77,7 @@ const Signup = () => {
       if(response.status === 201){
         setLocalUser(response.data.token)
         console.log(response.data)
-        navigate("/")
+        navigate("/main")
       }
     }).catch((error) => {
       if(error.response.status === 400){

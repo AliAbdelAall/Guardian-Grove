@@ -12,6 +12,8 @@ import LoginButton from '../../../../components/LoginButton'
 import { toast } from "react-toastify"
 import { useSendRequest } from '../../../../core/tools/remote/request'
 import { requestMethods } from '../../../../core/enums/requestMethods'
+import { setLocalUser } from '../../../../core/tools/local/user'
+
 
 
 const Login = () => {
@@ -53,7 +55,7 @@ const Login = () => {
       if(response.status === 200){
         setLocalUser(response.data.token)
         console.log(response.data)
-        navigate("/")
+        navigate("/main")
       }
     }).catch((error) => {
       if(error.response.status === 400){

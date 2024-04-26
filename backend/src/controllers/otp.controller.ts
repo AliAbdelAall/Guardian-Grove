@@ -87,6 +87,33 @@ export const verifyOTP = async (req:Request, res:Response) => {
   }
 }
 
+export const resetPassword = async (req:Request, res:Response) => {
+  try {
+    const { id } = req.user!
+    const { newPassword, confirmNewPassword } = req.body
+    
+    if(newPassword !== confirmNewPassword){
+      return res.status(200).json({message: "Passwords don't match"})
+    }
+    
+    const newHashedPassword = hashSync(newPassword, 10)
+
+    await prismaClient.user.update({
+      where: {
+        id
+      },
+      data: {
+        password: newHashedPassword
+      }
+    })
+
+    return res.status(200).json({message: "Password rest successful"})
+
+  } catch (error) {
+    return res.status(500).json({error: "internal server error!"})
+  }
+}
+
 
 
 

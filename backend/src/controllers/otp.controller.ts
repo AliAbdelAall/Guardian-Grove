@@ -8,30 +8,33 @@ import { error } from "console"
 export const SaveAndSendOTP =  async (req:Request, res:Response) => {
 
   try {
-    const { id } = req.user!
-    const profile = await prismaClient.profile.findFirst({where:{userId: id}})
-    const email = profile?.email
+    const { email } = req.body
+    const profile = await prismaClient.profile.findFirst({where:{email}})
+    
+    if(!profile){
+      return res.status(400).json({error: "Email does not exist"})
+    }
 
     const otp:string = Math.floor(1000 + Math.random() * 9000).toString()
 
-    const transporter = nodemailer.createTransport({
-      service: process.env.MAIL_SERVICE,
-      auth: {
-        user: process.env.MY_EMAIL,
-        pass: process.env.MY_PASSWORD
-      }
-    });
+    // const transporter = nodemailer.createTransport({
+    //   service: process.env.MAIL_SERVICE,
+    //   auth: {
+    //     user: process.env.MY_EMAIL,
+    //     pass: process.env.MY_PASSWORD
+    //   }
+    // });
 
-    const sendOTP = async (email:string, otp:string) => {
-      const mailOptions = {
-        from: process.env.OTP_EMAIL,
-        to: "camavo5002@picdv.com",
-        subject: 'Password Reset OTP',
-        html:`<p>Enter <b>${otp}</b> to verify your email and reset your password.<p/>\n<p><b>Expires in 1 Hour</b>.<p/>`
-      }
+    // const sendOTP = async (email:string, otp:string) => {
+    //   const mailOptions = {
+    //     from: process.env.OTP_EMAIL,
+    //     to: "camavo5002@picdv.com",
+    //     subject: 'Password Reset OTP',
+    //     html:`<p>Enter <b>${otp}</b> to verify your email and reset your password.<p/>\n<p><b>Expires in 1 Hour</b>.<p/>`
+    //   }
 
-      await transporter.sendMail(mailOptions)
-    }
+    //   await transporter.sendMail(mailOptions)
+    // }
 
     const hashedOTP = hashSync(otp, 10)
 
@@ -40,20 +43,20 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
 
     const newOTP = await prismaClient.passwordReset.create({
       data:{
-        userId: 1,
+        userId: profile.userId,
         otp: hashedOTP,
         createdAt: new Date(),
         expiresAt,
       }
     })
-    if(email){
-      sendOTP("camavo5002@picdv.com", otp)
-    }
+    // if(email){
+    //   sendOTP("camavo5002@picdv.com", otp)
+    // }
 
     return res.status(201).json({
       status: "PENDING",
       message: "Verification OTP email sent",
-      receiver: email
+      otp,
     })
 
   } catch (error) {
@@ -63,9 +66,8 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
 
 export const verifyOTP = async (req:Request, res:Response) => {
   try {
-    const { id } = req.user!
-    const { userOTP } = req.body
-    const otp = await prismaClient.passwordReset.findFirst({where:{userId: id}})
+    const { id, userOTP } = req.body
+    const otp = await prismaClient.passwordReset.findFirst({where:{userId: id}, orderBy: {createdAt: 'desc'}})
     if(!otp){
       return res.status(400).json({error: "OTP does not exist"})
     }
@@ -83,20 +85,27 @@ export const verifyOTP = async (req:Request, res:Response) => {
     return res.status(200).json({message: "OTP verification successful"})
 
   } catch (error) {
+    console.log(error)
     return res.status(500).json({error: "internal server error!"})
   }
 }
 
 export const resetPassword = async (req:Request, res:Response) => {
+
   try {
-    const { id } = req.user!
-    const { newPassword, confirmNewPassword } = req.body
+    const { id, newPassword, confirmNewPassword } = req.body
     
     if(newPassword !== confirmNewPassword){
       return res.status(200).json({message: "Passwords don't match"})
     }
     
     const newHashedPassword = hashSync(newPassword, 10)
+
+    const user = await prismaClient.user.findFirst({where:{id}})
+    
+    if(!user){
+      return res.status(400).json({message: "Invalid user"})
+    }
 
     await prismaClient.user.update({
       where: {
@@ -107,9 +116,10 @@ export const resetPassword = async (req:Request, res:Response) => {
       }
     })
 
-    return res.status(200).json({message: "Password rest successful"})
+    return res.status(200).json({message: "Password reset successful"})
 
   } catch (error) {
+    console.log(error)
     return res.status(500).json({error: "internal server error!"})
   }
 }

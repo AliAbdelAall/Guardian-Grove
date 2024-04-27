@@ -2,7 +2,6 @@ import { Request, Response } from "express"
 import { prismaClient } from ".."
 import { hashSync, compareSync } from "bcryptjs"
 import nodemailer from "nodemailer"
-import { error } from "console"
 
 
 export const SaveAndSendOTP =  async (req:Request, res:Response) => {
@@ -17,24 +16,24 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
 
     const otp:string = Math.floor(1000 + Math.random() * 9000).toString()
 
-    // const transporter = nodemailer.createTransport({
-    //   service: process.env.MAIL_SERVICE,
-    //   auth: {
-    //     user: process.env.MY_EMAIL,
-    //     pass: process.env.MY_PASSWORD
-    //   }
-    // });
+    const transporter = nodemailer.createTransport({
+      service: process.env.MAIL_SERVICE,
+      auth: {
+        user: process.env.MY_EMAIL,
+        pass: process.env.MY_PASSWORD
+      }
+    });
 
-    // const sendOTP = async (email:string, otp:string) => {
-    //   const mailOptions = {
-    //     from: process.env.OTP_EMAIL,
-    //     to: "camavo5002@picdv.com",
-    //     subject: 'Password Reset OTP',
-    //     html:`<p>Enter <b>${otp}</b> to verify your email and reset your password.<p/>\n<p><b>Expires in 1 Hour</b>.<p/>`
-    //   }
+    const sendOTP = async (email:string, otp:string) => {
+      const mailOptions = {
+        from: process.env.OTP_EMAIL,
+        to: email,
+        subject: 'Password Reset OTP',
+        html:`<p>Enter <b>${otp}</b> to verify your email and reset your password.<p/>\n<p><b>Expires in 1 Hour</b>.<p/>`
+      }
 
-    //   await transporter.sendMail(mailOptions)
-    // }
+      await transporter.sendMail(mailOptions)
+    }
 
     const hashedOTP = hashSync(otp, 10)
 
@@ -49,15 +48,14 @@ export const SaveAndSendOTP =  async (req:Request, res:Response) => {
         expiresAt,
       }
     })
-    // if(email){
-    //   sendOTP("camavo5002@picdv.com", otp)
-    // }
+    if(email){
+      sendOTP(email, otp)
+    }
 
     return res.status(201).json({
       status: "PENDING",
       message: "Verification OTP email sent",
       userId: profile.userId,
-      otp,
     })
 
   } catch (error) {

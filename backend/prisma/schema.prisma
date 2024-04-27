@@ -14,16 +14,15 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-
+  id            Int             @id @default(autoincrement())
   username      String          @unique
   password      String
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
   roleId        Int
   role          Role            @relation(fields: [roleId], references: [id])
   profile       Profile?
   PasswordReset PasswordReset[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
 
 model Role {
@@ -33,32 +32,58 @@ model Role {
 }
 
 model Profile {
-  id                Int       @id @default(autoincrement())
-  userId            Int       @unique
-  user              User      @relation(fields: [userId], references: [id])
-  firstName         String    @db.VarChar(255)
-  lastName          String    @db.VarChar(255)
-  email             String    @unique
-  dob               DateTime?
+  id           Int           @id @default(autoincrement())
+  firstName    String        @db.VarChar(255)
+  lastName     String        @db.VarChar(255)
+  email        String        @unique
+  dob          DateTime?
+  userId       Int           @unique
+  user         User          @relation(fields: [userId], references: [id])
+  parent       Parent?
+  Psychologist Psychologist?
+  Teacher      Teacher?
+}
+
+model Parent {
+  id            Int            @id @default(autoincrement())
+  profileId     Int            @unique
+  profile       Profile        @relation(fields: [profileId], references: [id])
+  Children      Child[]
+  psychologists Psychologist[]
+}
+
+model Psychologist {
+  id                Int      @id @default(autoincrement())
   speciality        String?
   yearsOfExperience Int?
-  school            String?
-  children          Child[]
+  profileId         Int      @unique
+  profile           Profile  @relation(fields: [profileId], references: [id])
+  clients           Parent[]
+}
+
+model Teacher {
+  id        Int     @id @default(autoincrement())
+  school    String?
+  profileId Int     @unique
+  profile   Profile @relation(fields: [profileId], references: [id])
+  students  Child[]
 }
 
 model Child {
-  id       Int      @id @default(autoincrement())
-  name     String
-  dob      DateTime
-  parent   Profile  @relation(fields: [parentId], references: [id])
-  parentId Int
+  id        Int      @id @default(autoincrement())
+  name      String
+  dob       DateTime
+  parent    Parent?  @relation(fields: [parentId], references: [id])
+  parentId  Int
+  teacher   Teacher? @relation(fields: [teacherId], references: [id])
+  teacherId Int?
 }
 
 model PasswordReset {
   id        Int      @id @default(autoincrement())
-  userId    Int
   otp       String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   expiresAt DateTime
-  user      User     @relation(fields: [userId], references: [id])
 }

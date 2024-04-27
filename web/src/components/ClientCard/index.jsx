@@ -1,5 +1,8 @@
 import React from 'react'
 
+// Styles
+import "./style.css"
+
 // Assets
 import "../../assets/images/profile.jpg"
 

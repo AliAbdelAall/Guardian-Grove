@@ -8,7 +8,7 @@ import logo from "../../../../assets/logo/logo.png"
 import SmallButton from '../../../../components/SmallButton'
 import { removeLocalUser } from '../../../../core/tools/local/user'
 
-const Sidebar = ({ userType = 'Psychologist' }) => {
+const Sidebar = ({ role = 'Psychologist' }) => {
   const firstName = "Jhon"
   const lastName = "Doe"
   const navigate = useNavigate()
@@ -30,7 +30,7 @@ const Sidebar = ({ userType = 'Psychologist' }) => {
     ],
   }
 
-  const userLinks = sidebarLinks["Teacher"] || []
+  const userLinks = sidebarLinks[role] || []
 
 
   const handleLogout = () => {

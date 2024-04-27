@@ -8,8 +8,8 @@ export const signup = async (req:Request, res:Response) => {
   try {
     const { firstName, lastName, username, email, password, roleId } = req.body
 
-    if (roleId === 4){
-      return res.status(401).json("Unauthorized")
+     if (![1, 2, 3].includes(roleId)) {
+      return res.status(401).json({ error: "Unauthourized" });
     }
 
     let user = await prismaClient.user.findFirst({where: {username}})
@@ -23,7 +23,7 @@ export const signup = async (req:Request, res:Response) => {
       return res. status(400).json({error: "Email already exist!"})
     }
 
-    await prismaClient.user.create({
+    const newUser = await prismaClient.user.create({
       data:{
         username,
         password: hashSync(password, 10),
@@ -33,20 +33,57 @@ export const signup = async (req:Request, res:Response) => {
             firstName,
             lastName,
             email,
+            profilePic: "default-profile.png",
             dob: null,
-            speciality: null,
-            yearsOfExperience: null,
-            school: null,
+            ...(roleId === 1 && {
+              parent:{
+                create:{
+                  children: {},
+                  psychologists: {}
+                }
+              }
+            }),
+            ...(roleId === 2 && {
+              Teacher:{
+                create:{
+                  school: null,
+                  students: {}
+                }
+              }
+            }),
+            ...(roleId === 3 && {
+              Psychologist:{
+                create:{
+                  speciality: null,
+                  yearsOfExperience: null,
+                  clients:{},
+                }
+              }
+            })
+            
           }
         }
-      }  
+      },
+      include:{
+        profile:{ 
+          include:{
+            ...(roleId === 1 && {parent: true}),
+            ...(roleId === 2 && {Teacher: true}),
+            ...(roleId === 3 && {Psychologist: true})
+          }
+        }
+      }
     })
+    
     
     user = await prismaClient.user.findFirst({where: {username}, include:{profile:true }})
 
     const token = jwt.sign({id: user!.id}, process.env.JWT_SECRET!)
 
-    return res.status(201).json({message: "user created successfully", token})
+    return res.status(201).json({
+      message: "user created successfully", 
+      token,
+    })
   } catch (error) {
     console.error("Error:", error)
     return res.status(500).json({error: "Internal server error!"})

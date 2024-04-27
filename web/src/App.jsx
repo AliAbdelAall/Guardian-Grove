@@ -46,8 +46,13 @@ function App() {
           <Route path="verify-otp" element={<VerifyOTP/>}/>
           <Route path="reset-password" element={<ResetPassword/>}/>
         </Route>
-        <Route path="/main" element={<Main/>}>
+        <Route path="/main/" element={<Main/>}>
           <Route index element={<Clients/>}/>
+          <Route path="schedules" element={<Clients/>}/>
+          <Route path="reports" element={<Clients/>}/>
+          <Route path="chat" element={<Clients/>}/>
+          <Route path="feedback" element={<Clients/>}/>
+          <Route path="profile" element={<Clients/>}/>
         </Route>
 
       </Routes>

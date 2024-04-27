@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 // Styles
 import "./style.css"
 
-// components
+// Components
 import Sidebar from './components/Sidebar'
 
 const Main = () => {

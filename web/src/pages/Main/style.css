@@ -13,15 +13,20 @@
   padding: 15px 0 15px 40px;
 }
 
-.active{
+.sidebar-active{
   background-color: var(--primary-col);
 }
 
-.sidebar-btn:hover:not(.active){
+.sidebar-btn:hover:not(.sidebar-active){
   background-color: #67729431;
 }
 
 .sidebar-nav{
   gap: 10px;
   margin-top: 45px;
+}
+
+.sidebar-logout{
+  flex-grow: 1;
+  padding-bottom: 40px;
 }

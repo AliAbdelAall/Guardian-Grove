@@ -1,6 +1,7 @@
 .small-btn{
   font-weight: 500;
   width: 90px;
+  max-height: 32px;
   font-size: var(--font-size-base);
   padding: 8px;
   border-radius: 5px;

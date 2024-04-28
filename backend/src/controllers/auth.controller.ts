@@ -13,17 +13,16 @@ export const signup = async (req:Request, res:Response) => {
     }
 
     let user = await prismaClient.user.findFirst({where: {username}})
-    let profile = await prismaClient.profile.findFirst({where: {email}})
-
     if(user){
       return res. status(400).json({error: "Username already exist!"})
     }
-
+    
+    let profile = await prismaClient.profile.findFirst({where: {email}})
     if(profile){
       return res. status(400).json({error: "Email already exist!"})
     }
 
-    const newUser = await prismaClient.user.create({
+    await prismaClient.user.create({
       data:{
         username,
         password: hashSync(password, 10),

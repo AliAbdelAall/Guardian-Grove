@@ -46,7 +46,11 @@
   gap: 20px;
   max-width: fit-content;
   overflow-y: scroll;
-  max-height: inherit;
+  max-height: 670px;
+}
+
+.clients-cards-wrapper::-webkit-scrollbar{
+  display: none;
 }
 
 .search-input{

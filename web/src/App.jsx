@@ -6,9 +6,13 @@ import "./styles/main.css"
 import "./styles/utilities.css"
 import "./styles/colors.css"
 
-// taostify
+// Taostify
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+// Redux
+import { Provider } from "react-redux";
+import { store } from "./core/redux/store";
 
 // Layouts
 import Auth from "./pages/Auth"
@@ -25,38 +29,40 @@ import Clients from "./pages/Main/components/Clients";
 
 function App() {
   return (
-    <BrowserRouter>
-      <ToastContainer
-        position="top-right"
-        autoClose={2500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <Routes>
-        <Route path="/" element={<Auth/>}>
-          <Route index element={<Login/>}/>
-          <Route path="signup" element={<Signup/>}/>
-          <Route path="send-email" element={<SendEmail/>}/>
-          <Route path="verify-otp" element={<VerifyOTP/>}/>
-          <Route path="reset-password" element={<ResetPassword/>}/>
-        </Route>
-        <Route path="/main/" element={<Main/>}>
-          <Route index element={<Clients/>}/>
-          <Route path="schedules" element={<Clients/>}/>
-          <Route path="reports" element={<Clients/>}/>
-          <Route path="chat" element={<Clients/>}/>
-          <Route path="feedback" element={<Clients/>}/>
-          <Route path="profile" element={<Clients/>}/>
-        </Route>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ToastContainer
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+        <Routes>
+          <Route path="/" element={<Auth/>}>
+            <Route index element={<Login/>}/>
+            <Route path="signup" element={<Signup/>}/>
+            <Route path="send-email" element={<SendEmail/>}/>
+            <Route path="verify-otp" element={<VerifyOTP/>}/>
+            <Route path="reset-password" element={<ResetPassword/>}/>
+          </Route>
+          <Route path="/main/" element={<Main/>}>
+            <Route index element={<Clients/>}/>
+            <Route path="schedules" element={<Clients/>}/>
+            <Route path="reports" element={<Clients/>}/>
+            <Route path="chat" element={<Clients/>}/>
+            <Route path="feedback" element={<Clients/>}/>
+            <Route path="profile" element={<Clients/>}/>
+          </Route>
 
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   )
 }
 

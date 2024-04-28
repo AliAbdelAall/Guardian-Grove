@@ -50,7 +50,7 @@ model Parent {
   profileId     Int            @unique
   profile       Profile        @relation(fields: [profileId], references: [id])
   children      Child[]
-  psychologists Psychologist[] @relation("parenttopsychologist")
+  psychologists Psychologist[]
 }
 
 model Psychologist {
@@ -59,7 +59,7 @@ model Psychologist {
   yearsOfExperience Int?
   profileId         Int      @unique
   profile           Profile  @relation(fields: [profileId], references: [id])
-  clients           Parent[] @relation("parenttopsychologist")
+  clients           Parent[]
 }
 
 model Teacher {
@@ -71,13 +71,14 @@ model Teacher {
 }
 
 model Child {
-  id        Int      @id @default(autoincrement())
-  name      String
-  dob       DateTime
-  parent    Parent?  @relation(fields: [parentId], references: [id])
-  parentId  Int
-  teacher   Teacher? @relation(fields: [teacherId], references: [id])
-  teacherId Int?
+  id         Int      @id @default(autoincrement())
+  name       String
+  dob        DateTime
+  profilePic String
+  parent     Parent?  @relation(fields: [parentId], references: [id])
+  parentId   Int
+  teacher    Teacher? @relation(fields: [teacherId], references: [id])
+  teacherId  Int?
 }
 
 model PasswordReset {

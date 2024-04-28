@@ -4,7 +4,7 @@ import { prismaClient } from ".."
 const psychologistMiddleware = async (req:Request, res:Response, next:NextFunction) => {
   try {
     const { id } = req.user!
-
+ 
     const user = await prismaClient.user.findFirst({where:{id}})
 
     if(!user || user.roleId !== 3){

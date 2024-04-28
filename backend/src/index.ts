@@ -1,7 +1,7 @@
 import express, {Express} from "express"
 import dotenv from "dotenv"
 import { PrismaClient } from "@prisma/client"
-import rootRouter from "./Routes/index.routes"
+import rootRouter from "./Routes/root.routes"
 import cors from"cors"
 
 const app:Express = express()

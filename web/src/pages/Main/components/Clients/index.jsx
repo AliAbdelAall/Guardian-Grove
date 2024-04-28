@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Assets
 import profilePic from "../../../../assets/images/profile.jpg"
@@ -15,6 +15,26 @@ const Clients = () => {
 
   const { parents } = useSelector((global) => global[parentsSliceName])
   const { children } = useSelector((global) => global[childrenSliceName])
+  const [filteredParents, setFilteredParents] = useState([])
+
+  console.log(filteredParents)
+  useEffect(()=>{
+    setFilteredParents(parents)
+  },[parents])
+
+  const handleParentSearch = (e) => {
+    const userSearch = e.target.value.toLowerCase();
+    const filteredParents = parents.filter((parent) => {
+
+      const parentChildren = children.filter((child) => child.parentId === parent.id);
+      const childrenNames = parentChildren.map((child) => child.name.toLowerCase()).join(' ');
+
+      const combinedNames = `${parent.profile.firstName} ${parent.profile.lastName} ${childrenNames}`;
+
+      return combinedNames.toLowerCase().includes(userSearch);
+    });
+    setFilteredParents(filteredParents);
+  }
 
   return (
     <div className='flex column full-width clients-cards-container'>
@@ -22,13 +42,13 @@ const Clients = () => {
       
       <div className='flex column full-width clients-search-wrapper'>
         <div>
-          <input className='search-input ' placeholder='Search' type="text" />
+          <input className='search-input ' placeholder='Search' type="text" onChange={(e) => handleParentSearch(e)}/>
 
         </div>
 
           <div className='flex wrap clients-cards-wrapper'>
 
-            {parents?.map((parent) => {
+            {filteredParents?.map((parent) => {
               const {id, profile} = parent
               const parentChildren = children.filter((child) => child.parentId === parent.id)
               const childrenNames = []
@@ -41,7 +61,7 @@ const Clients = () => {
                 age={profile.dob}
                 profilePic={profilePic}
                 email={profile.email}
-                children={childrenNames}
+                children={childrenNames.join(", ")}
                 />
               )
 

@@ -15,12 +15,12 @@ export const connectParentPsychologist = async (req:Request, res:Response) => {
 
     await prismaClient.parent.update({
       where: { profileId: parent!.id },
-      data: { psychologists: { connect: { id: psychologist.id } } },
+      data: { psychologists: { connect: { id: psychologist.Psychologist?.id } } },
     })
 
     await prismaClient.psychologist.update({
       where: { profileId: psychologist.id },
-      data: { clients: { connect: { id: parent!.id } } },
+      data: { clients: { connect: { id: parent?.parent?.id } } },
     })
 
     const updatedParent = await prismaClient.parent.findFirst({where:{profileId: parent!.id}, include:{psychologists:true}})

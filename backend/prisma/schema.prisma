@@ -50,7 +50,7 @@ model Parent {
   profileId     Int            @unique
   profile       Profile        @relation(fields: [profileId], references: [id])
   children      Child[]
-  psychologists Psychologist[]
+  psychologists Psychologist[] @relation("parenttopsychologist")
 }
 
 model Psychologist {
@@ -59,7 +59,7 @@ model Psychologist {
   yearsOfExperience Int?
   profileId         Int      @unique
   profile           Profile  @relation(fields: [profileId], references: [id])
-  clients           Parent[]
+  clients           Parent[] @relation("parenttopsychologist")
 }
 
 model Teacher {

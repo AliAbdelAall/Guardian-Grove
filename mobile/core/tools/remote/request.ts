@@ -1,11 +1,8 @@
 import axios, { AxiosResponse } from "axios"
 import { getLocalUser, removeLocalUser } from "../local/user"
-import { useNavigation } from "@react-navigation/native"
 import {useRouter} from "expo-router"
 
-const router = useRouter()
-
-axios.defaults.baseURL = "http://localhost:3000"
+axios.defaults.baseURL = "http://192.168.0.201:3000"
 
 interface ErrorResponse {
   response: {
@@ -14,11 +11,12 @@ interface ErrorResponse {
 }
 
 export const useSendRequest = () => {
+  const router = useRouter()
   const token = getLocalUser() ?? ""
-  const navigation = useNavigation()
 
   const sendRequest = async (method: string, route: string, body?: any) => {
     try {
+      console.log("request is here")
       const response: AxiosResponse = await axios.request({
         method,
         url: route,
@@ -28,14 +26,13 @@ export const useSendRequest = () => {
           "Content-Type": "application/json",
         },
       })
+      console.log(response)
       return response
     } catch (error) {
-      if ((error as ErrorResponse).response) {
-        const { status } = (error as ErrorResponse).response;
-        if (status === 401) {
-          removeLocalUser()
-          router.dismissAll
-        }
+      const { status } = (error as ErrorResponse).response;
+      if (status === 401) {
+        removeLocalUser()
+        router.dismissAll
       }
       console.error(error)
       throw error

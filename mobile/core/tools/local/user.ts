@@ -5,7 +5,7 @@ export const setLocalUser = async (token: string):Promise<void> => {
 }
 
 export const getLocalUser = async ():Promise<string | false> => {
-  const token = AsyncStorage.getItem("token")
+  const token = await AsyncStorage.getItem("token")
   return token? token : false
 }
 

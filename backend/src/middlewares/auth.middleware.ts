@@ -35,7 +35,7 @@ const authMiddleware = async (req:Request, res:Response, next:NextFunction) => {
       return res.status(401).send("Unauthenticated");
     }
 
-    req.user = { id: user.id,  }
+    req.user = { id: user.id }
     next()
   } catch (error) {
     return res.status(401).send("Unauthenticated")

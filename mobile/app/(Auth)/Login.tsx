@@ -30,6 +30,43 @@ const Login = () => {
   const router = useRouter()
   const sendRequest = useSendRequest()
 
+  const handleInputChange = (value: String, field: string) => {
+    setCredentials({...credentials, [field]: value})
+    console.log(credentials)
+  }
+
+  const handleLoginValidation = () => {
+    const { username, password } = credentials
+    
+    if (username.length < 3  || username.length > 20){
+      setError({...error, status: true, message: "Username must be 3->20 charachters"})
+      return
+    }
+    
+    if (password.length < 8){
+      setError({...error, status: true, message: "Password must be at least 8 characters long"})
+      return
+    }
+
+    setError({status: false, message: ""})
+
+    console.log("before request")
+
+    sendRequest(requestMethods.POST, "/api/auth/login", {
+      ...credentials,
+    }).then((response) => {
+      if(response.status === 201){
+        setLocalUser(response.data.token)
+        console.log(response.data)
+        router.push("/signup")
+      }
+    }).catch((error) => {
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
+    })
+  } 
+
 
   return (
     <View style={styles.container}>
@@ -69,6 +106,7 @@ const Login = () => {
     </View>
   )
 }
+
 
 
 export default Login

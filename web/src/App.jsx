@@ -25,6 +25,7 @@ import ResetPassword from "./pages/Auth/components/ResetPassword"
 import SendEmail from "./pages/Auth/components/SendEmail"
 import VerifyOTP from "./pages/Auth/components/VerifyOTP"
 import Clients from "./pages/Main/components/Clients";
+import Students from "./pages/Main/components/Students";
 
 
 function App() {
@@ -52,12 +53,22 @@ function App() {
             <Route path="reset-password" element={<ResetPassword/>}/>
           </Route>
           <Route path="/main/" element={<Main/>}>
-            <Route index element={<Clients/>}/>
-            <Route path="schedules" element={<Clients/>}/>
-            <Route path="reports" element={<Clients/>}/>
-            <Route path="chat" element={<Clients/>}/>
-            <Route path="feedback" element={<Clients/>}/>
-            <Route path="profile" element={<Clients/>}/>
+
+            <Route path={"teacher"} >
+              <Route index element={<Students/>}/>
+              <Route path="reports" element={<Students/>}/>
+              <Route path="chat" element={<Students/>}/>
+              <Route path="profile" element={<Students/>}/>
+            </Route>
+            
+            <Route path={"psychologist"} >
+              <Route index element={<Clients/>}/>
+              <Route path="schedules" element={<Clients/>}/>
+              <Route path="chat" element={<Clients/>}/>
+              <Route path="feedback" element={<Clients/>}/>
+              <Route path="profile" element={<Clients/>}/>
+            </Route>
+            
           </Route>
 
         </Routes>

@@ -16,17 +16,17 @@ const Sidebar = ({ role }) => {
 
   const sidebarLinks = {
     Psychologist: [
-      { path: "/main", text: "Clients" },
-      { path: "/main/schedules", text: "Schedules" },
-      { path: "/main/chat", text: "Chat" },
-      { path: "/main/feedback", text: "Feedback" },
-      { path: "/main/profile", text: "Profile" },
+      { path: "/main/psychologist", text: "Clients" },
+      { path: "/main/psychologist/schedules", text: "Schedules" },
+      { path: "/main/psychologist/chat", text: "Chat" },
+      { path: "/main/psychologist/feedback", text: "Feedback" },
+      { path: "/main/psychologist/profile", text: "Profile" },
     ],
     Teacher: [
-      { path: "/main", text: "Students" },
-      { path: "/main/chat", text: "Chat" },
-      { path: "/main/reports", text: "Reports" },
-      { path: "/main/profile", text: "Profile" },
+      { path: "/main/teacher", text: "Students" },
+      { path: "/main/teacher/chat", text: "Chat" },
+      { path: "/main/teacher/reports", text: "Reports" },
+      { path: "/main/teacher/profile", text: "Profile" },
     ],
   }
 

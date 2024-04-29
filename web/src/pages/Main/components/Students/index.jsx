@@ -23,7 +23,7 @@ const Students = () => {
     setFilteredStudents(children)
   },[children])
 
-  const handleParentSearch = (e) => {
+  const handleStudentSearch = (e) => {
     console.log (children)
     console.log (children[0])
     const userSearch = e.target.value.toLowerCase();
@@ -31,6 +31,23 @@ const Students = () => {
     )
   }
 
+  const calculateStudentAge = (dob) => {
+
+    const birthDate = new Date(dob)
+  
+    if (isNaN(birthDate.getTime())) {
+      return null
+    }
+  
+    const currentDate = new Date();
+  
+    const difference = currentDate.getTime() - birthDate.getTime();
+  
+    const age = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
+  
+    return age;
+  }
+  
 
   return (
     <div className='flex column full-width students-cards-container'>
@@ -38,7 +55,7 @@ const Students = () => {
       
       <div className='flex column full-width students-search-wrapper'>
         <div>
-          <input className='search-input ' placeholder='Search' type="text" onChange={(e) => handleParentSearch(e)}/>
+          <input className='search-input ' placeholder='Search' type="text" onChange={(e) => handleStudentSearch(e)}/>
 
         </div>
 
@@ -47,12 +64,13 @@ const Students = () => {
             {filteredStudents?.map((student) => {
               console.log(student)
               const {id, name, dob} = student
+              const age = calculateStudentAge(dob)
               return (
                 <StudentCard
                 key={id}
                 id = {id}
                 name={name}
-                age={dob}
+                age={age}
                 profilePic={profilePic}
                 />
               )

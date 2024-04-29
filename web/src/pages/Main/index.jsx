@@ -8,6 +8,7 @@ import "./style.css"
 import { useDispatch } from "react-redux"
 import { setchildren } from '../../core/redux/children'
 import { setParents } from '../../core/redux/parents'
+import { setProfile } from '../../core/redux/userProfle'
 
 // Tools
 import { useSendRequest } from '../../core/tools/remote/request'
@@ -24,12 +25,31 @@ const Main = () => {
 
   const sendRequest = useSendRequest()
   const dispatch = useDispatch()
+  const[ role, setRole] = useState("")
 
   useEffect(()=>{
-    loadParents()
+    checkRole()
   },[])
 
-  const loadParents = () => {
+  const checkRole = () => {
+    sendRequest(requestMethods.GET, "/api/web/check-role").then((response) => {
+      if(response.status === 200){
+        const { userRole, profile } = response.data
+        setRole(userRole)
+        dispatch(setProfile(profile))
+        userRole === "Teacher" ? loadStudents() : loadClients()
+        
+      }
+    }).catch((error) => {
+      toast.error("something went wrong...")
+  })
+  }
+
+  const loadStudents = () => {
+    
+  }
+
+  const loadClients = () => {
     sendRequest(requestMethods.GET, "/api/psychologist/get-clients").then((response) => {
       if(response.status === 200){
         console.log(response.data)
@@ -53,14 +73,12 @@ const Main = () => {
       }).catch((error) => {
         toast.error("something went wrong...")
       })
-
-    
   }
 
 
   return (
     <div className='flex '>
-      <Sidebar/>
+      <Sidebar role={role}/>
       <Outlet/>
     </div>
 

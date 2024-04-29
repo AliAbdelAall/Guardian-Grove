@@ -8,7 +8,7 @@ import logo from "../../../../assets/logo/logo.png"
 import SmallButton from '../../../../components/SmallButton'
 import { removeLocalUser } from '../../../../core/tools/local/user'
 
-const Sidebar = ({ role = 'Psychologist' }) => {
+const Sidebar = ({ role }) => {
   const firstName = "Jhon"
   const lastName = "Doe"
   const navigate = useNavigate()

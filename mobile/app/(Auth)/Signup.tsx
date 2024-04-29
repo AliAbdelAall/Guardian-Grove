@@ -1,15 +1,29 @@
 import React, { useState } from 'react'
 import { Image, Pressable, StyleSheet, Text, View, TextInput } from 'react-native'
+import {useRouter} from "expo-router"
+
+//  Styles
 import generalStyles from "../../Styles/generalStyles"
-import LoginButton from '../../components/LoginButton'
-import LoginInput from '../../components/LoginInput'
-import Login from './Login';
+
+// Tools
+import { useSendRequest } from '../../core/tools/remote/request'
+import { requestMethods } from '../../core/enum/requestMetods'
+import { setLocalUser } from '../../core/tools/local/user'
+
+// Assets
 const logo = require("../../assets/logo/logo.png")
 
+// Components
+import LoginButton from '../../components/LoginButton'
+import LoginInput from '../../components/LoginInput'
 
 
 const Signup = () => {
-  const [text, setText] = useState('');
+
+  const [error, setError] = useState({
+    status: false,
+    message: ""
+  })
   const [credentials, setCredentials] = useState({
     firstName: "",
     lastName: "",
@@ -18,6 +32,9 @@ const Signup = () => {
     password: "",
     roleId: 1
   })
+
+  const router = useRouter()
+  const sendRequest = useSendRequest()
 
   console.log(credentials)
 
@@ -28,7 +45,51 @@ const Signup = () => {
   }
   
   const handleSignupValidation = () => {
+    const { firstName, lastName, username, email, password, roleId } = credentials
+    const regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+    
+    if (firstName.length < 3){
+      setError({...error, status: true, message: "First Name must be at least 3 characters"})
+      return
+    }
+    if (lastName.length < 3){
+      setError({...error, status: true, message: "Last Name must be at least 3 characters"})
+      return
+    }
+    if(!regex.test(email)){
+      setError({...error, status: true, message: "Invalid email"})
+      return
+    }
+    if (username.length < 3  || username.length > 20){
+      setError({...error, status: true, message: "Username must be 3->20 charachters"})
+      return
+    }
+    
+    if (password.length < 8){
+      setError({...error, status: true, message: "Password must be at least 8 characters long"})
+      return
+    }
 
+    if(roleId !== 2 && roleId!== 3){
+      setError({...error, status: true, message: "please select teacher/psychologist"})
+      return
+    }
+
+    setError({status: false, message: ""})
+
+    sendRequest(requestMethods.POST, "/api/auth/signup", {
+      ...credentials,
+    }).then((response) => {
+      if(response.status === 201){
+        setLocalUser(response.data.token)
+        console.log(response.data)
+        router.replace("main")
+      }
+    }).catch((error) => {
+      if(error.response.status === 400){
+        setError({...error, status: true, message: error.response.data.error})
+      }
+    })
   }
 
   return (

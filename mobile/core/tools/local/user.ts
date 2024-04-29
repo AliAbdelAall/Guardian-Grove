@@ -1,12 +1,15 @@
-export const setLocalUser = (token: string) => {
-  localStorage.token = token
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const setLocalUser = async (token: string):Promise<void> => {
+  await AsyncStorage.setItem("token", token)
 }
 
-export const getLocalUser = (): string | false => {
-  const token = localStorage.token
-  return token ? token : false
+export const getLocalUser = async ():Promise<string | false> => {
+  const token = AsyncStorage.getItem("token")
+  return token? token : false
 }
 
-export const removeLocalUser = (): void => {
-  localStorage.removeItem("token")
-}
+export const removeLocalUser = async (): Promise<void> => {
+  await AsyncStorage.removeItem("token")
+} 
+

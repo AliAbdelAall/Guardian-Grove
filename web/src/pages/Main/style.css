@@ -9,6 +9,11 @@
   margin-bottom: 25px;
 }
 
+.sidebar-name{
+  margin-left: 80px;
+  gap: 5px;
+}
+
 .sidebar-btn{
   padding: 15px 0 15px 40px;
 }

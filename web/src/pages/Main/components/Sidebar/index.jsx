@@ -44,7 +44,7 @@ const Sidebar = ({ role }) => {
   return (
     <div className='flex column align-center sidebar-container'>
       <img src={logo} height={101} alt="logo" />
-      <div>
+      <div className='flex column full-width sidebar-name'>
         <p className='text-acient font-light'>Welcome,</p>
         <p className='font-regular text-acient'>{role === "Teacher" ?` ${profile.firstName} ${profile.lastName}` : `Dr. ${profile.firstName} ${profile.lastName}`}</p>
       </div>

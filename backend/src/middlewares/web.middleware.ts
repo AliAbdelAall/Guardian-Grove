@@ -7,7 +7,7 @@ export const webMiddleware = async (req:Request, res:Response, next:NextFunction
 
     const user = await prismaClient.user.findFirst({where:{id}})
 
-    if(!user || [2,3].includes(user.roleId)){
+    if(!user || (user.roleId !== 2 && user.roleId !== 3)){
       return res.status(401).send("unauthorized")
     }
 

@@ -18,6 +18,19 @@ const Students = () => {
   const { children } = useSelector((global) => global[childrenSliceName])
   const [filteredStudents, setFilteredStudents] = useState([])
 
+  console.log(filteredStudents)
+  useEffect(()=>{
+    setFilteredStudents(children)
+  },[children])
+
+  const handleParentSearch = (e) => {
+    console.log (children)
+    console.log (children[0])
+    const userSearch = e.target.value.toLowerCase();
+    setFilteredStudents(children.filter((child) => child.name.toLowerCase().includes(userSearch))
+    )
+  }
+
 
   return (
     <div className='flex column full-width students-cards-container'>

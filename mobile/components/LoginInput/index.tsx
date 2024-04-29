@@ -1,13 +1,14 @@
 import React from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 
-const LoginInput = ({text ,handlechange, placeholder}) => {
+const LoginInput = ({ value, handlechange, placeholder, password= false}) => {
   return (
     <View>
        <TextInput
-          style={styles.loginButton} 
+          style={styles.loginButton}
+          value={value}
           onChangeText={handlechange}
-          value={text}
+          secureTextEntry={password}
           placeholder={placeholder}
         />
     </View>
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray', 
     borderWidth: 1,
     borderRadius: 12,
+    fontSize: 16
   }
 })
 

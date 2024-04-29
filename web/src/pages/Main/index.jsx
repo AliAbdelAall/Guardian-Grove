@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 // Styles
 import "./style.css"
@@ -23,6 +23,7 @@ import Sidebar from './components/Sidebar'
 
 const Main = () => {
 
+  const navigate = useNavigate()
   const sendRequest = useSendRequest()
   const dispatch = useDispatch()
   const[ role, setRole] = useState("")
@@ -46,6 +47,7 @@ const Main = () => {
   }
 
   const loadStudents = () => {
+    navigate("/main/teacher")
     sendRequest(requestMethods.GET, "/api/teacher/get-students").then((response) => {
       if(response.status === 200){
         console.log(response.data)
@@ -72,6 +74,7 @@ const Main = () => {
   }
 
   const loadClients = () => {
+    navigate("/main/psychologist")
     sendRequest(requestMethods.GET, "/api/psychologist/get-clients").then((response) => {
       if(response.status === 200){
         console.log(response.data)

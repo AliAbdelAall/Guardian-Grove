@@ -57,3 +57,25 @@
   width: 280px;
 }
 
+.students-cards-container{
+  padding: 60px 20px 0 20px;
+  height: 100vh;
+}
+
+.students-search-wrapper{
+  padding: 20px;
+  gap: 15px;
+}
+  
+
+.students-cards-wrapper{
+  gap: 20px;
+  max-width: fit-content;
+  overflow-y: scroll;
+  max-height: 670px;
+}
+
+.students-cards-wrapper::-webkit-scrollbar{
+  display: none;
+}
+

@@ -14,7 +14,6 @@ import StudentCard from '../../../../components/StudentCard'
 
 const Students = () => {
 
-  const { parents } = useSelector((global) => global[parentsSliceName])
   const { children } = useSelector((global) => global[childrenSliceName])
   const [filteredStudents, setFilteredStudents] = useState([])
 

@@ -8,7 +8,7 @@ import "./style.css"
 import { useDispatch } from "react-redux"
 import { setchildren } from '../../core/redux/children'
 import { setParents } from '../../core/redux/parents'
-import { setProfile } from '../../core/redux/userProfle'
+import { setProfile } from '../../core/redux/userProfile'
 
 // Tools
 import { useSendRequest } from '../../core/tools/remote/request'
@@ -46,7 +46,29 @@ const Main = () => {
   }
 
   const loadStudents = () => {
-    
+    sendRequest(requestMethods.GET, "/api/teacher/get-students").then((response) => {
+      if(response.status === 200){
+        console.log(response.data)
+        const students = response.data.students
+        const parentsList = []
+        const studentsList = []
+
+        students?.forEach((student) => {
+          console.log(student)
+          const {parent, ...studentInfo} = student
+          parentsList.push(parent)
+          console.log(students)
+          studentsList.push(studentInfo)
+        })
+        console.log(studentsList)
+        console.log(parentsList)
+        dispatch(setParents(parentsList))
+        dispatch(setchildren(studentsList))
+        toast.success("load successful")
+      }
+      }).catch((error) => {
+        toast.error("something went wrong...")
+      })
   }
 
   const loadClients = () => {

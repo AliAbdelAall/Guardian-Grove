@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit"
 // Slices
 import parentsReducer, { parentsSliceName } from "./parents"
 import childrenReducer, { childrenSliceName } from "./children"
-import userProfleReducer, { userProfileSliceName } from "./userProfle"
+import userProfleReducer, { userProfileSliceName } from "./userProfile"
 
 // Logger
 import logger from "redux-logger"

@@ -5,7 +5,6 @@ import profilePic from "../../../../assets/images/profile.jpg"
 
 // Redux
 import { useSelector } from 'react-redux'
-import { parentsSliceName } from '../../../../core/redux/parents'
 import { childrenSliceName } from '../../../../core/redux/children'
 import StudentCard from '../../../../components/StudentCard'
 

@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
   },
   psychologistCardName:{
-    marginTop: -10,
+    // marginTop: -10,
     fontSize:24,
     fontWeight: '600',
     color: '#222222'
@@ -35,4 +35,10 @@ export const styles = StyleSheet.create({
     fontSize:16,
     fontWeight: '400'
   },
+  starRatingDisplay: {
+    marginVertical: 2,
+  },
+  starStyle:{
+    marginHorizontal: 0
+  }
 })

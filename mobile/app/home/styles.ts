@@ -64,8 +64,6 @@ const styles = StyleSheet.create({
   psychologistCardWrapper:{
     height:250,
     width:165,
-    overflow: 'visible',
-    
   },
   psychologistCardImage:{
     height:165,
@@ -77,13 +75,14 @@ const styles = StyleSheet.create({
     height: 85,
     display: 'flex',
     alignItems: 'center',
-    marginTop:10,
+    justifyContent: 'center',
     backgroundColor: '#ECECEC',
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
   },
   psychologistCardName:{
-    fontSize:22,
+    marginTop: -10,
+    fontSize:24,
     fontWeight: '600'
   },
   psychologistCardSpeciality:{
@@ -91,13 +90,66 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   psychologistCardRating:{
-    fontSize:14,
+    fontSize:16,
     fontWeight: '400'
   },
 
-  separator:{
+  horizontalSeparator:{
     width:20
+  },
+  teachercardContainer:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems:'flex-end',
+    width: '100%',
+    marginBottom: 15
+  },
+  teachercardWrapper:{
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  teachercardImage:{
+    width: 75,
+    height:75,
+    borderRadius:5
+  },
+  teachercardInfoWrapper:{
+    display: 'flex',
+    justifyContent: 'center',
+    marginLeft: 10
+  },
+  teacherCardName:{
+    marginTop: -10,
+    fontSize:24,
+    fontWeight: '600'
+  },
+  teacherCardSchoold:{
+    fontSize:16,
+    fontWeight: '300'
+  },
+  teacherCardSpeciality:{
+    fontSize:16,
+    fontWeight: '400'
+  },
+  connectButton:{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 85,
+    height:30,
+    backgroundColor: '#75AB19',
+    borderRadius:5,
+  },
+  connectButtonText:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    color:'white'
   }
+
+
+
+
 
 })
 export default styles

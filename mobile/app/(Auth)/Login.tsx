@@ -51,6 +51,7 @@ const Login = () => {
     setError({status: false, message: ""})
 
     console.log("before request")
+    router.push("/home")
 
     sendRequest(requestMethods.POST, "/api/auth/login", {
       ...credentials,
@@ -58,7 +59,7 @@ const Login = () => {
       if(response.status === 201){
         setLocalUser(response.data.token)
         console.log(response.data)
-        router.push("/signup")
+        router.replace("/home")
       }
     }).catch((error) => {
       if(error.response.status === 400){
@@ -97,7 +98,7 @@ const Login = () => {
         />
 
         <Text style={[styles.textcenter, styles.fontSize16]}>{"Don't have an account?"}
-          <Pressable onPress={()=>{router.push("/app/Signup")}}>
+          <Pressable onPress={()=>{router.push("/Signup")}}>
             <Text style={[styles.fontMedium, styles.primaryColor]} >Signup</Text>
           </Pressable>
         </Text>
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   container:{
     paddingLeft: 20,
     paddingRight: 20,
+    paddingTop:30,
     flex: 1,
     alignItems: "center",
     justifyContent: 'center',

@@ -142,7 +142,7 @@ const Signup = () => {
         />
 
         <Text style={[styles.textcenter, styles.fontSize16]}>{'Already have an account? '}
-          <Pressable onPress={()=>{router.push("/app/Login")}}>
+          <Pressable onPress={()=>{router.push("/Login")}}>
             <Text style={[styles.fontMedium, styles.primaryColor]}>Login</Text>
           </Pressable>
         </Text>

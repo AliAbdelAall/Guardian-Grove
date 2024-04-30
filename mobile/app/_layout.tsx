@@ -14,7 +14,7 @@ const RootLayout = () => {
         }
       }/>
       <Stack.Screen name='home' options={{
-        // headerShown: false 
+        headerShown: false 
         }
       }/>
 

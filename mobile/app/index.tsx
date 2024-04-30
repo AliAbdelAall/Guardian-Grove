@@ -2,13 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Signup from './(Auth)/Signup';
 import Login from './(Auth)/Login';
+import { Redirect } from 'expo-router';
 
-export default function App() {
+ const App = () => {
   return (
-    <View style={styles.container}>
-      <Login/>
-      {/* <Signup/> */}
-    </View>
+    <Redirect href={"home"}></Redirect>
   );
 }
 
@@ -20,3 +18,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App

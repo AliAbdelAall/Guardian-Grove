@@ -2,6 +2,7 @@ import React from 'react'
 import { FlatList, Image, Pressable, ScrollView, Text, View, } from 'react-native'
 import utilities from '../../Styles/utilities'
 import styles from './styles'
+import PsychologistCard from '../../components/PsychologistCard'
 const profilePic = require("../../assets/profile/profile.jpg")
 const heroImage = require("../../assets/images/hero-image.png")
 
@@ -10,24 +11,28 @@ const Main = () => {
 
   const psychologists = [
     {
-    profilePic,
-    name: "Jhon Doe",
-    speciality: 'development',
-    rating: 4
+      id: 0,
+      profilePic,
+      name: "Jhon Doe",
+      speciality: 'development',
+      rating: 4
     },
     {
+      id: 1,
       profilePic,
       name: "Jhonny Donny",
       speciality: 'family',
       rating: 3.5
     },
     {
-    profilePic,
-    name: "Ahmad Fakih",
-    speciality: 'development',
-    rating: 4.5
+      id: 2,
+      profilePic,
+      name: "Ahmad Fakih",
+      speciality: 'development',
+      rating: 4.5
     },
     {
+      id: 3,
       profilePic,
       name: "Lilly barney",
       speciality: 'family',
@@ -94,14 +99,14 @@ const Main = () => {
         }} 
         renderItem={(element) => {
           return (
-          <View style ={styles.psychologistCardWrapper}>
-            <Image source={element.item.profilePic}  style ={styles.psychologistCardImage}></Image>
-            <View style={styles.psychologistCardInfoWrapper}>
-              <Text style={styles.psychologistCardName}>{`Dr. ${element.item.name}`}</Text>
-              <Text style={styles.psychologistCardSpeciality}>{`${element.item.speciality} specialist`}</Text>
-              <Text style={styles.psychologistCardRating}>{`Rating: ${element.item.rating}`}</Text>
-            </View>
-          </View>)
+            <PsychologistCard
+            key={element.item.id}
+            profilePic={element.item.profilePic}
+            name={element.item.name}
+            speciality={element.item.speciality}
+            rating={element.item.rating}
+            />
+         )
         }
           
         }/>
@@ -116,7 +121,7 @@ const Main = () => {
         <FlatList
         data={teachers}
         renderItem={(element) => {
-          return (
+          return (    
             <View style ={styles.teachercardContainer}>
               <View style ={styles.teachercardWrapper}>
                 <Image source={element.item.profilePic}  style ={styles.teachercardImage}></Image>
@@ -130,13 +135,9 @@ const Main = () => {
                 <Text style={styles.connectButtonText}>Connect</Text>
               </Pressable>
             </View>
-              )
-            
-        }
-          
+          )     
+        }  
         }/>
-
-
       </ScrollView>
     </View>
   )

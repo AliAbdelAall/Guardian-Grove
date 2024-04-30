@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   },
   userName:{
     fontSize: 20,
+    color: '#677294'
 
   },
   heroImage:{
@@ -59,7 +60,8 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   seeAll:{
-    fontSize: 16
+    fontSize: 16,
+    color: '#677294'
   },
   psychologistCardWrapper:{
     height:250,
@@ -83,11 +85,13 @@ const styles = StyleSheet.create({
   psychologistCardName:{
     marginTop: -10,
     fontSize:24,
-    fontWeight: '600'
+    fontWeight: '600',
+    color: '#222222'
   },
   psychologistCardSpeciality:{
     fontSize:16,
-    fontWeight: '300'
+    fontWeight: '300',
+    color: '#677294'
   },
   psychologistCardRating:{
     fontSize:16,
@@ -126,11 +130,13 @@ const styles = StyleSheet.create({
   },
   teacherCardSchoold:{
     fontSize:16,
-    fontWeight: '300'
+    fontWeight: '300',
+    color: '#677294'
   },
   teacherCardSpeciality:{
     fontSize:16,
-    fontWeight: '400'
+    fontWeight: '400',
+    color: '#677294'
   },
   connectButton:{
     display: 'flex',

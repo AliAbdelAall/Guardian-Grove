@@ -35,6 +35,34 @@ const Main = () => {
     },
   ]
 
+  const teachers = [
+    {
+    profilePic,
+    name: "Jhon Doe",
+    school: 'School Name',
+    speciality:'Math',
+
+    },
+    {
+      profilePic,
+      name: "Jhonny Donny",
+      school: 'School Name',
+      speciality:'English',
+    },
+    {
+    profilePic,
+    name: "Ahmad Fakih",
+    school: 'School Name',
+    speciality:'Physics',
+    },
+    {
+      profilePic,
+      name: "Lilly barney",
+      school: 'School Name',
+      speciality:'History',
+    },
+  ]
+
   return (
     <View style={utilities.container}>
       
@@ -62,7 +90,7 @@ const Main = () => {
         horizontal={true}
         data={psychologists}
         ItemSeparatorComponent={() => {
-          return <View style={styles.separator}></View>
+          return <View style={styles.horizontalSeparator}></View>
         }} 
         renderItem={(element) => {
           return (
@@ -74,6 +102,36 @@ const Main = () => {
               <Text style={styles.psychologistCardRating}>{`Rating: ${element.item.rating}`}</Text>
             </View>
           </View>)
+        }
+          
+        }/>
+
+        <View style={styles.sectionTitleWrapper}>
+          <Text style={styles.sectionTitle}>Popular Teachers</Text>
+          <Pressable>
+            <Text style={styles.seeAll}>See All</Text>
+          </Pressable>
+        </View>
+
+        <FlatList
+        data={teachers}
+        renderItem={(element) => {
+          return (
+            <View style ={styles.teachercardContainer}>
+              <View style ={styles.teachercardWrapper}>
+                <Image source={element.item.profilePic}  style ={styles.teachercardImage}></Image>
+                <View style={styles.teachercardInfoWrapper}>
+                  <Text style={styles.teacherCardName}>{`${element.item.name}`}</Text>
+                  <Text style={styles.teacherCardSchoold}>{`${element.item.school}`}</Text>
+                  <Text style={styles.teacherCardSpeciality}>{`${element.item.speciality} teacher`}</Text>
+                </View>
+              </View>
+              <Pressable style={styles.connectButton}>
+                <Text style={styles.connectButtonText}>Connect</Text>
+              </Pressable>
+            </View>
+              )
+            
         }
           
         }/>

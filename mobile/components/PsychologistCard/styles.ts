@@ -4,6 +4,16 @@ export const styles = StyleSheet.create({
   psychologistCardWrapper:{
     height:250,
     width:165,
+    shadowColor: '#3A3A3A',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
+    marginBottom: 3,
+    borderRadius:12  
   },
   psychologistCardImage:{
     height:165,
@@ -21,7 +31,6 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
   },
   psychologistCardName:{
-    // marginTop: -10,
     fontSize:24,
     fontWeight: '600',
     color: '#222222'

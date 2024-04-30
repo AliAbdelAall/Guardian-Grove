@@ -7,7 +7,18 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems:'flex-end',
     width: '100%',
-    marginBottom: 15
+    marginBottom: 15,
+    shadowColor: '#3A3A3A',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
+    borderRadius:7,
+    backgroundColor: '#ECECEC'
+    
   },
   teachercardWrapper:{
     display: 'flex',
@@ -46,6 +57,8 @@ export const styles = StyleSheet.create({
     height:30,
     backgroundColor: '#75AB19',
     borderRadius:5,
+    marginRight: 7,
+    marginBottom: 7
   },
   connectButtonText:{
     fontSize: 16,

@@ -47,7 +47,57 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center'
   },
-  
+  sectionTitleWrapper:{
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 60,
+  },
+  sectionTitle:{
+    fontSize:18,
+    fontWeight: '600'
+  },
+  seeAll:{
+    fontSize: 16
+  },
+  psychologistCardWrapper:{
+    height:250,
+    width:165,
+    overflow: 'visible',
+    
+  },
+  psychologistCardImage:{
+    height:165,
+    width:165,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+  },
+  psychologistCardInfoWrapper:{
+    height: 85,
+    display: 'flex',
+    alignItems: 'center',
+    marginTop:10,
+    backgroundColor: '#ECECEC',
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15,
+  },
+  psychologistCardName:{
+    fontSize:22,
+    fontWeight: '600'
+  },
+  psychologistCardSpeciality:{
+    fontSize:16,
+    fontWeight: '300'
+  },
+  psychologistCardRating:{
+    fontSize:14,
+    fontWeight: '400'
+  },
+
+  separator:{
+    width:20
+  }
 
 })
 export default styles

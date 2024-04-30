@@ -3,6 +3,7 @@ import { FlatList, Image, Pressable, ScrollView, Text, View, } from 'react-nativ
 import utilities from '../../Styles/utilities'
 import styles from './styles'
 import PsychologistCard from '../../components/PsychologistCard'
+import TeacherCard from '../../components/TeacherCard'
 const profilePic = require("../../assets/profile/profile.jpg")
 const heroImage = require("../../assets/images/hero-image.png")
 
@@ -42,25 +43,29 @@ const Main = () => {
 
   const teachers = [
     {
-    profilePic,
-    name: "Jhon Doe",
-    school: 'School Name',
-    speciality:'Math',
+      id: 0,
+      profilePic,
+      name: "Jhon Doe",
+      school: 'School Name',
+      speciality:'Math',
 
     },
     {
+      id: 1,
       profilePic,
       name: "Jhonny Donny",
       school: 'School Name',
       speciality:'English',
     },
     {
-    profilePic,
-    name: "Ahmad Fakih",
-    school: 'School Name',
-    speciality:'Physics',
+      id: 2,
+      profilePic,
+      name: "Ahmad Fakih",
+      school: 'School Name',
+      speciality:'Physics',
     },
     {
+      id: 3,
       profilePic,
       name: "Lilly barney",
       school: 'School Name',
@@ -121,20 +126,14 @@ const Main = () => {
         <FlatList
         data={teachers}
         renderItem={(element) => {
-          return (    
-            <View style ={styles.teachercardContainer}>
-              <View style ={styles.teachercardWrapper}>
-                <Image source={element.item.profilePic}  style ={styles.teachercardImage}></Image>
-                <View style={styles.teachercardInfoWrapper}>
-                  <Text style={styles.teacherCardName}>{`${element.item.name}`}</Text>
-                  <Text style={styles.teacherCardSchoold}>{`${element.item.school}`}</Text>
-                  <Text style={styles.teacherCardSpeciality}>{`${element.item.speciality} teacher`}</Text>
-                </View>
-              </View>
-              <Pressable style={styles.connectButton}>
-                <Text style={styles.connectButtonText}>Connect</Text>
-              </Pressable>
-            </View>
+          return ( 
+            <TeacherCard
+            key={element.item.id}
+            profilePic={element.item.profilePic}
+            name={element.item.name}
+            school={element.item.school}
+            speciality={element.item.speciality}
+            />   
           )     
         }  
         }/>

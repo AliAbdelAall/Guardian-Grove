@@ -1,14 +1,33 @@
-import React from 'react'
-import { FlatList, Image, Pressable, ScrollView, Text, View, } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { FlatList, Image, Pressable, ScrollView, Text, ToastAndroid, View, } from 'react-native'
+import { router } from 'expo-router';
+import StarRating, {StarRatingDisplay} from 'react-native-star-rating-widget';
+
+// Styles
 import utilities from '../../Styles/utilities'
 import styles from './styles'
+
+// Components
 import PsychologistCard from '../../components/PsychologistCard'
 import TeacherCard from '../../components/TeacherCard'
+
+// Assets
 const profilePic = require("../../assets/profile/profile.jpg")
 const heroImage = require("../../assets/images/hero-image.png")
 
+// Utilities
+import { useSendRequest } from '../../core/tools/remote/request';
+import { requestMethods } from '../../core/enum/requestMetods';
 
 const Main = () => {
+
+  const sendRequest = useSendRequest()
+
+  const [rating, setRating] = useState(0)
+  const [psychologistsList, setPsychologistsList] = useState([])
+  const [teachersList, setTeachersList] = useState([])
+
+  console.log(rating)
 
   const psychologists = [
     {
@@ -73,8 +92,37 @@ const Main = () => {
     },
   ]
 
+  
+  useEffect(()=>{
+    loadPsychologistAndTeachers()
+  },[])
+
+  const loadPsychologistAndTeachers = () => {
+    sendRequest(requestMethods.GET, "/api/parent/get-psychologists-teachers").then((response) => {
+      if (response){
+        console.log(response)
+        setPsychologistsList(response.data.psychologists)
+        setTeachersList(response.data.teachers)
+      }
+    }).catch((error) => {
+      console.log(error)
+      ToastAndroid.show("Something went wrong", 5)
+    })
+  }
+
+
   return (
+
+
     <View style={utilities.container}>
+
+      {/* <StarRating
+        rating={rating}
+        onChange={(e) => setRating(e)}
+        maxStars={5}
+        starSize={30}
+        enableHalfStar={true}
+      /> */}
       
       <View style={styles.userProfileWrapper}>
         <Image source={profilePic} style={styles.userProfilePic}></Image>
@@ -118,7 +166,7 @@ const Main = () => {
 
         <View style={styles.sectionTitleWrapper}>
           <Text style={styles.sectionTitle}>Popular Teachers</Text>
-          <Pressable>
+          <Pressable onPress={() => ToastAndroid.show("Something went wrong", 35)}>
             <Text style={styles.seeAll}>See All</Text>
           </Pressable>
         </View>

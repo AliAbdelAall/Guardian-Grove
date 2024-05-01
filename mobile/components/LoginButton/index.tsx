@@ -13,7 +13,7 @@ const LoginButton = ({text ,handlePress}) => {
 
 const styles = StyleSheet.create({
   loginButton:{
-    height:55,
+    height:50,
     paddingLeft: 14,
     borderRadius: 12,
     backgroundColor:"#75AB19",
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   buttonText:{
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 21,
     color: '#ffff'
   }
 })

@@ -88,7 +88,7 @@ const Login = () => {
         <LoginInput
           value={credentials.password}
           handlechange={(value:string) => handleInputChange(value, 'password')}
-          placeholder={"password"}
+          placeholder={"Password"}
           password={true}
         />
 
@@ -97,9 +97,9 @@ const Login = () => {
           handlePress={handleLoginValidation}
         />
 
-        <Text style={[styles.textcenter, styles.fontSize16]}>{"Don't have an account?"}
+        <Text style={[styles.textcenter, styles.fontSize16]}>{"Don't have an account? "}
           <Pressable onPress={()=>{router.push("/Signup")}}>
-            <Text style={[styles.fontMedium, styles.primaryColor]} >Signup</Text>
+            <Text style={[styles.fontMedium, styles.primaryColor]} >Sign Up</Text>
           </Pressable>
         </Text>
 

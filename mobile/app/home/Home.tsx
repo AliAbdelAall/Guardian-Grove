@@ -128,7 +128,8 @@ const Main = () => {
         <Image source={profilePic} style={styles.userProfilePic}></Image>
         <Text style={styles.userName}>Hi Nabih!</Text>
       </View>
-      <ScrollView >
+      <ScrollView 
+      showsVerticalScrollIndicator={false}>
         <View style={styles.heroContainer}>
           <Image source={heroImage} style={styles.heroImage}></Image>
           <View style={styles.heroTextWrapper}>
@@ -146,6 +147,7 @@ const Main = () => {
 
         <FlatList
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
         data={psychologists}
         ItemSeparatorComponent={() => {
           return <View style={styles.horizontalSeparator}></View>

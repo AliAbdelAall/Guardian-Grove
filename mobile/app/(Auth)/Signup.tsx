@@ -106,7 +106,7 @@ const Signup = () => {
       </View>
 
       <View style={[styles.gap15, styles.fullWidth]}>
-        <View style={[styles.row, styles.fullWidth, styles.gap15]}>
+        <View style={[styles.row, styles.fullWidth, styles.gap10]}>
           <LoginInput
             half={true}
             value={credentials.firstName}
@@ -133,11 +133,11 @@ const Signup = () => {
         <LoginInput
           value={credentials.password}
           handlechange={(value:string) => handleInputChange(value, 'password')}
-          placeholder={"password"}
+          placeholder={"Password"}
           password={true}
         />
         <LoginButton
-          text={"Signup"}
+          text={"Sign Up"}
           handlePress={handleSignupValidation}
         />
 
@@ -197,6 +197,9 @@ const styles = StyleSheet.create({
   },
   gap15:{
     gap:15
+  },
+  gap10:{
+    gap:10
   },
   textcenter:{
     textAlign: 'center'

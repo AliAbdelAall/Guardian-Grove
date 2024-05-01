@@ -16,18 +16,18 @@ const LoginInput = ({ value, handlechange, placeholder, password= false , half =
 
 const styles = StyleSheet.create({
   loginButton:{
-    height:55,
+    height:50,
     paddingLeft: 15,
     borderColor: 'gray', 
     borderWidth: 1,
     borderRadius: 12,
-    fontSize: 16,
+    fontSize: 18,
   },
   fullWidth:{
     width: '100%'
   },
   halfWidth:{
-    width: '50%',
+    width: '48.4%',
   },
  
 })

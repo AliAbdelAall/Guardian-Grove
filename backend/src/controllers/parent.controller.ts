@@ -60,3 +60,35 @@ export const getPsychologistsAndTeachers = (req:Request, res:Response) =>{
     return res.status(500).json({error: "Internal server error!"})
   }
 }
+
+export const ratePsychologist = async (req:Request, res:Response) => {
+  try {
+    const {id} = req.user!
+    const {psychologistId, rating, review} = req.body
+
+    const parent = await prismaClient.profile.findFirst({where:{userId: id}, include:{parent: {include:{psychologists:true}}}})
+
+    const existingReview = await prismaClient.review.findFirst({where:{parentId:parent?.parent?.id, psychologistId}})
+    if(existingReview){
+      return res.status(400).json({error: "Psychologist already rated by you!"})
+    }
+    const found = parent?.parent?.psychologists.find((psychologist) => psychologist.id === psychologistId)
+    if(!found){
+      return res.status(400).json({error: "invalid psychologist!"})
+    }
+    await prismaClient.review.create({
+      data:{
+        parentId: parent!.parent!.id,
+        psychologistId: psychologistId,
+        rating,
+        review,
+      }
+    })
+
+    return res.status(201).json({error: "Review sent successfully!"})
+
+  } catch (error) {
+    console.error("Error:", error)
+    return res.status(500).json({error: "Internal server error!"})
+  }
+}

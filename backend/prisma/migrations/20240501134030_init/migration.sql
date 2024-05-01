@@ -46,7 +46,7 @@ CREATE TABLE `Parent` (
 -- CreateTable
 CREATE TABLE `Review` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `rating` INTEGER NULL,
+    `rating` FLOAT NULL,
     `review` VARCHAR(191) NULL,
     `psychologistId` INTEGER NOT NULL,
     `parentId` INTEGER NOT NULL,

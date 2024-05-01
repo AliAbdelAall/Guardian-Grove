@@ -35,3 +35,28 @@ export const connectParentPsychologist = async (req:Request, res:Response) => {
     return res.status(500).json({error: "Internal server error!"})
   }
 }
+
+export const getPsychologistsAndTeachers = (req:Request, res:Response) =>{
+  try {
+    const psychologists = prismaClient.psychologist.findMany({
+      include: {
+        Review: {
+          select: {
+            parentId:true,
+            rating: true,
+            review:true
+          }
+        }
+      }
+    })
+    const teachers = prismaClient.teacher.findMany({include:{profile:true}})
+    
+    return res.status(200).json({
+      psychologists,
+      teachers,
+    })
+  } catch (error) {
+    console.error("Error:", error)
+    return res.status(500).json({error: "Internal server error!"})
+  }
+}

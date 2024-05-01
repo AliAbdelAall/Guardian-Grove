@@ -36,9 +36,9 @@ export const connectParentPsychologist = async (req:Request, res:Response) => {
   }
 }
 
-export const getPsychologistsAndTeachers = (req:Request, res:Response) =>{
+export const getPsychologistsAndTeachers = async (req:Request, res:Response) =>{
   try {
-    const psychologists = prismaClient.psychologist.findMany({
+    const psychologists = await prismaClient.psychologist.findMany({
       include: {
         Review: {
           select: {
@@ -49,7 +49,7 @@ export const getPsychologistsAndTeachers = (req:Request, res:Response) =>{
         }
       }
     })
-    const teachers = prismaClient.teacher.findMany({include:{profile:true}})
+    const teachers = await prismaClient.teacher.findMany({include:{profile:true}})
     
     return res.status(200).json({
       psychologists,

@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import {
-	Image,
-	Pressable,
-	Text,
-	TextInput,
-	View,
-	TouchableOpacity,
-	StyleSheet,
-} from "react-native";
-import LoginButton from "../../../components/LoginButton";
+import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
-const profilePic = require("../../../assets/profile/profile.jpg");
+
+// Styles
 import { profileStyles } from "../../../Styles/main/profileStyles";
+
+// Components
+import LoginButton from "../../../components/LoginButton";
+import ProfileInput from "../../../components/ProfileInput";
+
+// Assets
+const profilePic = require("../../../assets/profile/profile.jpg");
 
 const Profile = () => {
 	const [dob, setDob] = useState(
@@ -53,30 +52,10 @@ const Profile = () => {
 			<View style={profileStyles.infoContainer}>
 				<Text style={profileStyles.infoText}>Personal Information</Text>
 				<View style={profileStyles.inputContainer}>
-					<View style={profileStyles.inputWrapper}>
-						<Text style={profileStyles.inputlabel}>Name</Text>
-						<TextInput
-							editable={false}
-							style={profileStyles.inputValue}
-							value={parent.name}
-						/>
-					</View>
-					<View style={profileStyles.inputWrapper}>
-						<Text style={profileStyles.inputlabel}>Email</Text>
-						<TextInput
-							editable={false}
-							style={profileStyles.inputValue}
-							value={parent.email}
-						/>
-					</View>
-					<View style={profileStyles.inputWrapper}>
-						<Text style={profileStyles.inputlabel}>Birth Date</Text>
-						<TextInput
-							editable={false}
-							style={profileStyles.inputValue}
-							value={parent.dob}
-						/>
-					</View>
+					<ProfileInput label={"Name"} input={parent.name} />
+					<ProfileInput label={"Email"} input={parent.email} />
+					<ProfileInput label={"Date Of Birth"} input={parent.dob} />
+
 					<LoginButton
 						text={"Children"}
 						handlePress={() => router.push("/Profile/Children")}

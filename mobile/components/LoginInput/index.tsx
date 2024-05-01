@@ -9,8 +9,8 @@ const LoginInput = ({ value, handlechange, placeholder, password= false , half =
       onChangeText={handlechange}
       secureTextEntry={password}
       placeholder={placeholder}
+      placeholderTextColor={'#677294'}
     />
-
   )
 }
 
@@ -18,8 +18,9 @@ const styles = StyleSheet.create({
   loginButton:{
     height:50,
     paddingLeft: 15,
-    borderColor: 'gray', 
+    borderColor: '#B3B9CA', 
     borderWidth: 1,
+  
     borderRadius: 12,
     fontSize: 18,
   },

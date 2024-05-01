@@ -99,6 +99,15 @@ CREATE TABLE `PasswordReset` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `_ParentToPsychologist` (
+    `A` INTEGER NOT NULL,
+    `B` INTEGER NOT NULL,
+
+    UNIQUE INDEX `_ParentToPsychologist_AB_unique`(`A`, `B`),
+    INDEX `_ParentToPsychologist_B_index`(`B`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `User` ADD CONSTRAINT `User_roleId_fkey` FOREIGN KEY (`roleId`) REFERENCES `Role`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -128,3 +137,9 @@ ALTER TABLE `Child` ADD CONSTRAINT `Child_teacherId_fkey` FOREIGN KEY (`teacherI
 
 -- AddForeignKey
 ALTER TABLE `PasswordReset` ADD CONSTRAINT `PasswordReset_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_ParentToPsychologist` ADD CONSTRAINT `_ParentToPsychologist_A_fkey` FOREIGN KEY (`A`) REFERENCES `Parent`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_ParentToPsychologist` ADD CONSTRAINT `_ParentToPsychologist_B_fkey` FOREIGN KEY (`B`) REFERENCES `Psychologist`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

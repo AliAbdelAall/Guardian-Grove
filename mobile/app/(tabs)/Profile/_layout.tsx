@@ -8,12 +8,14 @@ const ProfileLayout = () => {
 				name="index"
 				options={{
 					title: "Profile",
-				}}
-			/>
-			<Stack.Screen
-				name="Children"
-				options={{
-					title: "Children",
+					headerStyle: {
+						backgroundColor: "#75AB19",
+					},
+					headerTitleStyle: {
+						color: "white",
+						fontSize: 24,
+					},
+					headerTintColor: "white",
 				}}
 			/>
 		</Stack>

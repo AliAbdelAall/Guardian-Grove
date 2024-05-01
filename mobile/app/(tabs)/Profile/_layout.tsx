@@ -15,6 +15,8 @@ const ProfileLayout = () => {
 						color: "white",
 						fontSize: 24,
 					},
+
+					headerShadowVisible: false,
 					headerTintColor: "white",
 				}}
 			/>

@@ -12,10 +12,10 @@ interface ErrorResponse {
 
 export const useSendRequest = () => {
   const router = useRouter()
-  const token = getLocalUser() ?? ""
 
   const sendRequest = async (method: string, route: string, body?: any) => {
     try {
+      const token = await getLocalUser() ?? ""
       console.log("request is here")
       const response: AxiosResponse = await axios.request({
         method,
@@ -31,7 +31,7 @@ export const useSendRequest = () => {
     } catch (error) {
       const { status } = (error as ErrorResponse).response;
       if (status === 401) {
-        removeLocalUser()
+        await removeLocalUser()
         router.dismissAll
       }
       console.error(error)

@@ -16,6 +16,7 @@ const logo = require("../../assets/logo/logo.png");
 // Components
 import LoginButton from "../../components/LoginButton";
 import LoginInput from "../../components/LoginInput";
+import Toast from "react-native-toast-message";
 const Login = () => {
 	const [error, setError] = useState({
 		status: false,
@@ -58,16 +59,16 @@ const Login = () => {
 		setError({ status: false, message: "" });
 
 		console.log("before request");
-		router.push("/Home");
 
 		sendRequest(requestMethods.POST, "/api/auth/login", {
 			...credentials,
 		})
 			.then((response) => {
-				if (response.status === 201) {
+				if (response.status === 200) {
 					setLocalUser(response.data.token);
 					console.log(response.data);
-					router.replace("/home");
+
+					router.replace("/Home");
 				}
 			})
 			.catch((error) => {
@@ -78,6 +79,12 @@ const Login = () => {
 						message: error.response.data.error,
 					});
 				}
+				Toast.show({
+					type: "error",
+					text1: "Error",
+					text2: error.response.data.error,
+				});
+				console.log(error.response);
 			});
 	};
 
@@ -126,6 +133,7 @@ const Login = () => {
 					</Pressable>
 				</Text>
 			</View>
+			<Toast />
 		</View>
 	);
 };

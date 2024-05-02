@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   psychologistCardWrapper:{
     height:250,
-    width:165,
+    width:175,
     shadowColor: '#3A3A3A',
     shadowOffset: {
       width: 0,
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
   },
   psychologistCardImage:{
     height:165,
-    width:165,
+    width:175,
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
   },
@@ -31,12 +31,12 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
   },
   psychologistCardName:{
-    fontSize:24,
+    fontSize:20,
     fontWeight: '600',
     color: '#222222'
   },
   psychologistCardSpeciality:{
-    fontSize:16,
+    fontSize:14,
     fontWeight: '300',
     color: '#677294'
   },

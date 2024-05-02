@@ -36,16 +36,16 @@ export const styles = StyleSheet.create({
   },
   teacherCardName:{
     marginTop: -10,
-    fontSize:24,
+    fontSize:20,
     fontWeight: '600'
   },
   teacherCardSchoold:{
-    fontSize:16,
+    fontSize:14,
     fontWeight: '300',
     color: '#677294'
   },
   teacherCardSpeciality:{
-    fontSize:16,
+    fontSize:14,
     fontWeight: '400',
     color: '#677294'
   },

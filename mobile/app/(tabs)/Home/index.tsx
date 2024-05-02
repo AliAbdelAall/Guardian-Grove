@@ -109,8 +109,8 @@ const Main = () => {
 			"/api/parent/get-psychologists-teachers"
 		)
 			.then((response) => {
-				if (response) {
-					console.log(response);
+				if (response.status === 200) {
+					console.log(response.data);
 					setPsychologistsList(response.data.psychologists);
 					setTeachersList(response.data.teachers);
 				}

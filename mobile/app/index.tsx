@@ -1,11 +1,16 @@
+import React from "react";
+
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import Signup from "./(Auth)/Signup";
-import Login from "./(Auth)/Login";
+import { StyleSheet, View } from "react-native";
 import { Redirect } from "expo-router";
 
 const App = () => {
-	return <Redirect href={"Home"}></Redirect>;
+	return (
+		<View style={styles.container}>
+			<Redirect href={"Login"} />
+			<StatusBar style="auto" />
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Button, Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 
 // Styles
@@ -8,11 +8,14 @@ import { profileStyles } from "../../../Styles/main/profileStyles";
 // Components
 import LoginButton from "../../../components/LoginButton";
 import ProfileInput from "../../../components/ProfileInput";
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 // Assets
 const profilePic = require("../../../assets/profile/profile.jpg");
 
 const Profile = () => {
+	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
 	const [dob, setDob] = useState(
 		new Date().toLocaleDateString("en-GB", {
 			day: "2-digit",
@@ -27,6 +30,19 @@ const Profile = () => {
 		name: "John Doe",
 		email: "john@gmai.com",
 		dob,
+	};
+
+	const showDatePicker = () => {
+		setDatePickerVisibility(true);
+	};
+
+	const hideDatePicker = () => {
+		setDatePickerVisibility(false);
+	};
+
+	const handleConfirm = (date) => {
+		console.warn("A date has been picked: ", date);
+		hideDatePicker();
 	};
 
 	return (
@@ -49,12 +65,29 @@ const Profile = () => {
 				</View>
 			</View>
 
+			<View>
+				<DateTimePicker
+					isVisible={isDatePickerVisible}
+					mode="date"
+					onConfirm={handleConfirm}
+					onCancel={hideDatePicker}
+				/>
+			</View>
+
 			<View style={profileStyles.infoContainer}>
 				<Text style={profileStyles.infoText}>Personal Information</Text>
 				<View style={profileStyles.inputContainer}>
 					<ProfileInput label={"Name"} input={parent.name} />
 					<ProfileInput label={"Email"} input={parent.email} />
-					<ProfileInput label={"Date Of Birth"} input={parent.dob} />
+					<View>
+						<ProfileInput
+							label={"Date Of Birth"}
+							input={parent.dob}
+						/>
+						<Pressable onPress={showDatePicker}>
+							<Text>show Date</Text>
+						</Pressable>
+					</View>
 
 					<LoginButton
 						text={"Children"}

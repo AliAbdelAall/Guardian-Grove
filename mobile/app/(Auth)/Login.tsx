@@ -65,10 +65,10 @@ const Login = () => {
 		})
 			.then((response) => {
 				if (response.status === 200) {
-					setLocalUser(response.data.token);
-					console.log(response.data);
-
-					router.replace("/Home");
+					setLocalUser(response.data.token).then(() => {
+						console.log(response.data);
+						router.replace("/Home");
+					});
 				}
 			})
 			.catch((error) => {

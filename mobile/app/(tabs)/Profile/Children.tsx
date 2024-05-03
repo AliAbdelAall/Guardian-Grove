@@ -7,33 +7,20 @@ import { childrenStyles } from "../../../Styles/main/childrenStyles";
 // Component
 import ProfileInput from "../../../components/ProfileInput";
 import LoginButton from "../../../components/LoginButton";
-import Child from "../../../components/Child/Child";
+import Child from "../../../components/Child";
+
+// Redux
+import { useSelector } from "react-redux";
+import { RootState } from "../../../core/redux/store";
+import { userSliceName } from "../../../core/redux/user/index.";
+import { childrenSliceName } from "../../../core/redux/children";
 
 // Assets
 const ProfilePic = require("../../../assets/profile/profile.jpg");
 
 const Children = () => {
-	const children = [
-		{
-			name: "Mathew",
-			dob: "20/04/2024",
-		},
-		{
-			name: "Lilly",
-			dob: "20/04/2024",
-		},
-		{
-			name: "Carl",
-			dob: "20/04/2024",
-		},
-	];
-
-	const [dob, setDob] = useState(
-		new Date().toLocaleDateString("en-GB", {
-			day: "2-digit",
-			month: "2-digit",
-			year: "numeric",
-		})
+	const children = useSelector(
+		(global: RootState) => global[childrenSliceName]
 	);
 
 	return (
@@ -48,10 +35,15 @@ const Children = () => {
 				<FlatList
 					data={children}
 					renderItem={(element) => {
+						const { id, name, profilePic, school, dob } =
+							element.item;
 						return (
 							<Child
-								name={element.item.name}
-								dob={element.item.dob}
+								key={id}
+								profilePic={`${process.env.REACT_APP_PROFILE_PICS_URL}+${profilePic}`}
+								name={name}
+								school={school ?? "No School"}
+								dob={dob}
 							/>
 						);
 					}}

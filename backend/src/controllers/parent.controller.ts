@@ -67,10 +67,22 @@ export const getPsychologistsAndTeachers = async (
 				parent: {
 					include: {
 						psychologists: { select: { profileId: true } },
+						children: true,
 					},
 				},
 			},
 		});
+
+		const userProfile = {
+			id: user?.id,
+			firstName: user?.firstName,
+			lastName: user?.lastName,
+			email: user?.email,
+			profilePic: user?.profilePic,
+			dob: user?.dob,
+		};
+
+		const children = user?.parent?.children;
 
 		const psychologists = await prismaClient.psychologist.findMany({
 			include: {
@@ -111,9 +123,22 @@ export const getPsychologistsAndTeachers = async (
 			include: { profile: true },
 		});
 
+		const teachersWithCustomProfiles = teachers.map((teacher) => ({
+			id: teacher.id,
+			firstName: teacher.profile.firstName,
+			lastName: teacher.profile.lastName,
+			email: teacher.profile.email,
+			profilePic: teacher.profile.profilePic,
+			dob: teacher.profile.dob,
+			speciality: teacher.speciality,
+			school: teacher.school,
+		}));
+
 		return res.status(200).json({
+			user: userProfile,
+			children,
 			psychologists: psychologistsWithAvgRating,
-			teachers,
+			teachers: teachersWithCustomProfiles,
 		});
 	} catch (error) {
 		console.error("Error:", error);

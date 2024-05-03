@@ -87,7 +87,7 @@ model Child {
   id         Int      @id @default(autoincrement())
   name       String
   dob        DateTime
-  profilePic String
+  profilePic String   @default("default-profile.png")
   parent     Parent?  @relation(fields: [parentId], references: [id])
   parentId   Int
   teacher    Teacher? @relation(fields: [teacherId], references: [id])

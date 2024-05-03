@@ -185,3 +185,26 @@ export const ratePsychologist = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const updateUserDob = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+
+		const { dob } = req.body;
+		if (!dob) {
+			return res.status(400).json({ error: "dob is empty" });
+		}
+
+		await prismaClient.profile.update({
+			where: { userId: id },
+			data: { dob: dob },
+		});
+
+		return res
+			.status(200)
+			.json({ message: "Date Of Birth updated succefully" });
+	} catch (error) {
+		console.error("Error:", error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

@@ -20,6 +20,22 @@ const ProfileLayout = () => {
 					headerTintColor: "white",
 				}}
 			/>
+			<Stack.Screen
+				name="Children"
+				options={{
+					title: "Children Profiles",
+					headerStyle: {
+						backgroundColor: "#75AB19",
+					},
+					headerTitleStyle: {
+						color: "white",
+						fontSize: 24,
+					},
+
+					headerShadowVisible: false,
+					headerTintColor: "white",
+				}}
+			/>
 		</Stack>
 	);
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
+import * as ImagePicker from "expo-image-picker";
 
 // Styles
 import { profileStyles } from "../../../Styles/main/profileStyles";
@@ -29,6 +30,29 @@ const Profile = () => {
 
 	const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 	const [prevDob, setPrevDob] = useState(user.dob);
+
+	const selectImage = async (useLibarary: boolean) => {
+		let result: ImagePicker.ImagePickerResult;
+
+		if (useLibarary) {
+			result = await ImagePicker.launchImageLibraryAsync({
+				mediaTypes: ImagePicker.MediaTypeOptions.Images,
+				allowsEditing: true,
+				aspect: [4, 4],
+				quality: 0.75,
+			});
+		} else {
+			result = await ImagePicker.launchCameraAsync({
+				mediaTypes: ImagePicker.MediaTypeOptions.Images,
+				allowsEditing: true,
+				aspect: [4, 4],
+				quality: 0.75,
+			});
+		}
+		if (!result.canceled) {
+			console.log(result.assets[0].uri);
+		}
+	};
 
 	const showDatePicker = () => {
 		setDatePickerVisibility(true);
@@ -82,7 +106,7 @@ const Profile = () => {
 						style={profileStyles.profileImage}
 						src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${user.profilePic}`}
 					/>
-					<Pressable>
+					<Pressable onPress={() => selectImage(true)}>
 						<View style={profileStyles.editProfile}></View>
 					</Pressable>
 				</View>

@@ -35,7 +35,7 @@ model Profile {
   id           Int           @id @default(autoincrement())
   firstName    String        @db.VarChar(255)
   lastName     String        @db.VarChar(255)
-  profilePic   String        @default("default-profile")
+  profilePic   String        @default("default-profile.png")
   email        String        @unique
   dob          DateTime?
   userId       Int           @unique

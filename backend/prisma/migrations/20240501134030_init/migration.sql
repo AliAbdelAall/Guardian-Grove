@@ -24,7 +24,7 @@ CREATE TABLE `Profile` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `firstName` VARCHAR(255) NOT NULL,
     `lastName` VARCHAR(255) NOT NULL,
-    `profilePic` VARCHAR(191) NOT NULL DEFAULT 'default-profile',
+    `profilePic` VARCHAR(191) NOT NULL DEFAULT 'default-profile.png',
     `email` VARCHAR(191) NOT NULL,
     `dob` DATETIME(3) NULL,
     `userId` INTEGER NOT NULL,

@@ -40,10 +40,10 @@ const Children = () => {
 						return (
 							<Child
 								key={id}
-								profilePic={`${process.env.REACT_APP_PROFILE_PICS_URL}+${profilePic}`}
+								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
 								name={name}
 								school={school ?? "No School"}
-								dob={dob}
+								dob={dob.slice(0, 10)}
 							/>
 						);
 					}}

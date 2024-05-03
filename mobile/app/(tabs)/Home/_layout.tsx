@@ -6,6 +6,8 @@ import { setTeachers } from "../../../core/redux/teachers";
 import { setpsychologists } from "../../../core/redux/Psychologists";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
+import { setUser } from "../../../core/redux/user/index.";
+import { setChildren } from "../../../core/redux/children";
 
 const HomeLayout = () => {
 	const dispatch = useDispatch();
@@ -25,6 +27,8 @@ const HomeLayout = () => {
 					console.log(response.data);
 					dispatch(setTeachers(response.data.teachers));
 					dispatch(setpsychologists(response.data.psychologists));
+					dispatch(setUser(response.data.user));
+					dispatch(setChildren(response.data.children));
 				}
 			})
 			.catch((error) => {

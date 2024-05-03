@@ -7,7 +7,7 @@ interface child {
 	profilePic: String;
 	name: string;
 	school: string;
-	dob: String | null;
+	dob: string | null;
 }
 
 const initialState: child[] = [];

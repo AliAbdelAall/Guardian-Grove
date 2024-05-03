@@ -2,14 +2,23 @@ import React from "react";
 
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { Redirect } from "expo-router";
+import { Redirect, Stack } from "expo-router";
+import { Provider } from "react-redux";
+import { store } from "../core/redux/store";
 
 const App = () => {
 	return (
-		<View style={styles.container}>
+		<>
+			<Stack>
+				<Stack.Screen name="Login" redirect={true} />
+				<Stack.Screen name="Signup" />
+				<Stack.Screen name="Home" />
+				<Stack.Screen name="Profile" />
+				<Stack.Screen name="Children" />
+			</Stack>
 			<Redirect href={"Login"} />
 			<StatusBar style="auto" />
-		</View>
+		</>
 	);
 };
 

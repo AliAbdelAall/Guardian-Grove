@@ -43,11 +43,16 @@ const userProfileSlice = createSlice({
         profilePic,
         dob, ...rest
       }
+    },
+    editProfilPic: (state, action) => {
+      return {
+        ...state, profilePic: action.payload
+      }
     }
   }
 })
 
-export const { setProfile } = userProfileSlice.actions
+export const { setProfile, editProfilPic } = userProfileSlice.actions
 
 export const userProfileSliceName = userProfileSlice.name
 

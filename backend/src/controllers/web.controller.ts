@@ -78,3 +78,25 @@ export const UpdateUserProfilePic = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const editDob = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+
+		const { newDob } = req.body;
+
+		console.log(newDob);
+
+		await prismaClient.profile.update({
+			where: { userId: id },
+			data: { dob: newDob },
+		});
+		return res.status(200).json({
+			message: "Date of Birth updated successfully",
+			dob: newDob,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

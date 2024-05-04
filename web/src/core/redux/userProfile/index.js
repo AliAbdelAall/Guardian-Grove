@@ -54,11 +54,18 @@ const userProfileSlice = createSlice({
       return {
         ...state, dob: action.payload
       }
-    }
+    },
+    updateSpeciality: (state, action) => {
+      const { user, speciality } = action.payload
+      return {
+        ...state,
+        [user]: { ...[user], speciality: speciality }
+      };
+    },
   }
 })
 
-export const { setProfile, editProfilPic, editDob } = userProfileSlice.actions
+export const { setProfile, editProfilPic, editDob, updateSpeciality } = userProfileSlice.actions
 
 export const userProfileSliceName = userProfileSlice.name
 

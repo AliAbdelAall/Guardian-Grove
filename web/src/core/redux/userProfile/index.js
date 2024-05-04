@@ -19,6 +19,7 @@ const initialState = {
     profileId: 0,
     speciality: null,
     yearsOfExperience: null,
+    schedules: []
   }
 }
 
@@ -48,11 +49,16 @@ const userProfileSlice = createSlice({
       return {
         ...state, profilePic: action.payload
       }
+    },
+    editDob: (state, action) => {
+      return {
+        ...state, dob: action.payload
+      }
     }
   }
 })
 
-export const { setProfile, editProfilPic } = userProfileSlice.actions
+export const { setProfile, editProfilPic, editDob } = userProfileSlice.actions
 
 export const userProfileSliceName = userProfileSlice.name
 

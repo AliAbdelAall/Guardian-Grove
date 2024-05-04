@@ -58,6 +58,16 @@ const Clients = () => {
 						const parentChildren = children.filter(
 							(child) => child.parentId === parent.id
 						);
+						const calculateAge = (dateOfBirth) => {
+							const dob = new Date(dateOfBirth);
+							const currentDate = new Date();
+							let ageDiff = currentDate - dob;
+							let ageDate = new Date(ageDiff);
+							let calculatedAge = Math.abs(
+								ageDate.getUTCFullYear() - 1970
+							);
+							return calculatedAge;
+						};
 						const childrenNames = [];
 						parentChildren.forEach((child) => {
 							childrenNames.push(child.name);
@@ -67,7 +77,7 @@ const Clients = () => {
 								key={id}
 								id={profile.id}
 								name={`${profile.firstName} ${profile.lastName}`}
-								age={profile.dob}
+								age={calculateAge(profile.dob)}
 								profilePic={profilePic}
 								email={profile.email}
 								children={childrenNames.join(", ")}

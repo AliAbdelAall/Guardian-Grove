@@ -12,15 +12,20 @@ export const useSendRequest = () => {
   const navigate = useNavigate()
 
   const sendRequest = async (method, route, body) => {
+    const headers = {
+      'Authorization': `bearer ${token}`,
+    }
+    if (body instanceof FormData) {
+      headers["Content-Type"] = "multipart/form-data"
+    } else {
+      headers["Content-Type"] = 'application/json'
+    }
     try {
       const response = await axios.request({
         method,
         url: route,
         data: body,
-        headers: {
-          'Authorization': `bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
+        headers,
       })
       return response
 
@@ -38,3 +43,4 @@ export const useSendRequest = () => {
   }
   return sendRequest;
 }
+

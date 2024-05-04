@@ -19,7 +19,7 @@
 }
 
 .profile-input-wrapper{
-  padding: 10px;
+  padding: 10px 10px 10px 25px;
   width: 345px;
   border-radius: 10px;
   border: 1px solid var(--input-bor-col);
@@ -27,10 +27,30 @@
 
 .profile-input-wrapper>input{
   border: none;
+  outline: none;
   margin-top: 5px;
+
+}
+
+.profile-input-wrapper>p{
+padding: 5px 0;
+
 }
 
 .profile-input-wrapper>input::placeholder{
   color: var(--input-bor-col);
+}
+
+.profile-image-wrapper{
+  position: relative;
+}
+
+.file-input{
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--input-bor-col);
 }
 

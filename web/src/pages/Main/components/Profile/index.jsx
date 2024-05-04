@@ -1,12 +1,16 @@
 import React from "react";
 import "./style.css";
 import { useLocation } from "react-router-dom";
+import "react-image-crop/dist/ReactCrop.css";
 
-import ProfilePic from "../../../../assets/images/profile-pictures/profile.jpg";
-
-import { useSelector } from "react-redux";
-import { userProfileSliceName } from "../../../../core/redux/userProfile";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	editProfilPic,
+	userProfileSliceName,
+} from "../../../../core/redux/userProfile";
 import { MdEdit } from "react-icons/md";
+import { useSendRequest } from "../../../../core/tools/remote/request";
+import { requestMethods } from "../../../../core/enums/requestMethods";
 
 const Profile = ({ yearOfExperience = null, school = null }) => {
 	const user = useSelector((global) => global[userProfileSliceName]);
@@ -19,19 +23,37 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 		teacher,
 		psychologist,
 	} = user;
+
 	const location = useLocation();
+
 	return (
 		<div className="flex column full-width profile-container">
 			<h2>Profile</h2>
 			<div className="flex align-center space-around full-width">
 				<div className="flex column align-center">
-					<img
-						className="profile-image"
-						src={`${
-							import.meta.env.VITE_PROFILE_PIC_URL
-						}${profilePic}`}
-						alt="Profile"
-					/>
+					<div className="profile-image-wrapper">
+						<img
+							className="profile-image"
+							src={`${
+								import.meta.env.VITE_PROFILE_PIC_URL
+							}${profilePic}`}
+							alt="Profile"
+						/>
+
+						<label
+							className="flex center file-input"
+							htmlFor="image-Input"
+						>
+							<MdEdit size={30} color="#677294" />
+						</label>
+						<input
+							className="hidden"
+							type="file"
+							id="image-Input"
+							onChange={(e) => console.log(e.target.files[0])}
+							accept="image/*"
+						/>
+					</div>
 
 					<h2>{`${firstName} ${lastName}`}</h2>
 				</div>
@@ -43,12 +65,7 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 						>
 							Email
 						</label>
-						<input
-							className="text-lg text-acient"
-							type="text"
-							value={email}
-							contentEditable={false}
-						/>
+						<p className="text-lg text-acient">{email}</p>
 					</div>
 					<div className="flex column profile-input-wrapper">
 						<label
@@ -60,9 +77,10 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 						<input
 							placeholder="YYYY-MM-DD"
 							className="text-lg text-acient"
-							type="text"
+							type="date"
 							value={dob}
 							contentEditable={false}
+							onChange={(e) => console.log(e.target.value)}
 						/>
 					</div>
 					<div className="flex column profile-input-wrapper">
@@ -76,7 +94,7 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 							placeholder={
 								location.pathname === "/main/teacher/profile"
 									? "Math teacher"
-									: "Family specialist"
+									: "Family/Development specialist"
 							}
 							aria-placeholder="math"
 							className="text-lg text-acient"
@@ -115,7 +133,7 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 							</label>
 							<input
 								className="text-lg text-acient"
-								type="text"
+								type="number"
 								value={user.psychologist.yearsOfExperience}
 								contentEditable={false}
 							/>

@@ -46,12 +46,13 @@ model Profile {
 }
 
 model Parent {
-  id            Int            @id @default(autoincrement())
-  profileId     Int            @unique
-  profile       Profile        @relation(fields: [profileId], references: [id])
-  children      Child[]
-  psychologists Psychologist[]
-  Review        Review[]
+  id               Int                @id @default(autoincrement())
+  profileId        Int                @unique
+  profile          Profile            @relation(fields: [profileId], references: [id])
+  children         Child[]
+  psychologists    Psychologist[]
+  Review           Review[]
+  ScheduledMeeting ScheduledMeeting[]
 }
 
 model Review {
@@ -65,14 +66,14 @@ model Review {
 }
 
 model Psychologist {
-  id                Int        @id @default(autoincrement())
+  id                Int                @id @default(autoincrement())
   speciality        String?
   yearsOfExperience Int?
-  profileId         Int        @unique
-  profile           Profile    @relation(fields: [profileId], references: [id])
+  profileId         Int                @unique
+  profile           Profile            @relation(fields: [profileId], references: [id])
   clients           Parent[]
   Reviews           Review[]
-  schedules         Schedule[]
+  ScheduledMeeting  ScheduledMeeting[]
 }
 
 model Teacher {
@@ -114,10 +115,12 @@ model School {
   teachers Teacher[]
 }
 
-model Schedule {
+model ScheduledMeeting {
   id             Int          @id @default(autoincrement())
   start          DateTime
   end            DateTime
   Psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
   psychologistId Int
+  parent         Parent?      @relation(fields: [parentId], references: [id])
+  parentId       Int?
 }

@@ -60,6 +60,13 @@
 
 .search-input{
   width: 280px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--input-bor-col);
+}
+
+.search-input::placeholder{
+  color: var(--acients-col);
 }
 
 .students-cards-container{

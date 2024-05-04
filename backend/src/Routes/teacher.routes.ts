@@ -1,12 +1,21 @@
 import { Router } from "express";
 import authMiddleware from "../middlewares/auth.middleware";
 import teacherMiddleware from "../middlewares/teacher.middleware";
-import { addStudent, getStudents } from "../controllers/teach.controller";
+import { addStudent, getStudents } from "../controllers/teacher.controller";
 
+const teacherRoutes = Router();
 
-const teacherRoutes = Router()
+teacherRoutes.get(
+	"/get-students",
+	authMiddleware,
+	teacherMiddleware,
+	getStudents
+);
+teacherRoutes.put(
+	"/add-student",
+	authMiddleware,
+	teacherMiddleware,
+	addStudent
+);
 
-teacherRoutes.get("/get-students", authMiddleware, teacherMiddleware, getStudents)
-teacherRoutes.put("/add-student", authMiddleware, teacherMiddleware, addStudent)
-
-export default teacherRoutes
+export default teacherRoutes;

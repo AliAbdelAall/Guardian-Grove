@@ -87,7 +87,7 @@ export const getPsychologistsAndTeachers = async (
 		const psychologists = await prismaClient.psychologist.findMany({
 			include: {
 				profile: true,
-				Review: {
+				Reviews: {
 					select: {
 						parentId: true,
 						rating: true,
@@ -98,8 +98,8 @@ export const getPsychologistsAndTeachers = async (
 		});
 
 		const psychologistsWithAvgRating = psychologists.map((psychologist) => {
-			const totalRatings = psychologist.Review.length;
-			const sumOfRatings = psychologist.Review.reduce(
+			const totalRatings = psychologist.Reviews.length;
+			const sumOfRatings = psychologist.Reviews.reduce(
 				(sum, review) => sum + review.rating!,
 				0
 			);
@@ -120,7 +120,7 @@ export const getPsychologistsAndTeachers = async (
 		});
 
 		const teachers = await prismaClient.teacher.findMany({
-			include: { profile: true },
+			include: { profile: true, School:true },
 		});
 
 		const teachersWithCustomProfiles = teachers.map((teacher) => ({
@@ -131,7 +131,7 @@ export const getPsychologistsAndTeachers = async (
 			profilePic: teacher.profile.profilePic,
 			dob: teacher.profile.dob,
 			speciality: teacher.speciality,
-			school: teacher.school,
+			school: teacher.School?.name ?? null
 		}));
 
 		return res.status(200).json({

@@ -9,6 +9,7 @@ import "./style.css";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
+	editDob,
 	editProfilPic,
 	userProfileSliceName,
 } from "../../../../core/redux/userProfile";
@@ -51,6 +52,24 @@ const Profile = () => {
 			})
 			.catch((error) => {
 				toast.error("Somthing went wrong");
+			});
+	};
+
+	const handleDobChange = (e) => {
+		const dateTimeDob = `${e.target.value}T00:00:00.000Z`;
+		console.log(dateTimeDob);
+		sendRequest(requestMethods.POST, "/api/web/update-dob", {
+			newDob: dateTimeDob,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(editDob(response.data.dob));
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				toast.error("Something went wrong with dob");
 			});
 	};
 
@@ -107,10 +126,10 @@ const Profile = () => {
 							placeholder="YYYY-MM-DD"
 							className="text-lg text-acient"
 							type="date"
-							value={dob}
+							value={dob?.slice(0, 10)}
 							color="#75AB19"
 							contentEditable={false}
-							onChange={(e) => console.log(e.target.value)}
+							onChange={(e) => handleDobChange(e)}
 						/>
 					</div>
 					<div className="flex column profile-input-wrapper">
@@ -126,7 +145,6 @@ const Profile = () => {
 									? "Math teacher"
 									: "Family/Development specialist"
 							}
-							aria-placeholder="math"
 							className="text-lg text-acient"
 							type="text"
 							value={

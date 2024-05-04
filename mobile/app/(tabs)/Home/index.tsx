@@ -8,6 +8,7 @@ import {
 	ToastAndroid,
 	View,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { router } from "expo-router";
 import StarRating, { StarRatingDisplay } from "react-native-star-rating-widget";
 import Toast from "react-native-toast-message";
@@ -21,109 +22,86 @@ import PsychologistCard from "../../../components/PsychologistCard";
 import TeacherCard from "../../../components/TeacherCard";
 
 // Assets
-const profilePic = require("../../../assets/profile/profile.jpg");
+const profilePicc = require("../../../assets/profile/profile.jpg");
 const heroImage = require("../../../assets/images/hero-image.png");
 
 // Utilities
 import { useSendRequest } from "../../../core/tools/remote/request";
 import { requestMethods } from "../../../core/enum/requestMetods";
+import { RootState } from "../../../core/redux/store";
+import { setTeachers, teachersSliceName } from "../../../core/redux/teachers";
+import { setpsychologists } from "../../../core/redux/Psychologists";
 
 const Main = () => {
-	const sendRequest = useSendRequest();
+	const teachers = useSelector(
+		(global: RootState) => global[teachersSliceName]
+	);
 
 	const [rating, setRating] = useState(0);
-	const [psychologistsList, setPsychologistsList] = useState([]);
-	const [teachersList, setTeachersList] = useState([]);
 
-	console.log(rating);
+	console.log(teachers);
 
-	const psychologists = [
+	const psychologistss = [
 		{
 			id: 0,
-			profilePic,
+			profilePicc,
 			name: "John Doe",
 			speciality: "development",
 			rating: 4,
 		},
 		{
 			id: 1,
-			profilePic,
+			profilePicc,
 			name: "Johnny Donny",
 			speciality: "family",
 			rating: 3.5,
 		},
 		{
 			id: 2,
-			profilePic,
+			profilePicc,
 			name: "Ahmad Fakih",
 			speciality: "development",
 			rating: 4.5,
 		},
 		{
 			id: 3,
-			profilePic,
+			profilePicc,
 			name: "Lilly barney",
 			speciality: "family",
 			rating: 4.5,
 		},
 	];
 
-	const teachers = [
+	const teacherss = [
 		{
 			id: 0,
-			profilePic,
+			profilePicc,
 			name: "John Doe",
 			school: "School Name",
 			speciality: "Math",
 		},
 		{
 			id: 1,
-			profilePic,
+			profilePicc,
 			name: "Johnny Donny",
 			school: "School Name",
 			speciality: "English",
 		},
 		{
 			id: 2,
-			profilePic,
+			profilePicc,
 			name: "Ahmad Fakih",
 			school: "School Name",
 			speciality: "Physics",
 		},
 		{
 			id: 3,
-			profilePic,
+			profilePicc,
 			name: "Lilly barney",
 			school: "School Name",
 			speciality: "History",
 		},
 	];
-
-	useEffect(() => {
-		loadPsychologistAndTeachers();
-	}, []);
-
-	const loadPsychologistAndTeachers = () => {
-		sendRequest(
-			requestMethods.GET,
-			"/api/parent/get-psychologists-teachers"
-		)
-			.then((response) => {
-				if (response.status === 200) {
-					console.log(response.data);
-					setPsychologistsList(response.data.psychologists);
-					setTeachersList(response.data.teachers);
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				ToastAndroid.show("Something went wrong", 35);
-				Toast.show({
-					type: "success",
-					text1: "Hello",
-				});
-			});
-	};
 
 	return (
 		<View style={utilities.container}>
@@ -137,7 +115,7 @@ const Main = () => {
 
 			<View style={styles.userProfileWrapper}>
 				<Image
-					source={profilePic}
+					source={profilePicc}
 					style={styles.userProfilePic}
 				></Image>
 				<Text style={styles.userName}>Hi Nabih!</Text>
@@ -166,7 +144,7 @@ const Main = () => {
 				<FlatList
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
-					data={psychologists}
+					data={psychologistss}
 					ItemSeparatorComponent={() => {
 						return <View style={styles.horizontalSeparator}></View>;
 					}}
@@ -174,7 +152,7 @@ const Main = () => {
 						return (
 							<PsychologistCard
 								key={element.item.id}
-								profilePic={element.item.profilePic}
+								profilePic={element.item.profilePicc}
 								name={element.item.name}
 								speciality={element.item.speciality}
 								rating={element.item.rating}
@@ -204,10 +182,32 @@ const Main = () => {
 				<FlatList
 					data={teachers}
 					renderItem={(element) => {
+						const {
+							id,
+							firstName,
+							lastName,
+							profilePic,
+							school,
+							speciality,
+						} = element.item;
+						return (
+							<TeacherCard
+								key={id}
+								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+								name={`${firstName} ${lastName}`}
+								school={school}
+								speciality={speciality}
+							/>
+						);
+					}}
+				/>
+				<FlatList
+					data={teacherss}
+					renderItem={(element) => {
 						return (
 							<TeacherCard
 								key={element.item.id}
-								profilePic={element.item.profilePic}
+								profilePic={element.item.profilePicc}
 								name={element.item.name}
 								school={element.item.school}
 								speciality={element.item.speciality}

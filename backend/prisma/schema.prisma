@@ -71,16 +71,17 @@ model Psychologist {
   profileId         Int      @unique
   profile           Profile  @relation(fields: [profileId], references: [id])
   clients           Parent[]
-  Review            Review[]
+  Reviews           Review[]
 }
 
 model Teacher {
   id         Int     @id @default(autoincrement())
-  school     String?
   speciality String?
   profileId  Int     @unique
   profile    Profile @relation(fields: [profileId], references: [id])
   students   Child[]
+  School     School? @relation(fields: [schoolId], references: [id])
+  schoolId   Int?
 }
 
 model Child {
@@ -88,10 +89,12 @@ model Child {
   name       String
   dob        DateTime
   profilePic String   @default("default-profile.png")
-  parent     Parent?  @relation(fields: [parentId], references: [id])
+  parent     Parent   @relation(fields: [parentId], references: [id])
   parentId   Int
   teacher    Teacher? @relation(fields: [teacherId], references: [id])
   teacherId  Int?
+  School     School?  @relation(fields: [schoolId], references: [id])
+  schoolId   Int?
 }
 
 model PasswordReset {
@@ -101,4 +104,11 @@ model PasswordReset {
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   expiresAt DateTime
+}
+
+model School {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  sudents  Child[]
+  teachers Teacher[]
 }

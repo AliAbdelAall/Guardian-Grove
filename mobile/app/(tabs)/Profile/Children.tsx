@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 // Styles
 import { childrenStyles } from "../../../Styles/main/childrenStyles";
@@ -12,7 +13,6 @@ import Child from "../../../components/Child";
 // Redux
 import { useSelector } from "react-redux";
 import { RootState } from "../../../core/redux/store";
-import { userSliceName } from "../../../core/redux/user/index.";
 import { childrenSliceName } from "../../../core/redux/children";
 
 // Assets
@@ -22,7 +22,9 @@ const Children = () => {
 	const children = useSelector(
 		(global: RootState) => global[childrenSliceName]
 	);
-
+	console.log(
+		`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${"default-profile.png"}`
+	);
 	return (
 		<ScrollView style={childrenStyles.childrenContainer}>
 			<View>

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	editDob,
 	editProfilPic,
+	updateSpeciality,
 	userProfileSliceName,
 } from "../../../../core/redux/userProfile";
 
@@ -73,12 +74,34 @@ const Profile = () => {
 			});
 	};
 
+	const handlePsychologistSpecialityChange = (e) => {
+		const speciality = e.target.value;
+		sendRequest(
+			requestMethods.POST,
+			"/api/psychologist/update-speciality",
+			{
+				speciality,
+			}
+		).then((response) => {
+			if (response.status === 200) {
+				dispatch(
+					updateSpeciality({
+						user: "psychologist",
+						speciality: response.data.speciality,
+					})
+				);
+				toast.success(response.data.message);
+			}
+		});
+	};
+
 	return (
 		<div className="flex column full-width profile-container">
 			<h2>Profile</h2>
 			<div className="flex align-center space-around full-width">
 				<div className="flex column align-center">
 					<div className="profile-image-wrapper">
+						{/* image and image Input */}
 						<img
 							className="profile-image"
 							src={`${
@@ -106,6 +129,7 @@ const Profile = () => {
 					<h2>{`${firstName} ${lastName}`}</h2>
 				</div>
 				<div className="flex column profile-inputs-wrapper">
+					{/* Email  */}
 					<div className="flex column profile-input-wrapper">
 						<label
 							className="text-sm font-bold text-primary"
@@ -115,6 +139,7 @@ const Profile = () => {
 						</label>
 						<p className="text-lg text-acient">{email}</p>
 					</div>
+					{/* DOB */}
 					<div className="flex column profile-input-wrapper">
 						<label
 							className="text-sm font-bold text-primary"
@@ -132,31 +157,56 @@ const Profile = () => {
 							onChange={(e) => handleDobChange(e)}
 						/>
 					</div>
-					<div className="flex column profile-input-wrapper">
-						<label
-							className="text-sm font-bold text-primary"
-							htmlFor=""
-						>
-							Speciality
-						</label>
-						<input
-							placeholder={
-								location.pathname === "/main/teacher/profile"
-									? "Math teacher"
-									: "Family/Development specialist"
-							}
-							className="text-lg text-acient"
-							type="text"
-							value={
-								location === "/main/teacher/profile"
-									? teacher.speciality
-									: psychologist.speciality
-							}
-							contentEditable={false}
-						/>
-					</div>
+					{/* Speciality */}
+					{location.pathname === "/main/teacher/profile" ? (
+						// Speciality Teacher
+						<div className="flex column profile-input-wrapper">
+							<label
+								className="text-sm font-bold text-primary"
+								htmlFor=""
+							>
+								Speciality
+							</label>
+							<input
+								className="text-lg text-acient"
+								type="text"
+								value={user.teacher.school}
+								contentEditable={false}
+							/>
+						</div>
+					) : (
+						// Speciality psychologist
+						<div className="flex column profile-input-wrapper">
+							<label
+								className="text-sm font-bold text-primary"
+								htmlFor=""
+							>
+								Speciality
+							</label>
+							{psychologist.speciality ? (
+								<p className="text-lg text-acient">
+									{psychologist.speciality + " Specialist"}
+								</p>
+							) : (
+								<select
+									name=""
+									id=""
+									onChange={(e) =>
+										handlePsychologistSpecialityChange(e)
+									}
+								>
+									<option value="">Speciality</option>
+									<option value="Family">Family</option>
+									<option value="Development">
+										Development
+									</option>
+								</select>
+							)}
+						</div>
+					)}
 
 					{location.pathname === "/main/teacher/profile" ? (
+						// School
 						<div className="flex column profile-input-wrapper">
 							<label
 								className="text-sm font-bold text-primary"
@@ -172,6 +222,7 @@ const Profile = () => {
 							/>
 						</div>
 					) : (
+						// Years Of Experience
 						<div className="flex column profile-input-wrapper">
 							<label
 								className="text-sm font-bold text-primary"
@@ -182,8 +233,10 @@ const Profile = () => {
 							<input
 								className="text-lg text-acient"
 								type="number"
+								min={0}
+								max={45}
 								value={user.psychologist.yearsOfExperience}
-								contentEditable={false}
+								contentEditable={true}
 							/>
 						</div>
 					)}

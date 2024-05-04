@@ -65,13 +65,14 @@ model Review {
 }
 
 model Psychologist {
-  id                Int      @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   speciality        String?
   yearsOfExperience Int?
-  profileId         Int      @unique
-  profile           Profile  @relation(fields: [profileId], references: [id])
+  profileId         Int        @unique
+  profile           Profile    @relation(fields: [profileId], references: [id])
   clients           Parent[]
   Reviews           Review[]
+  schedules         Schedule[]
 }
 
 model Teacher {
@@ -111,4 +112,12 @@ model School {
   name     String    @unique
   sudents  Child[]
   teachers Teacher[]
+}
+
+model Schedule {
+  id             Int          @id @default(autoincrement())
+  start          DateTime
+  end            DateTime
+  Psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+  psychologistId Int
 }

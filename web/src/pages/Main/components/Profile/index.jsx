@@ -1,18 +1,24 @@
 import React from "react";
-import "./style.css";
 import { useLocation } from "react-router-dom";
 import "react-image-crop/dist/ReactCrop.css";
+import { MdEdit } from "react-icons/md";
 
+// Styles
+import "./style.css";
+
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import {
 	editProfilPic,
 	userProfileSliceName,
 } from "../../../../core/redux/userProfile";
-import { MdEdit } from "react-icons/md";
+
+// Tools
+import { toast } from "react-toastify";
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
 
-const Profile = ({ yearOfExperience = null, school = null }) => {
+const Profile = () => {
 	const user = useSelector((global) => global[userProfileSliceName]);
 	const {
 		firstName,
@@ -25,6 +31,28 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 	} = user;
 
 	const location = useLocation();
+	const dispatch = useDispatch();
+	const sendRequest = useSendRequest();
+
+	const handleImageChange = (e) => {
+		const file = e.target.files[0];
+		const formData = new FormData();
+		formData.append("image", file);
+		sendRequest(
+			requestMethods.POST,
+			"/api/web/update-profile-picture",
+			formData
+		)
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(editProfilPic(response.data.profilePic));
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				toast.error("Somthing went wrong");
+			});
+	};
 
 	return (
 		<div className="flex column full-width profile-container">
@@ -50,7 +78,8 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 							className="hidden"
 							type="file"
 							id="image-Input"
-							onChange={(e) => console.log(e.target.files[0])}
+							name="image"
+							onChange={(e) => handleImageChange(e)}
 							accept="image/*"
 						/>
 					</div>
@@ -79,6 +108,7 @@ const Profile = ({ yearOfExperience = null, school = null }) => {
 							className="text-lg text-acient"
 							type="date"
 							value={dob}
+							color="#75AB19"
 							contentEditable={false}
 							onChange={(e) => console.log(e.target.value)}
 						/>

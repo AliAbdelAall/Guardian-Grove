@@ -19,7 +19,7 @@ export const useSendRequest = () => {
         data: body,
         headers: {
           'Authorization': `bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'multipart/form-data'
         }
       })
       return response

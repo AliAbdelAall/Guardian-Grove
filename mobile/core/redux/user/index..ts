@@ -25,7 +25,7 @@ const userSlice = createSlice({
 				...action.payload,
 			};
 		},
-		updateDob: (state, action: PayloadAction<string>) => {
+		updateDob: (state, action: PayloadAction<String>) => {
 			return {
 				...state,
 				dob: action.payload,
@@ -34,6 +34,6 @@ const userSlice = createSlice({
 	},
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, updateDob } = userSlice.actions;
 export const userSliceName = userSlice.name;
 export default userSlice.reducer;

@@ -67,3 +67,32 @@ export const updateSpeciality = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const updateYearsOfExperience = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+
+		const { yoe } = req.body;
+
+		if (!yoe || yoe > 35 || yoe < 0) {
+			return res.status(400).json({ error: "Invalid yoe input" });
+		}
+
+		const user = await prismaClient.profile.findFirst({
+			where: { userId: id },
+		});
+
+		await prismaClient.psychologist.update({
+			where: { profileId: user?.id },
+			data: { yearsOfExperience: yoe },
+		});
+
+		return res.status(200).json({
+			message: "Years Of Experience updated successfully",
+			yoe,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

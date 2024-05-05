@@ -4,6 +4,7 @@ import psychologistMiddleware from "../middlewares/psychologist.middleware";
 import {
 	getClients,
 	updateSpeciality,
+	updateYearsOfExperience,
 } from "../controllers/psychologist.controller";
 
 const psychologistRoutes = Router();
@@ -19,6 +20,13 @@ psychologistRoutes.post(
 	authMiddleware,
 	psychologistMiddleware,
 	updateSpeciality
+);
+
+psychologistRoutes.post(
+	"/update-years-of-experience",
+	authMiddleware,
+	psychologistMiddleware,
+	updateYearsOfExperience
 );
 
 export default psychologistRoutes;

@@ -25,19 +25,31 @@ import TeacherCard from "../../../components/TeacherCard";
 const profilePicc = require("../../../assets/profile/profile.jpg");
 const heroImage = require("../../../assets/images/hero-image.png");
 
+// Redux
+import { RootState } from "../../../core/redux/store";
+import { teachersSliceName } from "../../../core/redux/teachers";
+import {
+	psychologistsSliceName,
+	setpsychologists,
+} from "../../../core/redux/Psychologists";
+import { userSliceName } from "../../../core/redux/user/index.";
+
 // Utilities
 import { useSendRequest } from "../../../core/tools/remote/request";
 import { requestMethods } from "../../../core/enum/requestMetods";
-import { RootState } from "../../../core/redux/store";
-import { setTeachers, teachersSliceName } from "../../../core/redux/teachers";
-import { setpsychologists } from "../../../core/redux/Psychologists";
 
 const Main = () => {
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
+	const psychologists = useSelector(
+		(global: RootState) => global[psychologistsSliceName]
+	);
+
+	const profile = useSelector((global: RootState) => global[userSliceName]);
 
 	const [rating, setRating] = useState(0);
+	const [teachersList, setTeachersList] = useState(0);
 
 	console.log(teachers);
 
@@ -115,10 +127,12 @@ const Main = () => {
 
 			<View style={styles.userProfileWrapper}>
 				<Image
-					source={profilePicc}
+					src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profile.profilePic}`}
 					style={styles.userProfilePic}
 				></Image>
-				<Text style={styles.userName}>Hi Nabih!</Text>
+				<Text
+					style={styles.userName}
+				>{`Hi ${profile.firstName}!`}</Text>
 			</View>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.heroContainer}>
@@ -128,7 +142,7 @@ const Main = () => {
 							We make parenting easy
 						</Text>
 						<Text style={styles.heroText}>
-							 Lorem ipsum dolor sit amet, consectetur adipiscing
+							Lorem ipsum dolor sit amet, consectetur adipiscing
 							elit
 						</Text>
 					</View>
@@ -141,6 +155,35 @@ const Main = () => {
 					</Pressable>
 				</View>
 
+				{/* <FlatList
+					horizontal={true}
+					showsHorizontalScrollIndicator={false}
+					data={psychologists}
+					ItemSeparatorComponent={() => {
+						return <View style={styles.horizontalSeparator}></View>;
+					}}
+					renderItem={(psychologist) => {
+						const {
+							id,
+							firstName,
+							lastName,
+							profilePic,
+							rating,
+							speciality,
+						} = psychologist.item;
+
+						return (
+							<PsychologistCard
+								key={id}
+								id={id}
+								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+								name={`${firstName} ${lastName}`}
+								speciality={speciality}
+								rating={rating}
+							/>
+						);
+					}}
+				/> */}
 				<FlatList
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
@@ -151,8 +194,9 @@ const Main = () => {
 					renderItem={(element) => {
 						return (
 							<PsychologistCard
+								id={element.item.id}
 								key={element.item.id}
-								profilePic={element.item.profilePicc}
+								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}1714905175140-639219459.jpg`}
 								name={element.item.name}
 								speciality={element.item.speciality}
 								rating={element.item.rating}
@@ -179,9 +223,9 @@ const Main = () => {
 					</Pressable>
 				</View>
 
-				<FlatList
+				{/* <FlatList
 					data={teachers}
-					renderItem={(element) => {
+					renderItem={(teacher) => {
 						const {
 							id,
 							firstName,
@@ -189,10 +233,14 @@ const Main = () => {
 							profilePic,
 							school,
 							speciality,
-						} = element.item;
+							dob,
+							email,
+						} = teacher.item;
+						console.log(teacher);
 						return (
 							<TeacherCard
 								key={id}
+								id={id}
 								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
 								name={`${firstName} ${lastName}`}
 								school={school}
@@ -200,14 +248,15 @@ const Main = () => {
 							/>
 						);
 					}}
-				/>
+				/> */}
 				<FlatList
 					data={teacherss}
 					renderItem={(element) => {
 						return (
 							<TeacherCard
+								id={element.item.id}
 								key={element.item.id}
-								profilePic={element.item.profilePicc}
+								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}1714905175140-639219459.jpg`}
 								name={element.item.name}
 								school={element.item.school}
 								speciality={element.item.speciality}

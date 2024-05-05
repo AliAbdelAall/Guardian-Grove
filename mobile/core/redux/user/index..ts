@@ -4,7 +4,7 @@ interface user {
 	firstName: string;
 	lastName: string;
 	email: string;
-	profilePic: string;
+	profilePic: String;
 	dob: String | null;
 }
 
@@ -31,9 +31,15 @@ const userSlice = createSlice({
 				dob: action.payload,
 			};
 		},
+		updateProfilePic: (state, action: PayloadAction<String>) => {
+			return {
+				...state,
+				profilePic: action.payload,
+			};
+		},
 	},
 });
 
-export const { setUser, updateDob } = userSlice.actions;
+export const { setUser, updateDob, updateProfilePic } = userSlice.actions;
 export const userSliceName = userSlice.name;
 export default userSlice.reducer;

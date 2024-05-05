@@ -1,7 +1,11 @@
 import { Router } from "express";
 import authMiddleware from "../middlewares/auth.middleware";
 import teacherMiddleware from "../middlewares/teacher.middleware";
-import { addStudent, getStudents } from "../controllers/teacher.controller";
+import {
+	addStudent,
+	getStudents,
+	updateSpeciality,
+} from "../controllers/teacher.controller";
 
 const teacherRoutes = Router();
 
@@ -16,6 +20,13 @@ teacherRoutes.put(
 	authMiddleware,
 	teacherMiddleware,
 	addStudent
+);
+
+teacherRoutes.post(
+	"/update-speciality",
+	authMiddleware,
+	teacherMiddleware,
+	updateSpeciality
 );
 
 export default teacherRoutes;

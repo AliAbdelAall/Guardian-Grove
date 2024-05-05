@@ -65,3 +65,41 @@ export const getStudents = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const updateSpeciality = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+
+		const { speciality } = req.body;
+
+		if (!speciality) {
+			return res.status(400).json({ error: "Invalid speciality" });
+		}
+
+		const specialityFormat =
+			speciality.slice(0, 1).toUpperCase() +
+			speciality.slice(1).toLowerCase();
+
+		console.log(
+			speciality.slice(0, 1).toUpperCase() +
+				speciality.slice(1).toLowerCase()
+		);
+
+		const user = await prismaClient.profile.findFirst({
+			where: { userId: id },
+		});
+
+		await prismaClient.teacher.update({
+			where: { profileId: user?.id },
+			data: { speciality: specialityFormat },
+		});
+
+		return res.status(200).json({
+			message: "speciality updated successfully",
+			speciality: specialityFormat,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

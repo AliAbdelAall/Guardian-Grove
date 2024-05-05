@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  reviews: []
+  reviews: [],
+  avgRating: 0
 }
 
 const reviewsSlice = createSlice({
@@ -9,8 +10,18 @@ const reviewsSlice = createSlice({
   name: "reviewsSlice",
   reducers: {
     setReviews: (state, action) => {
+      const reviews = action.payload
+      let sum = 0
+      let count = 0
+      reviews.forEach(review => {
+        sum += review.rating
+        count += 1
+      });
+
+      const avgRating = sum / count
+
       return {
-        ...state, reviews: [...action.payload]
+        ...state, reviews: [...reviews], avgRating
       }
     }
   }

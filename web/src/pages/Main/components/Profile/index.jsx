@@ -19,6 +19,7 @@ import {
 	userProfileSliceName,
 } from "../../../../core/redux/userProfile";
 import { schoolsSliceName } from "../../../../core/redux/shcools";
+import { reviewsSliceName } from "../../../../core/redux/reviews";
 
 // Tools
 import { toast } from "react-toastify";
@@ -26,6 +27,7 @@ import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
 
 const Profile = () => {
+	const { avgRating } = useSelector((global) => global[reviewsSliceName]);
 	const { schools } = useSelector((global) => global[schoolsSliceName]);
 	const user = useSelector((global) => global[userProfileSliceName]);
 	const {
@@ -208,7 +210,7 @@ const Profile = () => {
 					{location.pathname === "/main/psychologist/profile" && (
 						<StarRatings
 							numberOfStars={5}
-							rating={3.7}
+							rating={avgRating}
 							starSpacing="5px"
 							starDimension="40px"
 							starRatedColor="#FFB800"

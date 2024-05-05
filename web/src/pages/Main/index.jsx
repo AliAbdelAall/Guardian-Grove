@@ -17,9 +17,12 @@ import { requestMethods } from "../../core/enums/requestMethods";
 // Toastify
 import { toast } from "react-toastify";
 
+// Redux
+import { setSchools } from "../../core/redux/shcools";
+import { setReviews } from "../../core/redux/reviews";
+
 // Components
 import Sidebar from "./components/Sidebar";
-import { setSchools } from "../../core/redux/shcools";
 
 const Main = () => {
 	const navigate = useNavigate();
@@ -35,9 +38,12 @@ const Main = () => {
 		sendRequest(requestMethods.GET, "/api/web/check-role")
 			.then((response) => {
 				if (response.status === 200) {
-					const { userRole, profile } = response.data;
+					const { userRole, profile, reviews } = response.data;
 					setRole(userRole);
 					dispatch(setProfile(profile));
+					if (reviews) {
+						dispatch(setReviews(reviews));
+					}
 					userRole === "Teacher" ? loadStudents() : loadClients();
 				}
 			})

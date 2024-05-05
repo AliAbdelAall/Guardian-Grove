@@ -28,22 +28,22 @@ const userProfileSlice = createSlice({
   name: "userProfileSlice",
   reducers: {
     setProfile: (state, action) => {
-      const { id,
-        userId,
-        firstName,
-        lastName,
-        email,
-        profilePic,
-        dob, ...rest } = action.payload
-      return {
-        ...state, id,
-        userId,
-        firstName,
-        lastName,
-        email,
-        profilePic,
-        dob, ...rest
+      if (action.payload.Psychologist) {
+        const { Psychologist, ...rest } = action.payload
+        return {
+          ...state,
+          ...rest,
+          psychologist: { ...state.psychologist, ...Psychologist }
+        }
+      } else {
+        const { Teacher, ...rest } = action.payload
+        return {
+          ...state,
+          ...rest,
+          teacher: { ...state.teacher, ...Teacher }
+        }
       }
+
     },
     editProfilPic: (state, action) => {
       return {
@@ -59,13 +59,20 @@ const userProfileSlice = createSlice({
       const { user, speciality } = action.payload
       return {
         ...state,
-        [user]: { ...[user], speciality: speciality }
+
+        [user]: { ...state[user], speciality: speciality }
+      };
+    },
+    updateYoe: (state, action) => {
+      return {
+        ...state, psychologist: { ...state.psychologist, yearsOfExperience: action.payload }
+
       };
     },
   }
 })
 
-export const { setProfile, editProfilPic, editDob, updateSpeciality } = userProfileSlice.actions
+export const { setProfile, editProfilPic, editDob, updateSpeciality, updateYoe } = userProfileSlice.actions
 
 export const userProfileSliceName = userProfileSlice.name
 

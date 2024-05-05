@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "react-image-crop/dist/ReactCrop.css";
 import { MdEdit } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
+import StarRatings from "react-star-ratings";
 
 // Styles
 import "./style.css";
@@ -204,7 +205,16 @@ const Profile = () => {
 							accept="image/*"
 						/>
 					</div>
-
+					{location.pathname === "/main/psychologist/profile" && (
+						<StarRatings
+							numberOfStars={5}
+							rating={3.7}
+							starSpacing="5px"
+							starDimension="40px"
+							starRatedColor="#FFB800"
+							starEmptyColor="#A6A6A6"
+						/>
+					)}
 					<h2>{`${firstName} ${lastName}`}</h2>
 				</div>
 				<div className="flex column profile-inputs-wrapper">

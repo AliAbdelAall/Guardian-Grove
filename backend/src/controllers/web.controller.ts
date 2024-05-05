@@ -16,11 +16,17 @@ export const checkRole = async (req: Request, res: Response) => {
 		if (user?.roleId === 3) {
 			const psychologist = await prismaClient.profile.findFirst({
 				where: { userId: user.id },
-				include: { Psychologist: true },
+				include: { Psychologist: { include: { Reviews: true } } },
 			});
+
+			const reviews = await prismaClient.review.findMany({
+				where: { psychologistId: psychologist?.Psychologist?.id },
+			});
+
 			return res.status(200).json({
 				userRole: user?.role.name,
 				profile: psychologist,
+				reviews,
 			});
 		}
 		if (user?.roleId === 2) {

@@ -132,6 +132,27 @@ const Profile = () => {
 			});
 	};
 
+	const handleTeacherSpecialityChange = () => {
+		sendRequest(requestMethods.POST, "/api/teacher/update-speciality", {
+			speciality: teacherSpeciality,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(
+						updateSpeciality({
+							user: "teacher",
+							speciality: response.data.speciality,
+						})
+					);
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				toast.error("Something went wrong with speciality");
+			});
+	};
+
 	return (
 		<div className="flex column full-width profile-container">
 			<h2>Profile</h2>
@@ -204,26 +225,37 @@ const Profile = () => {
 							>
 								Speciality
 							</label>
-							<input
-								className="text-lg text-acient"
-								type="text"
-								value={user.teacher.school}
-								contentEditable={false}
-								onChange={() => {
-									setShowCeck(true);
-									setTeacherSpeciality(e.target.value);
-								}}
-							/>
-							<FaCheck
-								className={`confirm-input-value ${
-									showCheck ? "" : "hidden"
-								}`}
-								size={22}
-								onClick={() => {
-									handleYearsOfExperienceChange();
-									setShowCeck(false);
-								}}
-							/>
+							{user.teacher.speciality ? (
+								<p className="text-lg text-acient">
+									{`${teacher.speciality} Teacher`}
+								</p>
+							) : (
+								<div className="flex space-between full-width">
+									<input
+										placeholder="Math, Biology,"
+										className="text-lg text-acient"
+										type="text"
+										value={teacher.speciality}
+										contentEditable={false}
+										onChange={(e) => {
+											setShowCeck(true);
+											setTeacherSpeciality(
+												e.target.value
+											);
+										}}
+									/>
+									<FaCheck
+										className={`confirm-input-value ${
+											showCheck ? "" : "hidden"
+										}`}
+										size={22}
+										onClick={() => {
+											handleTeacherSpecialityChange();
+											setShowCeck(false);
+										}}
+									/>
+								</div>
+							)}
 						</div>
 					) : (
 						// Speciality psychologist

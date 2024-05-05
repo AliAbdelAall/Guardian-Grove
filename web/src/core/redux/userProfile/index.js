@@ -12,6 +12,7 @@ const initialState = {
     id: 0,
     profileId: 0,
     speciality: null,
+    schoolId: 0,
     school: null,
   },
   psychologist: {
@@ -37,10 +38,11 @@ const userProfileSlice = createSlice({
         }
       } else {
         const { Teacher, ...rest } = action.payload
+        const { School, ...restTeacher } = Teacher
         return {
           ...state,
           ...rest,
-          teacher: { ...state.teacher, ...Teacher }
+          teacher: { ...state.teacher, ...restTeacher, school: School?.name ? School.name : null }
         }
       }
 
@@ -69,10 +71,17 @@ const userProfileSlice = createSlice({
 
       };
     },
+    updateSchool: (state, action) => {
+      const { id, name } = action.payload
+      return {
+        ...state, teacher: { ...state.teacher, school: name, schoolId: id }
+      };
+    },
+
   }
 })
 
-export const { setProfile, editProfilPic, editDob, updateSpeciality, updateYoe } = userProfileSlice.actions
+export const { setProfile, editProfilPic, editDob, updateSpeciality, updateYoe, updateSchool } = userProfileSlice.actions
 
 export const userProfileSliceName = userProfileSlice.name
 

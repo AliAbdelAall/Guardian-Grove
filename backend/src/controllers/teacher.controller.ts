@@ -84,11 +84,6 @@ export const updateSpeciality = async (req: Request, res: Response) => {
 			speciality.slice(0, 1).toUpperCase() +
 			speciality.slice(1).toLowerCase();
 
-		console.log(
-			speciality.slice(0, 1).toUpperCase() +
-				speciality.slice(1).toLowerCase()
-		);
-
 		const user = await prismaClient.profile.findFirst({
 			where: { userId: id },
 		});
@@ -101,6 +96,38 @@ export const updateSpeciality = async (req: Request, res: Response) => {
 		return res.status(200).json({
 			message: "speciality updated successfully",
 			speciality: specialityFormat,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};
+
+export const updateSchool = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+
+		const { schoolId } = req.body;
+
+		const school = await prismaClient.school.findFirst({
+			where: { id: schoolId },
+		});
+		if (!school) {
+			return res.status(400).json({ error: "Invalid School" });
+		}
+
+		const user = await prismaClient.profile.findFirst({
+			where: { userId: id },
+		});
+
+		await prismaClient.teacher.update({
+			where: { profileId: user?.id },
+			data: { schoolId: school.id },
+		});
+
+		return res.status(200).json({
+			message: "School updated successfully",
+			school: school,
 		});
 	} catch (error) {
 		console.log(error);

@@ -26,7 +26,11 @@ export const checkRole = async (req: Request, res: Response) => {
 		if (user?.roleId === 2) {
 			const teacher = await prismaClient.profile.findFirst({
 				where: { userId: user.id },
-				include: { Teacher: true },
+				include: {
+					Teacher: {
+						include: { School: { select: { name: true } } },
+					},
+				},
 			});
 			return res.status(200).json({
 				userRole: user?.role.name,

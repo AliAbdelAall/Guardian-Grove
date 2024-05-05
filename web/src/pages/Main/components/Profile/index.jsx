@@ -12,10 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
 	editDob,
 	editProfilPic,
+	updateSchool,
 	updateSpeciality,
 	updateYoe,
 	userProfileSliceName,
 } from "../../../../core/redux/userProfile";
+import { schoolsSliceName } from "../../../../core/redux/shcools";
 
 // Tools
 import { toast } from "react-toastify";
@@ -23,6 +25,7 @@ import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
 
 const Profile = () => {
+	const { schools } = useSelector((global) => global[schoolsSliceName]);
 	const user = useSelector((global) => global[userProfileSliceName]);
 	const {
 		firstName,
@@ -37,7 +40,7 @@ const Profile = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const sendRequest = useSendRequest();
-
+	console.log(schools);
 	const [showCheck, setShowCeck] = useState(false);
 	const [yoe, setYoe] = useState(0);
 	const [teacherSpeciality, setTeacherSpeciality] = useState("");
@@ -144,6 +147,24 @@ const Profile = () => {
 							speciality: response.data.speciality,
 						})
 					);
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				toast.error("Something went wrong with speciality");
+			});
+	};
+
+	const handleSchoolUpdate = (e) => {
+		const schoolId = parseInt(e.target.value);
+		sendRequest(requestMethods.POST, "/api/teacher/update-school", {
+			schoolId,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					const { id, name } = response.data.school;
+					dispatch(updateSchool({ id, name }));
 					toast.success(response.data.message);
 				}
 			})
@@ -297,12 +318,29 @@ const Profile = () => {
 							>
 								School
 							</label>
-							<input
-								className="text-lg text-acient"
-								type="text"
-								value={user.teacher.school}
-								contentEditable={false}
-							/>
+							{teacher.school ? (
+								<p className="text-lg text-acient">
+									{teacher.school}
+								</p>
+							) : (
+								<select
+									name=""
+									id=""
+									onChange={(e) => handleSchoolUpdate(e)}
+								>
+									<option key={0} value="">
+										School
+									</option>
+									{schools?.map((school) => (
+										<option
+											key={school.id}
+											value={school.id}
+										>
+											{school.name}
+										</option>
+									))}
+								</select>
+							)}
 						</div>
 					) : (
 						// Years Of Experience

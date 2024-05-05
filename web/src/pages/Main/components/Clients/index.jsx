@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-// Assets
-import profilePic from "../../../../assets/images/profile-pictures/profile.jpg";
-
 // Redux
 import { useSelector } from "react-redux";
 import { parentsSliceName } from "../../../../core/redux/parents";
@@ -78,7 +75,9 @@ const Clients = () => {
 								id={profile.id}
 								name={`${profile.firstName} ${profile.lastName}`}
 								age={calculateAge(profile.dob)}
-								profilePic={profilePic}
+								profilePic={`${
+									import.meta.env.VITE_PROFILE_PIC_URL
+								}${profile.profilePic}`}
 								email={profile.email}
 								children={childrenNames.join(", ")}
 							/>

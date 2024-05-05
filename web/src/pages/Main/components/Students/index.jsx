@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-// Assets
-import profilePic from "../../../../assets/images/profile-pictures/profile.jpg";
-
 // Redux
 import { useSelector } from "react-redux";
 import { childrenSliceName } from "../../../../core/redux/children";
@@ -63,7 +60,7 @@ const Students = () => {
 				<div className="flex wrap students-cards-wrapper">
 					{filteredStudents?.map((student) => {
 						console.log(student);
-						const { id, name, dob } = student;
+						const { id, name, dob, profilePic } = student;
 						const age = calculateStudentAge(dob);
 						return (
 							<StudentCard
@@ -71,7 +68,9 @@ const Students = () => {
 								id={id}
 								name={name}
 								age={age}
-								profilePic={profilePic}
+								profilePic={`${
+									import.meta.env.VITE_PROFILE_PIC_URL
+								}${profilePic}`}
 							/>
 						);
 					})}

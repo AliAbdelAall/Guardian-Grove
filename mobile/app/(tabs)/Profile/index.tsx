@@ -9,18 +9,23 @@ import { profileStyles } from "../../../Styles/main/profileStyles";
 // Redux
 import { RootState } from "../../../core/redux/store";
 import { updateDob, userSliceName } from "../../../core/redux/user/index.";
+import { useDispatch, useSelector } from "react-redux";
 
 // Components
 import LoginButton from "../../../components/LoginButton";
 import ProfileInput from "../../../components/ProfileInput";
-import DateTimePicker from "react-native-modal-datetime-picker";
-import { useDispatch, useSelector } from "react-redux";
 import { useSendRequest } from "../../../core/tools/remote/request";
 import { requestMethods } from "../../../core/enum/requestMetods";
+
+// Tools
+import DateTimePicker from "react-native-modal-datetime-picker";
 import Toast from "react-native-toast-message";
 
 // Assets
 const profilePic = require("../../../assets/profile/profile.jpg");
+
+// Icons
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const Profile = () => {
 	const user = useSelector((global: RootState) => global[userSliceName]);
@@ -107,7 +112,13 @@ const Profile = () => {
 						src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${user.profilePic}`}
 					/>
 					<Pressable onPress={() => selectImage(true)}>
-						<View style={profileStyles.editProfile}></View>
+						<View style={profileStyles.editProfile}>
+							<FontAwesome
+								name="camera"
+								size={16}
+								color={"#677294"}
+							/>
+						</View>
 					</Pressable>
 				</View>
 			</View>
@@ -129,13 +140,20 @@ const Profile = () => {
 						input={`${user.firstName} ${user.lastName}`}
 					/>
 					<ProfileInput label={"Email"} input={user.email} />
-					<View>
+					<View style={profileStyles.dateInputWrapper}>
 						<ProfileInput
 							label={"Date Of Birth"}
 							input={user?.dob?.slice(0, 10) ?? prevDob}
 						/>
-						<Pressable onPress={showDatePicker}>
-							<Text>show Date</Text>
+						<Pressable
+							style={profileStyles.calendarIconwrapper}
+							onPress={showDatePicker}
+						>
+							<FontAwesome
+								name="calendar"
+								size={16}
+								style={profileStyles.calendarIcon}
+							/>
 						</Pressable>
 					</View>
 

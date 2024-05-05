@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "react-image-crop/dist/ReactCrop.css";
 import { MdEdit } from "react-icons/md";
+import { FaCheck } from "react-icons/fa6";
 
 // Styles
 import "./style.css";
@@ -12,6 +13,7 @@ import {
 	editDob,
 	editProfilPic,
 	updateSpeciality,
+	updateYoe,
 	userProfileSliceName,
 } from "../../../../core/redux/userProfile";
 
@@ -36,6 +38,10 @@ const Profile = () => {
 	const dispatch = useDispatch();
 	const sendRequest = useSendRequest();
 
+	const [showCheck, setShowCeck] = useState(false);
+	const [yoe, setYoe] = useState(0);
+	const [teacherSpeciality, setTeacherSpeciality] = useState("");
+	console.log(yoe);
 	const handleImageChange = (e) => {
 		const file = e.target.files[0];
 		const formData = new FormData();
@@ -82,17 +88,48 @@ const Profile = () => {
 			{
 				speciality,
 			}
-		).then((response) => {
-			if (response.status === 200) {
-				dispatch(
-					updateSpeciality({
-						user: "psychologist",
-						speciality: response.data.speciality,
-					})
-				);
-				toast.success(response.data.message);
+		)
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(
+						updateSpeciality({
+							user: "psychologist",
+							speciality: response.data.speciality,
+						})
+					);
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				toast.error("Something went wrong with speciality");
+			});
+	};
+
+	const handleYearsOfExperienceChange = () => {
+		if (yoe > 35 || yoe < 0) {
+			toast.error("years of experience can only be 0->35");
+			return;
+		}
+		sendRequest(
+			requestMethods.POST,
+			"/api/psychologist/update-years-of-experience",
+			{
+				yoe,
 			}
-		});
+		)
+			.then((response) => {
+				if (response.status === 200) {
+					console.log(response.data.yoe);
+					console.log(response.data.message);
+					dispatch(updateYoe(response.data.yoe));
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				toast.error("Something went wrong with yoe");
+			});
 	};
 
 	return (
@@ -172,6 +209,20 @@ const Profile = () => {
 								type="text"
 								value={user.teacher.school}
 								contentEditable={false}
+								onChange={() => {
+									setShowCeck(true);
+									setTeacherSpeciality(e.target.value);
+								}}
+							/>
+							<FaCheck
+								className={`confirm-input-value ${
+									showCheck ? "" : "hidden"
+								}`}
+								size={22}
+								onClick={() => {
+									handleYearsOfExperienceChange();
+									setShowCeck(false);
+								}}
 							/>
 						</div>
 					) : (
@@ -230,14 +281,39 @@ const Profile = () => {
 							>
 								Years Of Experience
 							</label>
-							<input
-								className="text-lg text-acient"
-								type="number"
-								min={0}
-								max={45}
-								value={user.psychologist.yearsOfExperience}
-								contentEditable={true}
-							/>
+
+							{user.psychologist.yearsOfExperience ? (
+								<p className="text-lg text-acient">
+									{user.psychologist.yearsOfExperience}
+								</p>
+							) : (
+								<div className="flex full-width space-between">
+									<input
+										className="text-lg text-acient "
+										type="number"
+										min={0}
+										max={35}
+										value={
+											user.psychologist.yearsOfExperience
+										}
+										contentEditable={true}
+										onChange={(e) => {
+											setShowCeck(true);
+											setYoe(parseInt(e.target.value));
+										}}
+									/>
+									<FaCheck
+										className={`confirm-input-value ${
+											showCheck ? "" : "hidden"
+										}`}
+										size={22}
+										onClick={() => {
+											handleYearsOfExperienceChange();
+											setShowCeck(false);
+										}}
+									/>
+								</div>
+							)}
 						</div>
 					)}
 				</div>

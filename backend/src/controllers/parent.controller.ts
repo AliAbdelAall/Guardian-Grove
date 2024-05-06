@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prismaClient } from "..";
+import fs from "fs/promises";
 
 export const connectParentPsychologist = async (
 	req: Request,
@@ -120,7 +121,7 @@ export const getPsychologistsAndTeachers = async (
 		});
 
 		const teachers = await prismaClient.teacher.findMany({
-			include: { profile: true, School:true },
+			include: { profile: true, School: true },
 		});
 
 		const teachersWithCustomProfiles = teachers.map((teacher) => ({
@@ -131,7 +132,7 @@ export const getPsychologistsAndTeachers = async (
 			profilePic: teacher.profile.profilePic,
 			dob: teacher.profile.dob,
 			speciality: teacher.speciality,
-			school: teacher.School?.name ?? null
+			school: teacher.School?.name ?? null,
 		}));
 
 		return res.status(200).json({
@@ -205,6 +206,43 @@ export const updateUserDob = async (req: Request, res: Response) => {
 			.json({ message: "Date Of Birth updated succefully" });
 	} catch (error) {
 		console.error("Error:", error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};
+
+export const UpdateProfilePic = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+		if (!req.file) {
+			return res.status(400).json({ error: "No file uploaded" });
+		}
+
+		const user = await prismaClient.profile.findFirst({
+			where: { userId: id },
+		});
+
+		if (!user) {
+			return res.status(404).json({ error: "User not found" });
+		}
+
+		const newProfilePic = req.file.filename;
+		const newProfilePicPath = req.file.path;
+
+		if (user.profilePic !== "default-profile.png") {
+			await fs.unlink(`public/profile-pictures/${user.profilePic}`);
+		}
+
+		await prismaClient.profile.update({
+			where: { id: user.id },
+			data: { profilePic: newProfilePic },
+		});
+
+		return res.status(200).json({
+			message: "Profile picture updated successfully",
+			profilePic: newProfilePic,
+		});
+	} catch (error) {
+		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };

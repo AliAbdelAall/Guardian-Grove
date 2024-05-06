@@ -1,12 +1,15 @@
 import { Router } from "express";
 import authMiddleware from "../middlewares/auth.middleware";
 import {
+	UpdateProfilePic,
 	connectParentPsychologist,
 	getPsychologistsAndTeachers,
 	ratePsychologist,
 	updateUserDob,
 } from "../controllers/parent.controller";
 import parentMiddleware from "../middlewares/parent.middleware";
+import multer from "multer";
+import multerMiddlware from "../middlewares/multer.middlware";
 
 const parentRoutes = Router();
 
@@ -29,5 +32,13 @@ parentRoutes.post(
 	ratePsychologist
 );
 parentRoutes.put("/edit-dob", authMiddleware, parentMiddleware, updateUserDob);
+
+parentRoutes.post(
+	"/update-profile-picture",
+	authMiddleware,
+	parentMiddleware,
+	UpdateProfilePic,
+	multerMiddlware
+);
 
 export default parentRoutes;

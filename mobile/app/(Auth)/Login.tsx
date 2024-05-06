@@ -17,6 +17,7 @@ const logo = require("../../assets/logo/logo.png");
 import LoginButton from "../../components/LoginButton";
 import LoginInput from "../../components/LoginInput";
 import Toast from "react-native-toast-message";
+import OtpBottomSheet from "../../components/OtpBottomSheet";
 const Login = () => {
 	const [error, setError] = useState({
 		status: false,
@@ -26,6 +27,8 @@ const Login = () => {
 		username: "",
 		password: "",
 	});
+
+	const [isbottomSheetVisible, setBottomSheetVisibility] = useState(false);
 
 	const router = useRouter();
 	const sendRequest = useSendRequest();
@@ -98,6 +101,10 @@ const Login = () => {
 					abroad studies
 				</Text>
 			</View>
+			<OtpBottomSheet
+				visibility={isbottomSheetVisible}
+				setVisibility={setBottomSheetVisibility}
+			/>
 			<View style={[styles.gap15, styles.fullWidth]}>
 				<LoginInput
 					value={credentials.username}
@@ -106,14 +113,19 @@ const Login = () => {
 					}
 					placeholder={"Username"}
 				/>
-				<LoginInput
-					value={credentials.password}
-					handlechange={(value: string) =>
-						handleInputChange(value, "password")
-					}
-					placeholder={"Password"}
-					password={true}
-				/>
+				<View>
+					<LoginInput
+						value={credentials.password}
+						handlechange={(value: string) =>
+							handleInputChange(value, "password")
+						}
+						placeholder={"Password"}
+						password={true}
+					/>
+					<Pressable onPress={() => setBottomSheetVisibility(true)}>
+						<Text>Forgot Password?</Text>
+					</Pressable>
+				</View>
 
 				<LoginButton
 					text={"Login"}

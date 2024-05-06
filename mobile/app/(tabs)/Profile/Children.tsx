@@ -59,6 +59,35 @@ const Children = () => {
 		setChildInfo({ ...childInfo, dob: formattedDateString });
 	};
 
+	const handleAddChild = () => {
+		const { name, schoolId, dob } = childInfo;
+		if (!name || !schoolId || !dob) {
+			Toast.show({
+				type: "error",
+				text1: "All child Data must be specified",
+			});
+			return;
+		}
+		sendRequest(requestMethods.POST, "/api/child/add-child", {
+			...childInfo,
+		})
+			.then((response) => {
+				if (response.status === 201) {
+					dispatch(addChild(response.data.child));
+					Toast.show({
+						type: "success",
+						text1: "Child added successfuly",
+					});
+					setShowPopoup(false);
+				}
+			})
+			.catch((error) => {
+				Toast.show({
+					type: "error",
+					text1: error.response.error,
+				});
+			});
+	};
 	return (
 		<ScrollView style={childrenStyles.childrenContainer}>
 			<View>
@@ -141,7 +170,7 @@ const Children = () => {
 								</View>
 								<View style={childrenStyles.halfButton}>
 									<LoginButton
-										handlePress={() => setShowPopoup(false)}
+										handlePress={handleAddChild}
 										text={"Confirm"}
 									/>
 								</View>
@@ -153,14 +182,17 @@ const Children = () => {
 					data={children}
 					scrollEnabled={false}
 					renderItem={(element) => {
-						const { id, name, profilePic, school, dob } =
+						const { id, name, profilePic, schoolId, dob } =
 							element.item;
+						const school = schools.find(
+							(school) => school.id === schoolId
+						);
 						return (
 							<Child
 								key={id}
 								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
 								name={name}
-								school={school ?? "No School"}
+								school={school.name ?? "No School"}
 								dob={dob.slice(0, 10)}
 							/>
 						);

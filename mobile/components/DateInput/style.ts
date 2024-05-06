@@ -4,7 +4,6 @@ export const DateInputStyles = StyleSheet.create({
 	dateInputWrapper: {
 		position: "relative",
 		width: "100%",
-		marginBottom: 25,
 	},
 	calendarIconwrapper: {
 		position: "absolute",

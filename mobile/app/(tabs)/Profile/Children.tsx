@@ -41,6 +41,24 @@ const Children = () => {
 	const dispatch = useDispatch();
 	const sendRequest = useSendRequest();
 
+	console.log(childInfo);
+
+	const handleSchoolChange = (value: number, index: number) => {
+		setChildInfo({ ...childInfo, schoolId: value });
+	};
+
+	const handleDateConfirmation = (date: string) => {
+		const inputDate = new Date(date);
+
+		const year = inputDate.getFullYear();
+		const month = String(inputDate.getMonth() + 1).padStart(2, "0");
+		const day = String(inputDate.getDate()).padStart(2, "0");
+
+		const formattedDateString = `${year}-${month}-${day}T00:00:00.000Z`;
+		console.log(inputDate, typeof inputDate);
+		setChildInfo({ ...childInfo, dob: formattedDateString });
+	};
+
 	return (
 		<ScrollView style={childrenStyles.childrenContainer}>
 			<View>

@@ -21,6 +21,8 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 		confirmNewPassword: "",
 	};
 	const [info, setInfo] = useState(initialIdfoState);
+	const [sheetVisibility, setSheetVisibility] = useState(true);
+	const [step, setStep] = useState(1);
 
 	const sendRequest = useSendRequest();
 
@@ -46,7 +48,7 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 						"userId",
 						JSON.stringify(response.data.userId)
 					);
-					setstep(step + 1);
+					setStep(step + 1);
 					setSheetVisibility(false);
 					setTimeout(() => {
 						setSheetVisibility(true);
@@ -77,13 +79,13 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 			id,
 			userOTP: OTP,
 		})
-			.then(async (response) => {
+			.then((response) => {
 				if (response.status === 200) {
 					Toast.show({
 						type: "success",
 						text1: "Verifiction Successful",
 					});
-					setstep(step + 1);
+					setStep(step + 1);
 					setSheetVisibility(false);
 					setTimeout(() => {
 						setSheetVisibility(true);
@@ -99,11 +101,41 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 			});
 	};
 
-	const [OTP, setOTP] = useState("");
-	const [newPassword, setNewPassword] = useState("");
-	const [confirmNewPassword, setConfirmNewPassword] = useState("");
-	const [step, setstep] = useState(1);
-	const [sheetVisibility, setSheetVisibility] = useState(true);
+	const handlePasswordReset = async () => {
+		const { newPassword, confirmNewPassword } = info;
+		const stringifiedId = await AsyncStorage.getItem("userId");
+		const id = JSON.parse(stringifiedId);
+		if (newPassword !== confirmNewPassword) {
+			Toast.show({
+				type: "error",
+				text1: "passwords don't match",
+			});
+			return;
+		}
+		sendRequest(requestMethods.POST, "/api/otp/reset-password", {
+			id,
+			newPassword,
+			confirmNewPassword,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					Toast.show({
+						type: "success",
+						text1: "Password Reset Successful",
+					});
+					setVisibility(false);
+					setStep(1);
+					setInfo(initialIdfoState);
+				}
+			})
+			.catch((error) => {
+				console.log("error: ", error.response);
+				Toast.show({
+					type: "error",
+					text1: error.response.error,
+				});
+			});
+	};
 
 	return (
 		<View>
@@ -154,17 +186,22 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 							{step === 3 && (
 								<View style={styles.passwordResetInputsWrapper}>
 									<LoginInput
+										password={true}
 										placeholder={"New Password"}
-										value={newPassword}
+										value={info.newPassword}
 										handlechange={(e: string) =>
-											setNewPassword(e)
+											setInfo({ ...info, newPassword: e })
 										}
 									/>
 									<LoginInput
+										password={true}
 										placeholder={"Re-enter Password"}
-										value={confirmNewPassword}
+										value={info.confirmNewPassword}
 										handlechange={async (e: string) =>
-											setConfirmNewPassword(e)
+											setInfo({
+												...info,
+												confirmNewPassword: e,
+											})
 										}
 									/>
 								</View>
@@ -174,7 +211,7 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 									<View style={styles.halfButton}>
 										<LoginButton
 											handlePress={() => {
-												setstep(1);
+												setStep(1);
 												setVisibility(false);
 											}}
 											text={"Cancel"}
@@ -197,10 +234,7 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 							)}
 							{step === 3 && (
 								<LoginButton
-									handlePress={() => {
-										setstep(1);
-										setVisibility(false);
-									}}
+									handlePress={handlePasswordReset}
 									text={"Confirm"}
 								/>
 							)}

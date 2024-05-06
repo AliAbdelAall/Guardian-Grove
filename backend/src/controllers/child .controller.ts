@@ -4,32 +4,26 @@ import { prismaClient } from "..";
 export const addChild = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.user!;
-		const { name, dob, profilePic, schoolId } = req.body;
+		const { name, dob, schoolId } = req.body;
+
+		if (!name || !dob || !schoolId) {
+			return res
+				.status(400)
+				.json({ error: "All child Data must be specified" });
+		}
 
 		const parent = await prismaClient.profile.findFirst({
 			where: { userId: id },
 			include: { parent: true },
 		});
 
-		if (!name || !dob || !profilePic || !schoolId) {
-			return res
-				.status(400)
-				.json({ error: "All child Data must be specified" });
-		}
-
 		const child = await prismaClient.child.create({
 			data: {
 				name,
 				dob: new Date(dob),
-				profilePic,
 				parentId: parent!.parent!.id,
 				schoolId,
 			},
-		});
-
-		await prismaClient.parent.update({
-			where: { profileId: parent?.id },
-			data: { children: { connect: { id: child.id } } },
 		});
 
 		return res.status(201).json({

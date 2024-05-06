@@ -1,8 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { styles } from "./styles";
 
-const ProfileInput = ({ label, input }) => {
+type props = {
+	label: string;
+	input: string;
+};
+const ProfileInput: FC<props> = ({ label, input }) => {
 	return (
 		<View style={styles.inputWrapper}>
 			<Text style={styles.inputlabel}>{label}</Text>

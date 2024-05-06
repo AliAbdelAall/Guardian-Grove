@@ -62,6 +62,43 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 			});
 	};
 
+	const handleOtpvalidtion = async () => {
+		const { OTP } = info;
+		const stringifiedId = await AsyncStorage.getItem("userId");
+		const id = JSON.parse(stringifiedId);
+		if (isNaN(parseInt(OTP)) || OTP.length !== 4) {
+			Toast.show({
+				type: "error",
+				text1: "OTP must be 4 numbers",
+			});
+			return;
+		}
+		sendRequest(requestMethods.POST, "/api/otp/verify-otp", {
+			id,
+			userOTP: OTP,
+		})
+			.then(async (response) => {
+				if (response.status === 200) {
+					Toast.show({
+						type: "success",
+						text1: "Verifiction Successful",
+					});
+					setstep(step + 1);
+					setSheetVisibility(false);
+					setTimeout(() => {
+						setSheetVisibility(true);
+					}, 100);
+				}
+			})
+			.catch((error) => {
+				console.log("error: ", error.response);
+				Toast.show({
+					type: "error",
+					text1: error.response.error,
+				});
+			});
+	};
+
 	const [OTP, setOTP] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -108,8 +145,10 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 							{step === 2 && (
 								<LoginInput
 									placeholder={"1234"}
-									value={OTP}
-									handlechange={(e: string) => setOTP(e)}
+									value={info.OTP}
+									handlechange={(e: string) =>
+										setInfo({ ...info, OTP: e })
+									}
 								/>
 							)}
 							{step === 3 && (
@@ -146,6 +185,9 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 											handlePress={() => {
 												if (step === 1) {
 													handleSendEmail();
+												}
+												if (step === 2) {
+													handleOtpvalidtion();
 												}
 											}}
 											text={"Next"}

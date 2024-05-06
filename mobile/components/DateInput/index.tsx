@@ -22,14 +22,23 @@ const DateInput = ({ handleDateConfirmation, prevDob, dob }) => {
 				<DateTimePicker
 					isVisible={isDatePickerVisible}
 					mode="date"
-					onConfirm={(e) => handleDateConfirmation(e.toDateString())}
+					onConfirm={(date) => {
+						hideDatePicker();
+						handleDateConfirmation(date.toISOString());
+					}}
 					onCancel={hideDatePicker}
 				/>
 			</View>
 			<View style={DateInputStyles.dateInputWrapper}>
 				<ProfileInput
 					label={"Date Of Birth"}
-					input={dob.slice(0, 10) ?? prevDob}
+					input={
+						dob
+							? dob.slice(0, 10)
+							: prevDob
+							? prevDob.slice(0, 10)
+							: "YYYY-MM-DD"
+					}
 				/>
 				<Pressable
 					style={DateInputStyles.calendarIconwrapper}

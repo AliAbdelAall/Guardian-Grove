@@ -8,7 +8,11 @@ import { profileStyles } from "../../../Styles/main/profileStyles";
 
 // Redux
 import { RootState } from "../../../core/redux/store";
-import { updateDob, userSliceName } from "../../../core/redux/user/index.";
+import {
+	updateDob,
+	updateProfilePic,
+	userSliceName,
+} from "../../../core/redux/user/index.";
 import { useDispatch, useSelector } from "react-redux";
 
 // Components
@@ -55,6 +59,7 @@ const Profile = () => {
 			});
 		}
 		if (!result.canceled) {
+			handleImageupload(result.assets[0].uri);
 			console.log(result.assets[0].uri);
 		}
 	};
@@ -99,6 +104,33 @@ const Profile = () => {
 			});
 	};
 
+	const handleImageupload = async (imageURI: string) => {
+		const blob = await fetch(imageURI).then((response) => response.blob());
+		const formData = new FormData();
+		formData.append("image", blob);
+		sendRequest(
+			requestMethods.POST,
+			"api/parent/update-profile-picture",
+			formData
+		)
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(updateProfilePic(response.data.profilePic));
+					Toast.show({
+						type: "success",
+						text1: "Updated successfully",
+					});
+				}
+			})
+			.catch((error) => {
+				Toast.show({
+					type: "error",
+					text1: "Something went wrong",
+				});
+				console.log(error.response);
+			});
+	};
+
 	return (
 		<View>
 			<View style={profileStyles.profilePicContainer}>
@@ -111,7 +143,7 @@ const Profile = () => {
 						style={profileStyles.profileImage}
 						src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${user.profilePic}`}
 					/>
-					<Pressable onPress={() => selectImage(true)}>
+					<Pressable onPress={() => selectImage(false)}>
 						<View style={profileStyles.editProfile}>
 							<FontAwesome
 								name="camera"

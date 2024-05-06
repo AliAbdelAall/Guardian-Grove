@@ -18,9 +18,7 @@ const teachersSlice = createSlice({
 	name: "teachersSlice",
 	reducers: {
 		setTeachers: (state, action) => {
-			return {
-				...action.payload,
-			};
+			return [...action.payload];
 		},
 	},
 });

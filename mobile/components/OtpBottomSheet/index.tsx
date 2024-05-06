@@ -27,7 +27,7 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 	console.log(info);
 
 	const handleSendEmail = async () => {
-		const { email, OTP, newPassword, confirmNewPassword } = info;
+		const { email } = info;
 		const regex =
 			/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 		if (!regex.test(email)) {
@@ -38,11 +38,14 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 			return;
 		}
 		sendRequest(requestMethods.POST, "/api/otp/send-otp", {
-			email: info,
+			email,
 		})
 			.then(async (response) => {
 				if (response.status === 201) {
-					await AsyncStorage.setItem("userId", response.data.id);
+					await AsyncStorage.setItem(
+						"userId",
+						JSON.stringify(response.data.userId)
+					);
 					setstep(step + 1);
 					setSheetVisibility(false);
 					setTimeout(() => {

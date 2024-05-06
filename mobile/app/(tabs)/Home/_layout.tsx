@@ -8,6 +8,7 @@ import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../core/redux/user/index.";
 import { setChildren } from "../../../core/redux/children";
+import { setSchools } from "../../../core/redux/schools";
 
 const HomeLayout = () => {
 	const dispatch = useDispatch();
@@ -25,10 +26,13 @@ const HomeLayout = () => {
 			.then((response) => {
 				if (response.status === 200) {
 					console.log(response.data);
-					dispatch(setTeachers(response.data.teachers));
-					dispatch(setpsychologists(response.data.psychologists));
-					dispatch(setUser(response.data.user));
-					dispatch(setChildren(response.data.children));
+					const { teachers, psychologists, user, children, schools } =
+						response.data;
+					dispatch(setTeachers(teachers));
+					dispatch(setpsychologists(psychologists));
+					dispatch(setUser(user));
+					dispatch(setChildren(children));
+					dispatch(setSchools(schools));
 				}
 			})
 			.catch((error) => {

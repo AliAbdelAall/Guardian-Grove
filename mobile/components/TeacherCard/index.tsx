@@ -3,13 +3,20 @@ import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "./styles";
 
 type props = {
+	id: number;
 	profilePic: string;
 	name: string;
 	school: string | null;
 	speciality: string | null;
 };
 
-const TeacherCard: FC<props> = ({ profilePic, name, school, speciality }) => {
+const TeacherCard: FC<props> = ({
+	id,
+	profilePic,
+	name,
+	school,
+	speciality,
+}) => {
 	return (
 		<View style={styles.teachercardContainer}>
 			<View style={styles.teachercardWrapper}>

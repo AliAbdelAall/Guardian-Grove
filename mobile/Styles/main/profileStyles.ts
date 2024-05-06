@@ -69,18 +69,4 @@ export const profileStyles = StyleSheet.create({
 		fontSize: 18,
 		color: "#677294",
 	},
-
-	dateInputWrapper: {
-		position: "relative",
-		width: "100%",
-		marginBottom: 25,
-	},
-	calendarIconwrapper: {
-		position: "absolute",
-		right: 15,
-		top: "50%",
-	},
-	calendarIcon: {
-		color: "#677294",
-	},
 });

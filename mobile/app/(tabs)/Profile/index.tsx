@@ -30,6 +30,7 @@ const profilePic = require("../../../assets/profile/profile.jpg");
 
 // Icons
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import DateInput from "../../../components/DateInput";
 
 const Profile = () => {
 	const user = useSelector((global: RootState) => global[userSliceName]);
@@ -155,15 +156,6 @@ const Profile = () => {
 				</View>
 			</View>
 
-			<View>
-				<DateTimePicker
-					isVisible={isDatePickerVisible}
-					mode="date"
-					onConfirm={(e) => handleDateConfirmation(e.toDateString())}
-					onCancel={hideDatePicker}
-				/>
-			</View>
-
 			<View style={profileStyles.infoContainer}>
 				<Text style={profileStyles.infoText}>Personal Information</Text>
 				<View style={profileStyles.inputContainer}>
@@ -172,22 +164,11 @@ const Profile = () => {
 						input={`${user.firstName} ${user.lastName}`}
 					/>
 					<ProfileInput label={"Email"} input={user.email} />
-					<View style={profileStyles.dateInputWrapper}>
-						<ProfileInput
-							label={"Date Of Birth"}
-							input={user?.dob?.slice(0, 10) ?? prevDob}
-						/>
-						<Pressable
-							style={profileStyles.calendarIconwrapper}
-							onPress={showDatePicker}
-						>
-							<FontAwesome
-								name="calendar"
-								size={16}
-								style={profileStyles.calendarIcon}
-							/>
-						</Pressable>
-					</View>
+					<DateInput
+						dob={user?.dob}
+						prevDob={prevDob}
+						handleDateConfirmation={handleDateConfirmation}
+					/>
 
 					<LoginButton
 						text={"Children"}

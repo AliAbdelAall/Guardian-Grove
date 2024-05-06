@@ -51,70 +51,6 @@ const Main = () => {
 	const [rating, setRating] = useState(0);
 	const [teachersList, setTeachersList] = useState(0);
 
-	console.log(teachers);
-
-	const psychologistss = [
-		{
-			id: 0,
-			profilePicc,
-			name: "John Doe",
-			speciality: "development",
-			rating: 4,
-		},
-		{
-			id: 1,
-			profilePicc,
-			name: "Johnny Donny",
-			speciality: "family",
-			rating: 3.5,
-		},
-		{
-			id: 2,
-			profilePicc,
-			name: "Ahmad Fakih",
-			speciality: "development",
-			rating: 4.5,
-		},
-		{
-			id: 3,
-			profilePicc,
-			name: "Lilly barney",
-			speciality: "family",
-			rating: 4.5,
-		},
-	];
-
-	const teacherss = [
-		{
-			id: 0,
-			profilePicc,
-			name: "John Doe",
-			school: "School Name",
-			speciality: "Math",
-		},
-		{
-			id: 1,
-			profilePicc,
-			name: "Johnny Donny",
-			school: "School Name",
-			speciality: "English",
-		},
-		{
-			id: 2,
-			profilePicc,
-			name: "Ahmad Fakih",
-			school: "School Name",
-			speciality: "Physics",
-		},
-		{
-			id: 3,
-			profilePicc,
-			name: "Lilly barney",
-			school: "School Name",
-			speciality: "History",
-		},
-	];
-
 	return (
 		<View style={utilities.container}>
 			{/* <StarRating
@@ -155,7 +91,7 @@ const Main = () => {
 					</Pressable>
 				</View>
 
-				{/* <FlatList
+				<FlatList
 					horizontal={true}
 					showsHorizontalScrollIndicator={false}
 					data={psychologists}
@@ -183,26 +119,6 @@ const Main = () => {
 							/>
 						);
 					}}
-				/> */}
-				<FlatList
-					horizontal={true}
-					showsHorizontalScrollIndicator={false}
-					data={psychologistss}
-					ItemSeparatorComponent={() => {
-						return <View style={styles.horizontalSeparator}></View>;
-					}}
-					renderItem={(element) => {
-						return (
-							<PsychologistCard
-								id={element.item.id}
-								key={element.item.id}
-								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}1714905175140-639219459.jpg`}
-								name={element.item.name}
-								speciality={element.item.speciality}
-								rating={element.item.rating}
-							/>
-						);
-					}}
 				/>
 
 				<View style={styles.sectionTitleWrapper}>
@@ -223,8 +139,9 @@ const Main = () => {
 					</Pressable>
 				</View>
 
-				{/* <FlatList
+				<FlatList
 					data={teachers}
+					scrollEnabled={false}
 					renderItem={(teacher) => {
 						const {
 							id,
@@ -245,21 +162,6 @@ const Main = () => {
 								name={`${firstName} ${lastName}`}
 								school={school}
 								speciality={speciality}
-							/>
-						);
-					}}
-				/> */}
-				<FlatList
-					data={teacherss}
-					renderItem={(element) => {
-						return (
-							<TeacherCard
-								id={element.item.id}
-								key={element.item.id}
-								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}1714905175140-639219459.jpg`}
-								name={element.item.name}
-								school={element.item.school}
-								speciality={element.item.speciality}
 							/>
 						);
 					}}

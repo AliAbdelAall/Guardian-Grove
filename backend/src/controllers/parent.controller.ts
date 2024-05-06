@@ -116,7 +116,7 @@ export const getPsychologistsAndTeachers = async (
 				dob: psychologist.profile.dob,
 				speciality: psychologist.speciality,
 				yearsOfExperience: psychologist.yearsOfExperience,
-				Rating: averageRating,
+				rating: averageRating,
 			};
 		});
 
@@ -135,11 +135,14 @@ export const getPsychologistsAndTeachers = async (
 			school: teacher.School?.name ?? null,
 		}));
 
+		const schools = await prismaClient.school.findMany();
+
 		return res.status(200).json({
 			user: userProfile,
 			children,
 			psychologists: psychologistsWithAvgRating,
 			teachers: teachersWithCustomProfiles,
+			schools,
 		});
 	} catch (error) {
 		console.error("Error:", error);

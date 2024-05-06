@@ -29,6 +29,12 @@ export const styles = StyleSheet.create({
 		gap: 15,
 		minWidth: "100%",
 	},
+	splitInputsWrapper: {
+		display: "flex",
+		flexDirection: "row",
+		minWidth: "100%",
+		gap: 10,
+	},
 	forgotPasswordText: {
 		fontSize: 16,
 		paddingTop: 12,
@@ -52,9 +58,5 @@ export const styles = StyleSheet.create({
 		color: "#75AB19",
 		alignSelf: "center",
 		fontSize: 16,
-	},
-	authSwitchButton: {
-		paddingVertical: 0,
-		alignSelf: "flex-end",
 	},
 });

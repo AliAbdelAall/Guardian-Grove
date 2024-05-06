@@ -140,9 +140,8 @@ const Login = () => {
 						{"Don't have an account? "}
 					</Text>
 					<Pressable
-						style={styles.authSwitchButton}
 						onPress={() => {
-							router.push("/Signup");
+							router.replace("/Signup");
 						}}
 					>
 						<Text style={styles.authSwitch}>Sign Up</Text>

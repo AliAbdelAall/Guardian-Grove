@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 
 //  Styles
 import generalStyles from "../../Styles/generalStyles";
+import { styles } from "../../Styles/authStyles";
 
 // Tools
 import { useSendRequest } from "../../core/tools/remote/request";
@@ -121,17 +122,17 @@ const Signup = () => {
 
 	return (
 		<View style={styles.container}>
-			<Image source={logo} style={styles.image}></Image>
-			<View style={[styles.center, styles.Width80]}>
+			<Image source={logo} style={styles.logo}></Image>
+			<View style={styles.authWrapper}>
 				<Text style={generalStyles.h1}>Join us to start searching</Text>
-				<Text style={[styles.textcenter, styles.lineHeight14]}>
+				<Text style={styles.authText}>
 					You can search course, apply course and find scholarship for
 					abroad studies
 				</Text>
 			</View>
 
-			<View style={[styles.gap15, styles.fullWidth]}>
-				<View style={[styles.row, styles.fullWidth, styles.gap10]}>
+			<View style={styles.authInputs}>
+				<View style={styles.splitInputsWrapper}>
 					<LoginInput
 						half={true}
 						value={credentials.firstName}
@@ -175,87 +176,21 @@ const Signup = () => {
 					text={"Sign Up"}
 					handlePress={handleSignupValidation}
 				/>
-
-				<Text style={[styles.textcenter, styles.fontSize16]}>
-					{"Already have an account? "}
+				<View style={styles.authSwitchWrapper}>
+					<Text style={styles.authSwitchText}>
+						{"Already have an account? "}
+					</Text>
 					<Pressable
 						onPress={() => {
-							router.push("/Login");
+							router.replace("/Login");
 						}}
 					>
-						<Text style={[styles.fontMedium, styles.primaryColor]}>
-							Login
-						</Text>
+						<Text style={styles.authSwitch}>Login</Text>
 					</Pressable>
-				</Text>
+				</View>
 			</View>
 		</View>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: {
-		paddingLeft: 20,
-		paddingRight: 20,
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	image: {
-		width: 100,
-		height: 100,
-	},
-	center: {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	row: {
-		flexDirection: "row",
-	},
-	fullWidth: {
-		minWidth: "100%",
-	},
-	Width80: {
-		width: "80%",
-	},
-	lineHeight14: {
-		lineHeight: 24,
-		marginBottom: 10,
-	},
-
-	autoStretch: {
-		flex: 1,
-	},
-	loginButton: {
-		height: 55,
-		paddingLeft: 15,
-		borderColor: "gray",
-		borderWidth: 1,
-		borderRadius: 12,
-		width: "auto",
-	},
-	gap15: {
-		gap: 15,
-	},
-	gap10: {
-		gap: 10,
-	},
-	textcenter: {
-		textAlign: "center",
-	},
-	backgroundRed: {
-		backgroundColor: "red",
-	},
-	fontMedium: {
-		fontWeight: "500",
-	},
-	primaryColor: {
-		color: "#75AB19",
-	},
-	fontSize16: {
-		fontSize: 16,
-	},
-});
 
 export default Signup;

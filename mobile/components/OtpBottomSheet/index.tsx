@@ -3,6 +3,10 @@ import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import { styles } from "./styles";
 import LoginButton from "../../components/LoginButton";
 import LoginInput from "../../components/LoginInput";
+import Toast from "react-native-toast-message";
+import { useSendRequest } from "../../core/tools/remote/request";
+import { requestMethods } from "../../core/enum/requestMetods";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Props = {
 	visibility: boolean;
@@ -10,7 +14,51 @@ type Props = {
 };
 
 const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
-	const [email, setEmail] = useState("");
+	const initialIdfoState = {
+		email: "",
+		OTP: "",
+		newPassword: "",
+		confirmNewPassword: "",
+	};
+	const [info, setInfo] = useState(initialIdfoState);
+
+	const sendRequest = useSendRequest();
+
+	console.log(info);
+
+	const handleSendEmail = async () => {
+		const { email, OTP, newPassword, confirmNewPassword } = info;
+		const regex =
+			/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		if (!regex.test(email)) {
+			Toast.show({
+				type: "error",
+				text1: "Invalid Email",
+			});
+			return;
+		}
+		sendRequest(requestMethods.POST, "/api/otp/send-otp", {
+			email: info,
+		})
+			.then(async (response) => {
+				if (response.status === 201) {
+					await AsyncStorage.setItem("userId", response.data.id);
+					setstep(step + 1);
+					setSheetVisibility(false);
+					setTimeout(() => {
+						setSheetVisibility(true);
+					}, 100);
+				}
+			})
+			.catch((error) => {
+				console.log("error: ", error.response);
+				Toast.show({
+					type: "error",
+					text1: error.response.error,
+				});
+			});
+	};
+
 	const [OTP, setOTP] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -48,8 +96,10 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 							{step === 1 && (
 								<LoginInput
 									placeholder={"Email"}
-									value={email}
-									handlechange={(e: string) => setEmail(e)}
+									value={info.email}
+									handlechange={(e: string) =>
+										setInfo({ ...info, email: e })
+									}
 								/>
 							)}
 							{step === 2 && (
@@ -91,11 +141,9 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 									<View style={styles.halfButton}>
 										<LoginButton
 											handlePress={() => {
-												setstep(step + 1);
-												setSheetVisibility(false);
-												setTimeout(() => {
-													setSheetVisibility(true);
-												}, 100);
+												if (step === 1) {
+													handleSendEmail();
+												}
 											}}
 											text={"Next"}
 										/>

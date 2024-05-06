@@ -6,7 +6,7 @@ interface child {
 	teacherId: string | null;
 	profilePic: String;
 	name: string;
-	school: string;
+	schoolId: number;
 	dob: string | null;
 }
 
@@ -19,9 +19,12 @@ const childrenSlice = createSlice({
 		setChildren: (state, action: PayloadAction<child[]>) => {
 			return action.payload;
 		},
+		addChild: (state, action: PayloadAction<child>) => {
+			return [...state, action.payload];
+		},
 	},
 });
 
-export const { setChildren } = childrenSlice.actions;
+export const { setChildren, addChild } = childrenSlice.actions;
 export const childrenSliceName = childrenSlice.name;
 export default childrenSlice.reducer;

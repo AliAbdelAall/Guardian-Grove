@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 
 //  Styles
 import generalStyles from "../../Styles/generalStyles";
+import { styles } from "../../Styles/authStyles";
 
 // Tools
 import { useSendRequest } from "../../core/tools/remote/request";
 import { requestMethods } from "../../core/enum/requestMetods";
 import { setLocalUser } from "../../core/tools/local/user";
+import Toast from "react-native-toast-message";
 
 // Assets
 const logo = require("../../assets/logo/logo.png");
@@ -16,8 +18,8 @@ const logo = require("../../assets/logo/logo.png");
 // Components
 import LoginButton from "../../components/LoginButton";
 import LoginInput from "../../components/LoginInput";
-import Toast from "react-native-toast-message";
 import OtpBottomSheet from "../../components/OtpBottomSheet";
+
 const Login = () => {
 	const [error, setError] = useState({
 		status: false,
@@ -93,10 +95,10 @@ const Login = () => {
 
 	return (
 		<View style={styles.container}>
-			<Image source={logo} style={styles.image}></Image>
-			<View style={[styles.center, styles.Width80]}>
+			<Image source={logo} style={styles.logo}></Image>
+			<View style={styles.authWrapper}>
 				<Text style={generalStyles.h1}>Welcome back</Text>
-				<Text style={[styles.textcenter, styles.lineHeight14]}>
+				<Text style={styles.authText}>
 					You can search course, apply course and find scholarship for
 					abroad studies
 				</Text>
@@ -105,7 +107,7 @@ const Login = () => {
 				visibility={isbottomSheetVisible}
 				setVisibility={setBottomSheetVisibility}
 			/>
-			<View style={[styles.gap15, styles.fullWidth]}>
+			<View style={styles.authInputs}>
 				<LoginInput
 					value={credentials.username}
 					handlechange={(value: string) =>
@@ -123,7 +125,9 @@ const Login = () => {
 						password={true}
 					/>
 					<Pressable onPress={() => setBottomSheetVisibility(true)}>
-						<Text>Forgot Password?</Text>
+						<Text style={styles.forgotPasswordText}>
+							Forgot Password?
+						</Text>
 					</Pressable>
 				</View>
 
@@ -131,86 +135,23 @@ const Login = () => {
 					text={"Login"}
 					handlePress={handleLoginValidation}
 				/>
-
-				<Text style={[styles.textcenter, styles.fontSize16]}>
-					{"Don't have an account? "}
+				<View style={styles.authSwitchWrapper}>
+					<Text style={styles.authSwitchText}>
+						{"Don't have an account? "}
+					</Text>
 					<Pressable
+						style={styles.authSwitchButton}
 						onPress={() => {
 							router.push("/Signup");
 						}}
 					>
-						<Text style={[styles.fontMedium, styles.primaryColor]}>
-							Sign Up
-						</Text>
+						<Text style={styles.authSwitch}>Sign Up</Text>
 					</Pressable>
-				</Text>
+				</View>
 			</View>
 			<Toast />
 		</View>
 	);
 };
-
-const styles = StyleSheet.create({
-	container: {
-		paddingLeft: 20,
-		paddingRight: 20,
-		paddingTop: 30,
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	image: {
-		width: 100,
-		height: 100,
-	},
-	center: {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	row: {
-		flexDirection: "row",
-	},
-	fullWidth: {
-		minWidth: "100%",
-	},
-	Width80: {
-		width: "80%",
-	},
-	lineHeight14: {
-		lineHeight: 24,
-		marginBottom: 10,
-	},
-
-	autoStretch: {
-		flex: 1,
-	},
-	loginButton: {
-		height: 55,
-		paddingLeft: 15,
-		borderColor: "gray",
-		borderWidth: 1,
-		borderRadius: 12,
-		width: "auto",
-	},
-	gap15: {
-		gap: 15,
-	},
-	textcenter: {
-		textAlign: "center",
-	},
-	backgroundRed: {
-		backgroundColor: "red",
-	},
-	fontMedium: {
-		fontWeight: "500",
-	},
-	primaryColor: {
-		color: "#75AB19",
-	},
-	fontSize16: {
-		fontSize: 16,
-	},
-});
 
 export default Login;

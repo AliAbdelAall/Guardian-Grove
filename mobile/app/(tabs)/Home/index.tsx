@@ -54,12 +54,12 @@ const Main = () => {
 	return (
 		<View style={utilities.container}>
 			{/* <StarRating
-        rating={rating}
-        onChange={(e) => setRating(e)}
-        maxStars={5}
-        starSize={30}
-        enableHalfStar={true}
-      /> */}
+				rating={rating}
+				onChange={(e) => setRating(e)}
+				maxStars={5}
+				starSize={30}
+				enableHalfStar={true}
+			/> */}
 
 			<View style={styles.userProfileWrapper}>
 				<Image

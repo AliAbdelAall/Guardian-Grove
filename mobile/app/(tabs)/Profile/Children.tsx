@@ -17,11 +17,11 @@ import { RootState } from "../../../core/redux/store";
 import { addChild, childrenSliceName } from "../../../core/redux/children";
 import LoginInput from "../../../components/LoginInput";
 import DateInput from "../../../components/DateInput";
+import { schoolSliceName } from "../../../core/redux/schools";
 
 // Tools
 import { useSendRequest } from "../../../core/tools/remote/request";
 import { requestMethods } from "../../../core/enum/requestMetods";
-import { schoolSliceName } from "../../../core/redux/schools";
 import Toast from "react-native-toast-message";
 import ChildInput from "../../../components/childInput";
 

@@ -12,6 +12,7 @@ import { teachersSliceName } from "../../../core/redux/teachers";
 // Components
 import SearchInput from "../../../components/SearchInput";
 import TeacherCard from "../../../components/TeacherCard";
+import { router } from "expo-router";
 
 const teachers = () => {
 	const teachers = useSelector(
@@ -54,7 +55,9 @@ const teachers = () => {
 					} = psychologist.item;
 
 					return (
-						<TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => router.push("/TeacherProfile")}
+						>
 							<TeacherCard
 								key={id}
 								id={id}

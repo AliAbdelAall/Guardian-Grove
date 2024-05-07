@@ -26,8 +26,6 @@ const OtpBottomSheet: FC<Props> = ({ visibility, setVisibility }) => {
 
 	const sendRequest = useSendRequest();
 
-	console.log(info);
-
 	const handleSendEmail = async () => {
 		const { email } = info;
 		const regex =

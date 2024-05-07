@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import {
-	Animated,
-	FlatList,
-	Pressable,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
+import { router } from "expo-router";
 
 // Styles
 import { psychologistsStyles } from "../../../Styles/psychologists/psycholoists";
@@ -17,9 +10,6 @@ import { psychologistsSliceName } from "../../../core/redux/Psychologists";
 import { RootState } from "../../../core/redux/store";
 import { useSelector } from "react-redux";
 import PsychologistCard from "../../../components/PsychologistCard";
-
-// Icons
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 // Components
 import FilterButton from "../../../components/FilterButton";
@@ -100,7 +90,9 @@ const Psychologists = () => {
 					} = psychologist.item;
 
 					return (
-						<TouchableOpacity>
+						<TouchableOpacity
+							onPress={() => router.push(`/PsychologistProfile`)}
+						>
 							<PsychologistCard
 								key={id}
 								id={id}

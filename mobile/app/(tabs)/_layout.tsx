@@ -18,6 +18,13 @@ const HomeLayout = () => {
 					headerShown: false,
 				}}
 			/>
+			<Tabs.Screen
+				name="Psychologists"
+				options={{
+					title: "Psychologists",
+					headerShown: false,
+				}}
+			/>
 		</Tabs>
 	);
 };

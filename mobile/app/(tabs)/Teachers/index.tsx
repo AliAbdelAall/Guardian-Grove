@@ -56,7 +56,7 @@ const teachers = () => {
 
 					return (
 						<TouchableOpacity
-							onPress={() => router.push("/TeacherProfile")}
+							onPress={() => router.push("/TeacherProfile/index")}
 						>
 							<TeacherCard
 								key={id}

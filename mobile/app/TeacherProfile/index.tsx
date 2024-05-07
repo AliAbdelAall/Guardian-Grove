@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 
 // styles
 import { psychoProfileStyles } from "../../Styles/psychologists/profile";
@@ -39,16 +39,6 @@ const TeacherProfile = () => {
 			<Stack.Screen
 				options={{
 					title: `${teacher.firstName} ${teacher.lastName}`,
-					headerStyle: {
-						backgroundColor: "#75AB19",
-					},
-					headerTitleStyle: {
-						color: "white",
-						fontSize: 24,
-					},
-
-					headerShadowVisible: false,
-					headerTintColor: "white",
 				}}
 			/>
 			<View>
@@ -77,7 +67,12 @@ const TeacherProfile = () => {
 						/>
 						<ProfileInput label={"School"} input={teacher.school} />
 
-						<LoginButton text={"Reports"} handlePress={() => {}} />
+						<LoginButton
+							text={"Reports"}
+							handlePress={() => {
+								router.push("/TeacherProfile/ChildrenReports");
+							}}
+						/>
 					</View>
 				</View>
 			</View>

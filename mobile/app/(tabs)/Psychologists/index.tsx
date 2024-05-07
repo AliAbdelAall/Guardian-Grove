@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+	Animated,
 	FlatList,
 	Pressable,
 	Text,
@@ -7,6 +8,9 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
+
+// Styles
+import { psychologistsStyles } from "../../../Styles/psychologists/psycholoists";
 
 // Redux
 import { psychologistsSliceName } from "../../../core/redux/Psychologists";
@@ -16,33 +20,59 @@ import PsychologistCard from "../../../components/PsychologistCard";
 
 // Icons
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FilterButton from "../../../components/FilterButton";
 
 const Psychologists = () => {
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
 
+	const [activeButton, setActiveButton] = useState("All");
+
+	const handlePress = (buttonName: string) => {
+		setActiveButton(buttonName);
+	};
+
 	return (
-		<View style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
-			<View>
-				<TextInput placeholder="Search" />
+		<View style={psychologistsStyles.psychologistsContainer}>
+			<View style={psychologistsStyles.searchInputwrapper}>
+				<TextInput
+					placeholderTextColor={"#B3B9CA"}
+					style={psychologistsStyles.searchInput}
+					placeholder="Search"
+					value={searchText}
+					onChangeText={setSearchText}
+				/>
+				<FontAwesome
+					size={16}
+					style={psychologistsStyles.searchIcon}
+					name="search"
+				/>
 			</View>
-			<View>
-				<Pressable>
-					<Text>All</Text>
-				</Pressable>
-				<Pressable>
-					<Text>Family</Text>
-				</Pressable>
-				<Pressable>
-					<Text>Development</Text>
-				</Pressable>
-				<Pressable>
-					<Text>Recent</Text>
-				</Pressable>
+			<View style={psychologistsStyles.filterButtonsWrapper}>
+				<FilterButton
+					isActive={activeButton === "All"}
+					name="All"
+					handlePress={() => handlePress("All")}
+				/>
+				<FilterButton
+					isActive={activeButton === "Family"}
+					name="Family"
+					handlePress={() => handlePress("Family")}
+				/>
+				<FilterButton
+					isActive={activeButton === "Development"}
+					name="Development"
+					handlePress={() => handlePress("Development")}
+				/>
+				<FilterButton
+					isActive={activeButton === "Recent"}
+					name="Recent"
+					handlePress={() => handlePress("Recent")}
+				/>
 			</View>
 			<FlatList
-				data={psychologists}
+				data={filteredPsychologists}
 				numColumns={2}
 				ItemSeparatorComponent={() => {
 					return <View style={{ height: 15 }}></View>;

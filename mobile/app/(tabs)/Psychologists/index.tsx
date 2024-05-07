@@ -20,7 +20,10 @@ import PsychologistCard from "../../../components/PsychologistCard";
 
 // Icons
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+
+// Components
 import FilterButton from "../../../components/FilterButton";
+import SearchInput from "../../../components/SearchInput";
 
 const Psychologists = () => {
 	const psychologists = useSelector(
@@ -55,20 +58,8 @@ const Psychologists = () => {
 
 	return (
 		<View style={psychologistsStyles.psychologistsContainer}>
-			<View style={psychologistsStyles.searchInputwrapper}>
-				<TextInput
-					placeholderTextColor={"#B3B9CA"}
-					style={psychologistsStyles.searchInput}
-					placeholder="Search"
-					value={searchText}
-					onChangeText={setSearchText}
-				/>
-				<FontAwesome
-					size={16}
-					style={psychologistsStyles.searchIcon}
-					name="search"
-				/>
-			</View>
+			<SearchInput value={searchText} handleTextChange={setSearchText} />
+
 			<View style={psychologistsStyles.filterButtonsWrapper}>
 				<FilterButton
 					isActive={activeButton === "All"}

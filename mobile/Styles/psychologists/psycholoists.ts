@@ -6,26 +6,6 @@ export const psychologistsStyles = StyleSheet.create({
 		paddingLeft: 20,
 		paddingRight: 20,
 	},
-	searchInputwrapper: {
-		padding: 10,
-		paddingLeft: 40,
-		borderWidth: 1,
-		borderColor: "#B3B9CA",
-		borderRadius: 10,
-		marginTop: 20,
-		position: "relative",
-	},
-	searchIcon: {
-		position: "absolute",
-		top: "56%",
-
-		left: 15,
-		color: "#B3B9CA",
-	},
-	searchInput: {
-		fontSize: 18,
-		color: "#677294",
-	},
 	filterButtonsWrapper: {
 		display: "flex",
 		flexDirection: "row",

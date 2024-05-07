@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native";
 
 export const childrenStyles = StyleSheet.create({
 	childrenContainer: {
+		flex: 1,
+	},
+	ChildrenScrollable: {
 		display: "flex",
 		flexDirection: "column",
 		paddingLeft: 20,
@@ -78,5 +81,19 @@ export const childrenStyles = StyleSheet.create({
 		borderWidth: 1,
 		borderRadius: 10,
 		borderColor: "#B3B9CA",
+	},
+	addChildButtonWrapper: {
+		padding: 20,
+		shadowColor: "#3A3A3A",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84,
+		elevation: 5,
+		marginTop: 3,
+		zIndex: 1,
+		backgroundColor: "white",
 	},
 });

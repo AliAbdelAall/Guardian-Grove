@@ -90,122 +90,133 @@ const Children = () => {
 			});
 	};
 	return (
-		<ScrollView style={childrenStyles.childrenContainer}>
-			<View>
-				<View style={childrenStyles.childrenTextWrapper}>
-					<Text style={childrenStyles.childrenText}>
-						to help the psychologists to get the info needed to help
-						your children
-					</Text>
-				</View>
+		<View style={childrenStyles.childrenContainer}>
+			<ScrollView
+				style={childrenStyles.ChildrenScrollable}
+				showsVerticalScrollIndicator={false}
+			>
+				<View>
+					<View style={childrenStyles.childrenTextWrapper}>
+						<Text style={childrenStyles.childrenText}>
+							to help the psychologists to get the info needed to
+							help your children
+						</Text>
+					</View>
 
-				<Modal
-					animationType="fade"
-					transparent={true}
-					visible={showPopoup}
-				>
-					<View style={childrenStyles.overlay}></View>
-				</Modal>
+					<Modal
+						animationType="fade"
+						transparent={true}
+						visible={showPopoup}
+					>
+						<View style={childrenStyles.overlay}></View>
+					</Modal>
 
-				<Modal
-					animationType="slide"
-					transparent={true}
-					visible={showPopoup}
-					onRequestClose={() => {}}
-				>
-					<View style={childrenStyles.popupContainer}>
-						<View style={childrenStyles.popupWrapper}>
-							<LoginButton
-								handlePress={() => {}}
-								text={"Upload Image"}
-							/>
-							<ChildInput
-								key={"Name"}
-								label={"Name"}
-								placeholder={"Mathew"}
-								handleChange={(e: string) =>
-									setChildInfo({ ...childInfo, name: e })
-								}
-								value={childInfo.name}
-							/>
-							<DateInput
-								dob={childInfo.dob}
-								prevDob={childInfo.dob}
-								handleDateConfirmation={handleDateConfirmation}
-							/>
-							<View style={childrenStyles.pickerInputWrapper}>
-								<Picker
-									selectedValue={childInfo.schoolId}
-									onValueChange={handleSchoolChange}
-								>
-									<Picker.Item
-										style={{
-											color: "#75AB19",
-											fontSize: 18,
-										}}
-										label="Choose School"
-										value={0}
-										key={0}
-									/>
-									{schools?.map((school) => {
-										const { id, name } = school;
-										return (
-											<Picker.Item
-												style={{
-													color: "#677294",
-													fontSize: 18,
-												}}
-												key={id}
-												label={name}
-												value={id}
-											/>
-										);
-									})}
-								</Picker>
-							</View>
-							<View style={childrenStyles.buttonsContainer}>
-								<View style={childrenStyles.halfButton}>
-									<LoginButton
-										handlePress={() => setShowPopoup(false)}
-										text={"Cancel"}
-									/>
+					<Modal
+						animationType="slide"
+						transparent={true}
+						visible={showPopoup}
+						onRequestClose={() => {}}
+					>
+						<View style={childrenStyles.popupContainer}>
+							<View style={childrenStyles.popupWrapper}>
+								<LoginButton
+									handlePress={() => {}}
+									text={"Upload Image"}
+								/>
+								<ChildInput
+									key={"Name"}
+									label={"Name"}
+									placeholder={"Mathew"}
+									handleChange={(e: string) =>
+										setChildInfo({ ...childInfo, name: e })
+									}
+									value={childInfo.name}
+								/>
+								<DateInput
+									dob={childInfo.dob}
+									prevDob={childInfo.dob}
+									handleDateConfirmation={
+										handleDateConfirmation
+									}
+								/>
+								<View style={childrenStyles.pickerInputWrapper}>
+									<Picker
+										selectedValue={childInfo.schoolId}
+										onValueChange={handleSchoolChange}
+									>
+										<Picker.Item
+											style={{
+												color: "#75AB19",
+												fontSize: 18,
+											}}
+											label="Choose School"
+											value={0}
+											key={0}
+										/>
+										{schools?.map((school) => {
+											const { id, name } = school;
+											return (
+												<Picker.Item
+													style={{
+														color: "#677294",
+														fontSize: 18,
+													}}
+													key={id}
+													label={name}
+													value={id}
+												/>
+											);
+										})}
+									</Picker>
 								</View>
-								<View style={childrenStyles.halfButton}>
-									<LoginButton
-										handlePress={handleAddChild}
-										text={"Confirm"}
-									/>
+								<View style={childrenStyles.buttonsContainer}>
+									<View style={childrenStyles.halfButton}>
+										<LoginButton
+											handlePress={() =>
+												setShowPopoup(false)
+											}
+											text={"Cancel"}
+										/>
+									</View>
+									<View style={childrenStyles.halfButton}>
+										<LoginButton
+											handlePress={handleAddChild}
+											text={"Confirm"}
+										/>
+									</View>
 								</View>
 							</View>
 						</View>
-					</View>
-				</Modal>
-				<FlatList
-					data={children}
-					scrollEnabled={false}
-					renderItem={(element) => {
-						const { id, name, profilePic, schoolId, dob } =
-							element.item;
-						const school = schools.find(
-							(school) => school.id === schoolId
-						);
-						return (
-							<Child
-								key={id}
-								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-								name={name}
-								school={school.name ?? "No School"}
-								dob={dob.slice(0, 10)}
-							/>
-						);
-					}}
-				></FlatList>
+					</Modal>
+					<FlatList
+						data={children}
+						scrollEnabled={false}
+						renderItem={(element) => {
+							const { id, name, profilePic, schoolId, dob } =
+								element.item;
+							const school = schools.find(
+								(school) => school.id === schoolId
+							);
+							return (
+								<Child
+									key={id}
+									profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+									name={name}
+									school={school.name ?? "No School"}
+									dob={dob.slice(0, 10)}
+								/>
+							);
+						}}
+					></FlatList>
+				</View>
+			</ScrollView>
+			<View style={childrenStyles.addChildButtonWrapper}>
+				<LoginButton
+					text={"Add Child"}
+					handlePress={() => setShowPopoup(true)}
+				/>
 			</View>
-			<LoginButton
-				text={"Add Child"}
-				handlePress={() => setShowPopoup(true)}
-			/>
-		</ScrollView>
+		</View>
 	);
 };
 

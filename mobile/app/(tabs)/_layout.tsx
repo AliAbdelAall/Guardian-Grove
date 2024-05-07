@@ -25,6 +25,13 @@ const HomeLayout = () => {
 					headerShown: false,
 				}}
 			/>
+			<Tabs.Screen
+				name="Teachers"
+				options={{
+					title: "Teachers",
+					headerShown: false,
+				}}
+			/>
 		</Tabs>
 	);
 };

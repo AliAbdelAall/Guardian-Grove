@@ -28,6 +28,26 @@ const Psychologists = () => {
 	);
 
 	const [activeButton, setActiveButton] = useState("All");
+	const [searchText, setSearchText] = useState("");
+	console.log(searchText);
+
+	const filteredPsychologists = psychologists.filter((psychologist) => {
+		if (
+			activeButton !== "All" &&
+			psychologist.speciality !== activeButton
+		) {
+			return false;
+		}
+		if (
+			searchText.trim() !== "" &&
+			!`Dr. ${psychologist.firstName}${psychologist.lastName}`
+				.toLowerCase()
+				.includes(searchText.toLowerCase())
+		) {
+			return false;
+		}
+		return true;
+	});
 
 	const handlePress = (buttonName: string) => {
 		setActiveButton(buttonName);

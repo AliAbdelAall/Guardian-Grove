@@ -5,12 +5,15 @@ import { styles } from "./styles";
 type props = {
 	label: string;
 	input: string;
+	placeholder?: string;
 };
-const ProfileInput: FC<props> = ({ label, input }) => {
+const ProfileInput: FC<props> = ({ label, input, placeholder }) => {
 	return (
 		<View style={styles.inputWrapper}>
 			<Text style={styles.inputlabel}>{label}</Text>
 			<TextInput
+				placeholder={placeholder}
+				placeholderTextColor={"#B3B9CA"}
 				editable={false}
 				style={styles.inputValue}
 				value={input}

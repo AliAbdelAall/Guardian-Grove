@@ -74,4 +74,9 @@ export const childrenStyles = StyleSheet.create({
 	halfButton: {
 		maxWidth: "48.8%",
 	},
+	pickerInputWrapper: {
+		borderWidth: 1,
+		borderRadius: 10,
+		borderColor: "#B3B9CA",
+	},
 });

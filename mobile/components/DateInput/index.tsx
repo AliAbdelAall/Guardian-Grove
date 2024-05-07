@@ -17,7 +17,7 @@ const DateInput = ({ handleDateConfirmation, prevDob, dob }) => {
 	};
 
 	return (
-		<>
+		<View>
 			<View>
 				<DateTimePicker
 					isVisible={isDatePickerVisible}
@@ -31,13 +31,14 @@ const DateInput = ({ handleDateConfirmation, prevDob, dob }) => {
 			</View>
 			<View style={DateInputStyles.dateInputWrapper}>
 				<ProfileInput
+					placeholder="YYYY-MM-DD"
 					label={"Date Of Birth"}
 					input={
 						dob
 							? dob.slice(0, 10)
 							: prevDob
 							? prevDob.slice(0, 10)
-							: "YYYY-MM-DD"
+							: ""
 					}
 				/>
 				<Pressable
@@ -51,7 +52,7 @@ const DateInput = ({ handleDateConfirmation, prevDob, dob }) => {
 					/>
 				</Pressable>
 			</View>
-		</>
+		</View>
 	);
 };
 

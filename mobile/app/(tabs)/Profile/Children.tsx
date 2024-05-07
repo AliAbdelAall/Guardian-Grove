@@ -23,6 +23,7 @@ import { useSendRequest } from "../../../core/tools/remote/request";
 import { requestMethods } from "../../../core/enum/requestMetods";
 import { schoolSliceName } from "../../../core/redux/schools";
 import Toast from "react-native-toast-message";
+import ChildInput from "../../../components/childInput";
 
 // Assets
 const ProfilePic = require("../../../assets/profile/profile.jpg");
@@ -118,10 +119,11 @@ const Children = () => {
 								handlePress={() => {}}
 								text={"Upload Image"}
 							/>
-							<LoginInput
+							<ChildInput
 								key={"Name"}
-								placeholder={"Name"}
-								handlechange={(e: string) =>
+								label={"Name"}
+								placeholder={"Mathew"}
+								handleChange={(e: string) =>
 									setChildInfo({ ...childInfo, name: e })
 								}
 								value={childInfo.name}
@@ -131,7 +133,7 @@ const Children = () => {
 								prevDob={childInfo.dob}
 								handleDateConfirmation={handleDateConfirmation}
 							/>
-							<View style={{ borderWidth: 1, borderRadius: 10 }}>
+							<View style={childrenStyles.pickerInputWrapper}>
 								<Picker
 									selectedValue={childInfo.schoolId}
 									onValueChange={handleSchoolChange}

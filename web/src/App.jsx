@@ -26,6 +26,10 @@ import VerifyOTP from "./pages/Auth/components/VerifyOTP";
 import Clients from "./pages/Main/components/Clients";
 import Students from "./pages/Main/components/Students";
 import Profile from "./pages/Main/components/Profile";
+import NotFound from "./pages/Main/components/NotFound/index ";
+import ProtectedRoutes from "./core/routes/ProtectedRoutes";
+import TeacherLayout from "./pages/Main/TeacherLayout";
+import PsychologistLayout from "./pages/Main/PsychologistLayout";
 
 function App() {
 	return (
@@ -55,19 +59,35 @@ function App() {
 						/>
 					</Route>
 					<Route path="/main/" element={<Main />}>
-						<Route path={"teacher"}>
+						<Route
+							path={"teacher"}
+							element={
+								<ProtectedRoutes role={2}>
+									<TeacherLayout />
+								</ProtectedRoutes>
+							}
+						>
 							<Route index element={<Students />} />
 							<Route path="reports" element={<Students />} />
 							<Route path="chat" element={<Students />} />
 							<Route path="profile" element={<Profile />} />
+							<Route path="*" element={<NotFound />} />
 						</Route>
 
-						<Route path={"psychologist"}>
+						<Route
+							path={"psychologist"}
+							element={
+								<ProtectedRoutes role={3}>
+									<PsychologistLayout />
+								</ProtectedRoutes>
+							}
+						>
 							<Route index element={<Clients />} />
 							<Route path="schedules" element={<Clients />} />
 							<Route path="chat" element={<Clients />} />
 							<Route path="feedback" element={<Clients />} />
 							<Route path="profile" element={<Profile />} />
+							<Route path="*" element={<NotFound />} />
 						</Route>
 					</Route>
 				</Routes>

@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Redux
 import { useSelector } from "react-redux";
 import { childrenSliceName } from "../../../../core/redux/children";
 import StudentCard from "../../../../components/StudentCard";
-import { Link } from "react-router-dom";
-
-// Components
+import { userProfileSliceName } from "../../../../core/redux/userProfile";
 
 const Students = () => {
+	const teacher = useSelector((global) => global[userProfileSliceName]);
 	const { children } = useSelector((global) => global[childrenSliceName]);
 	const [filteredStudents, setFilteredStudents] = useState([]);
 
 	console.log(filteredStudents);
 	useEffect(() => {
-		setFilteredStudents(children);
+		const filteredChildren = children.filter(
+			(child) => child.teacherId === teacher.teacher.id
+		);
+		setFilteredStudents(filteredChildren);
 	}, [children]);
 
 	const handleStudentSearch = (e) => {
-		console.log(children);
-		console.log(children[0]);
 		const userSearch = e.target.value.toLowerCase();
 		setFilteredStudents(
 			children.filter((child) =>

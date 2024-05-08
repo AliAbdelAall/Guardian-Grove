@@ -1,0 +1,34 @@
+.client-profile-container{
+  padding: 40px;
+
+  gap: 90px;
+}
+
+.info-Wrapper{
+  gap: 15px;
+}
+
+.client-chlidren-container{
+    width: fit-content;
+}
+
+.client-chlidren-container>h3{
+  margin-bottom: 20px;
+}
+
+.client-chlidren-wrapper{
+  height: fit-content;
+  max-height: 700px;
+  overflow-y: scroll;
+  gap:15px;
+}
+
+.client-chlidren-wrapper::-webkit-scrollbar{
+  display: none;
+}
+
+.back-button{
+  margin-top: 30px;
+  width: fit-content;
+  margin-left: 40px;
+}

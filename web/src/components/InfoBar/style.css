@@ -1,0 +1,22 @@
+.info-bar-wrapper{
+  padding: 10px 10px 10px 25px;
+  width: 345px;
+  border-radius: 10px;
+  border: 1px solid var(--input-bor-col);
+}
+
+.info-bar-wrapper>input{
+  border: none;
+  outline: none;
+  margin-top: 5px;
+
+}
+
+.info-bar-wrapper>p{
+padding: 5px 0;
+
+}
+
+.info-bar-wrapper>input::placeholder{
+  color: var(--input-bor-col);
+}

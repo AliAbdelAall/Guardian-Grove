@@ -1,0 +1,47 @@
+.input-bar-container{
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-bar-container>textarea{
+  width: 100%;
+  padding: 10px 10px 10px 20px;
+  resize: none;
+  border : 1px solid var(--input-bor-col);
+  border-radius: 10px;
+  outline: none;
+  font-size: 18px;
+}
+
+.input-bar-container>textarea::placeholder{
+  color: var(--input-bor-col);
+
+}
+
+.input-bar-container>button{
+  width: 100px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  background-color: var(--primary-col);
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.instrucions-container{
+  gap: 10px;
+  max-height: 650px;
+  overflow-y: scroll;
+}
+
+.instrucions-container::-webkit-scrollbar{
+  display: none;
+}
+
+.instruction-wrapper{
+  padding: 10px;
+  background-color: #e1e1e1;
+  border-radius: 10px;
+  gap: 10px;
+}

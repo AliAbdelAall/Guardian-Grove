@@ -1,7 +1,8 @@
 .student-card{
   padding: 15px;
   width: 325px;
-  border: 1px solid var(--acients-col);
+  height: fit-content;
+  border: 1px solid var(--input-bor-col);
   border-radius: 10px;
 }
 

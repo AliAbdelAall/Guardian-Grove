@@ -113,7 +113,6 @@ const Main = () => {
 
 	return (
 		<div className="flex ">
-			<Sidebar role={role} />
 			<Outlet />
 		</div>
 	);

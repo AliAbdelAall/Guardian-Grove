@@ -49,21 +49,16 @@ export const getStudents = async (req: Request, res: Response) => {
 		const teacher = await prismaClient.profile.findFirst({
 			where: { userId: id },
 			include: {
-				Teacher: {
-					include: {
-						students: {
-							include: { parent: { include: { profile: true } } },
-						},
-					},
-				},
+				Teacher: true,
 			},
 		});
-
+		const children = await prismaClient.child.findMany({
+			where: { schoolId: teacher?.Teacher?.schoolId },
+			include: { parent: { include: { profile: true } } },
+		});
 		const schools = await prismaClient.school.findMany();
 
-		return res
-			.status(200)
-			.json({ students: teacher?.Teacher?.students, schools });
+		return res.status(200).json({ students: children, schools });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });

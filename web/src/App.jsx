@@ -31,6 +31,7 @@ import ProtectedRoutes from "./core/routes/ProtectedRoutes";
 import TeacherLayout from "./pages/Main/TeacherLayout";
 import PsychologistLayout from "./pages/Main/PsychologistLayout";
 import Client from "./pages/Main/components/Client";
+import Child from "./pages/Main/components/Child/index ";
 
 function App() {
 	return (
@@ -70,10 +71,7 @@ function App() {
 						>
 							<Route path="students">
 								<Route index element={<Students />} />
-								<Route
-									path="student/:id"
-									element={<Students />}
-								/>
+								<Route path="student/:id" element={<Child />} />
 							</Route>
 							<Route path="reports" element={<Students />} />
 							<Route path="chat" element={<Students />} />
@@ -92,7 +90,7 @@ function App() {
 							<Route path="clients/">
 								<Route index element={<Clients />} />
 								<Route path="client/:id" element={<Client />} />
-								<Route path="child/:id" element={<Client />} />
+								<Route path="child/:id" element={<Child />} />
 							</Route>
 							<Route path="schedules" element={<Clients />} />
 							<Route path="chat" element={<Clients />} />

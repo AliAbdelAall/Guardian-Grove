@@ -25,7 +25,7 @@ export const checkRole = async (req: Request, res: Response) => {
 
 			return res.status(200).json({
 				userRole: user?.role.name,
-				profile: psychologist,
+				profile: { ...psychologist, roleId: user.roleId },
 				reviews,
 			});
 		}
@@ -40,7 +40,7 @@ export const checkRole = async (req: Request, res: Response) => {
 			});
 			return res.status(200).json({
 				userRole: user?.role.name,
-				profile: teacher,
+				profile: { ...teacher, roleId: user.roleId },
 			});
 		}
 	} catch (error) {

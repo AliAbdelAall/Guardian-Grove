@@ -8,6 +8,7 @@ const initialState = {
   email: "",
   profilePic: "",
   dob: null,
+  roleId: 0,
   teacher: {
     id: 0,
     profileId: 0,

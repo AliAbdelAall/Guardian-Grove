@@ -21,8 +21,6 @@ import { toast } from "react-toastify";
 import { setSchools } from "../../core/redux/shcools";
 import { setReviews } from "../../core/redux/reviews";
 
-// Components
-import Sidebar from "./components/Sidebar";
 
 const Main = () => {
 	const navigate = useNavigate();
@@ -61,11 +59,15 @@ const Main = () => {
 					const students = response.data.students;
 					const parentsList = [];
 					const studentsList = [];
+					const parentIds = [];
 
 					students?.forEach((student) => {
 						console.log(student);
 						const { parent, ...studentInfo } = student;
-						parentsList.push(parent);
+						if (!parentIds.includes(parent.id)) {
+							parentsList.push(parent);
+							parentIds.push(parent.id);
+						}
 						console.log(students);
 						studentsList.push(studentInfo);
 					});

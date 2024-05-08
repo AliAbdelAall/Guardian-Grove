@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -12,12 +12,12 @@ const Students = () => {
 	const { children } = useSelector((global) => global[childrenSliceName]);
 	const [filteredStudents, setFilteredStudents] = useState([]);
 
-	console.log(filteredStudents);
+	const location = useLocation();
+
+	const isSchool = location.pathname.includes("school");
+
 	useEffect(() => {
-		const filteredChildren = children.filter(
-			(child) => child.teacherId === teacher.teacher.id
-		);
-		setFilteredStudents(filteredChildren);
+		setTeacherStudents();
 	}, [children]);
 
 	const handleStudentSearch = (e) => {
@@ -31,18 +31,29 @@ const Students = () => {
 
 	const calculateStudentAge = (dob) => {
 		const birthDate = new Date(dob);
-
 		if (isNaN(birthDate.getTime())) {
 			return null;
 		}
-
 		const currentDate = new Date();
-
 		const difference = currentDate.getTime() - birthDate.getTime();
-
 		const age = Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
-
 		return age;
+	};
+
+	const setTeacherStudents = () => {
+		let filteredChildren = [];
+		if (isSchool) {
+			filteredChildren = children.filter(
+				(child) =>
+					child.schoolId === teacher.teacher.schoolId &&
+					!child.teacherId
+			);
+		} else {
+			filteredChildren = children.filter(
+				(child) => child.teacherId === teacher.teacher.id
+			);
+		}
+		setFilteredStudents(filteredChildren);
 	};
 
 	return (
@@ -59,28 +70,35 @@ const Students = () => {
 					/>
 				</div>
 
-				<div className="flex wrap students-cards-wrapper">
-					{filteredStudents?.map((student) => {
-						console.log(student);
-						const { id, name, dob, profilePic } = student;
-						const age = calculateStudentAge(dob);
-						return (
-							<Link
-								key={id}
-								to={`/main/teacher/students/student/${id}`}
-							>
-								<StudentCard
-									id={id}
-									name={name}
-									age={age}
-									profilePic={`${
-										import.meta.env.VITE_PROFILE_PIC_URL
-									}${profilePic}`}
-								/>
-							</Link>
-						);
-					})}
-				</div>
+				{filteredStudents.length !== 0 ? (
+					<div className="flex wrap students-cards-wrapper">
+						{filteredStudents?.map((student) => {
+							const { id, name, dob, profilePic } = student;
+							const age = calculateStudentAge(dob);
+							return (
+								<Link
+									key={id}
+									to={`/main/teacher/students/student/${id}`}
+								>
+									<StudentCard
+										id={id}
+										name={name}
+										age={age}
+										profilePic={`${
+											import.meta.env.VITE_PROFILE_PIC_URL
+										}${profilePic}`}
+									/>
+								</Link>
+							);
+						})}
+					</div>
+				) : (
+					<h2>
+						{isSchool
+							? "There is no Students without a teacher keeping an eye on them."
+							: "You have no students to send reports check you school students."}
+					</h2>
+				)}
 			</div>
 		</div>
 	);

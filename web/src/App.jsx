@@ -30,6 +30,7 @@ import NotFound from "./pages/Main/components/NotFound/index ";
 import ProtectedRoutes from "./core/routes/ProtectedRoutes";
 import TeacherLayout from "./pages/Main/TeacherLayout";
 import PsychologistLayout from "./pages/Main/PsychologistLayout";
+import Client from "./pages/Main/components/Client";
 
 function App() {
 	return (
@@ -45,7 +46,7 @@ function App() {
 					pauseOnFocusLoss
 					draggable
 					pauseOnHover
-					theme="dark"
+					theme="light"
 				/>
 				<Routes>
 					<Route path="/" element={<Auth />}>
@@ -67,7 +68,13 @@ function App() {
 								</ProtectedRoutes>
 							}
 						>
-							<Route index element={<Students />} />
+							<Route path="students">
+								<Route index element={<Students />} />
+								<Route
+									path="student/:id"
+									element={<Students />}
+								/>
+							</Route>
 							<Route path="reports" element={<Students />} />
 							<Route path="chat" element={<Students />} />
 							<Route path="profile" element={<Profile />} />
@@ -82,7 +89,11 @@ function App() {
 								</ProtectedRoutes>
 							}
 						>
-							<Route index element={<Clients />} />
+							<Route path="clients/">
+								<Route index element={<Clients />} />
+								<Route path="client/:id" element={<Client />} />
+								<Route path="child/:id" element={<Client />} />
+							</Route>
 							<Route path="schedules" element={<Clients />} />
 							<Route path="chat" element={<Clients />} />
 							<Route path="feedback" element={<Clients />} />

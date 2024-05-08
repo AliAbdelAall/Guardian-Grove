@@ -19,14 +19,14 @@ const Sidebar = ({ role }) => {
 
 	const sidebarLinks = {
 		Psychologist: [
-			{ path: "/main/psychologist", text: "Clients" },
+			{ path: "/main/psychologist/clients", text: "Clients" },
 			{ path: "/main/psychologist/schedules", text: "Schedules" },
 			{ path: "/main/psychologist/chat", text: "Chat" },
 			{ path: "/main/psychologist/feedback", text: "Feedback" },
 			{ path: "/main/psychologist/profile", text: "Profile" },
 		],
 		Teacher: [
-			{ path: "/main/teacher", text: "Students" },
+			{ path: "/main/teacher/students", text: "Students" },
 			{ path: "/main/teacher/chat", text: "Chat" },
 			{ path: "/main/teacher/reports", text: "Reports" },
 			{ path: "/main/teacher/profile", text: "Profile" },
@@ -34,6 +34,7 @@ const Sidebar = ({ role }) => {
 	};
 
 	const userLinks = sidebarLinks[role] || [];
+	const isActive = (path) => location.pathname.startsWith(path);
 
 	const handleLogout = () => {
 		removeLocalUser();
@@ -56,7 +57,7 @@ const Sidebar = ({ role }) => {
 						key={index}
 						to={link.path}
 						className={`sidebar-btn ${
-							location.pathname === link.path
+							isActive(link.path)
 								? "sidebar-active white"
 								: "text-acient"
 						} text-lg full-width`}

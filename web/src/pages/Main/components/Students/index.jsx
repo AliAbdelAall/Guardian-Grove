@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { childrenSliceName } from "../../../../core/redux/children";
 import StudentCard from "../../../../components/StudentCard";
+import { Link } from "react-router-dom";
 
 // Components
 
@@ -63,15 +64,19 @@ const Students = () => {
 						const { id, name, dob, profilePic } = student;
 						const age = calculateStudentAge(dob);
 						return (
-							<StudentCard
+							<Link
 								key={id}
-								id={id}
-								name={name}
-								age={age}
-								profilePic={`${
-									import.meta.env.VITE_PROFILE_PIC_URL
-								}${profilePic}`}
-							/>
+								to={`/main/teacher/students/student/${id}`}
+							>
+								<StudentCard
+									id={id}
+									name={name}
+									age={age}
+									profilePic={`${
+										import.meta.env.VITE_PROFILE_PIC_URL
+									}${profilePic}`}
+								/>
+							</Link>
 						);
 					})}
 				</div>

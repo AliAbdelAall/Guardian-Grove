@@ -7,6 +7,7 @@ import { childrenSliceName } from "../../../../core/redux/children";
 
 // Components
 import ClientCard from "../../../../components/ClientCard";
+import { Link } from "react-router-dom";
 
 const Clients = () => {
 	const { parents } = useSelector((global) => global[parentsSliceName]);
@@ -70,17 +71,21 @@ const Clients = () => {
 							childrenNames.push(child.name);
 						});
 						return (
-							<ClientCard
+							<Link
 								key={id}
-								id={profile.id}
-								name={`${profile.firstName} ${profile.lastName}`}
-								age={calculateAge(profile.dob)}
-								profilePic={`${
-									import.meta.env.VITE_PROFILE_PIC_URL
-								}${profile.profilePic}`}
-								email={profile.email}
-								children={childrenNames.join(", ")}
-							/>
+								to={`/main/psychologist/clients/client/${id}`}
+							>
+								<ClientCard
+									id={profile.id}
+									name={`${profile.firstName} ${profile.lastName}`}
+									age={calculateAge(profile.dob)}
+									profilePic={`${
+										import.meta.env.VITE_PROFILE_PIC_URL
+									}${profile.profilePic}`}
+									email={profile.email}
+									children={childrenNames.join(", ")}
+								/>
+							</Link>
 						);
 					})}
 				</div>

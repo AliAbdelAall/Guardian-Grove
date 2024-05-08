@@ -53,7 +53,7 @@ const Main = () => {
 	};
 
 	const loadStudents = () => {
-		navigate("/main/teacher");
+		navigate("/main/teacher/students");
 		sendRequest(requestMethods.GET, "/api/teacher/get-students")
 			.then((response) => {
 				if (response.status === 200) {
@@ -83,7 +83,7 @@ const Main = () => {
 	};
 
 	const loadClients = () => {
-		navigate("/main/psychologist");
+		navigate("/main/psychologist/clients");
 		sendRequest(requestMethods.GET, "/api/psychologist/get-clients")
 			.then((response) => {
 				if (response.status === 200) {
@@ -103,6 +103,7 @@ const Main = () => {
 					console.log(parentsList);
 					dispatch(setParents(parentsList));
 					dispatch(setchildren(childrenList));
+					dispatch(setSchools(response.data.schools));
 					toast.success("load successful");
 				}
 			})

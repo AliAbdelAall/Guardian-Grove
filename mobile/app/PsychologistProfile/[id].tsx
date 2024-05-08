@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 // styles
 import { psychoProfileStyles } from "../../Styles/psychologists/profile";
@@ -17,13 +17,13 @@ import LoginButton from "../../components/LoginButton";
 import ProfileInput from "../../components/ProfileInput";
 
 const PsichologisProfile = () => {
-	const id = 4;
+	const { id } = useLocalSearchParams();
 
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
 	const psychologist = psychologists.find(
-		(psychologist) => (psychologist.id = id)
+		(psychologist) => psychologist.id == parseInt(id[0])
 	);
 
 	const calculateStudentAge = (dob: string) => {

@@ -91,7 +91,9 @@ const Psychologists = () => {
 
 					return (
 						<TouchableOpacity
-							onPress={() => router.push(`/PsychologistProfile`)}
+							onPress={() =>
+								router.push(`/PsychologistProfile/${id}`)
+							}
 						>
 							<PsychologistCard
 								key={id}

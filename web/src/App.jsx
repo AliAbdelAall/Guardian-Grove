@@ -73,7 +73,7 @@ function App() {
 								<Route index element={<Students />} />
 								<Route path="student/:id" element={<Child />} />
 							</Route>
-							<Route path="reports" element={<Students />} />
+							<Route path="school" element={<Students />} />
 							<Route path="chat" element={<Students />} />
 							<Route path="profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />

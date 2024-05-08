@@ -27,8 +27,8 @@ const Sidebar = ({ role }) => {
 		],
 		Teacher: [
 			{ path: "/main/teacher/students", text: "Students" },
+			{ path: "/main/teacher/school", text: "School" },
 			{ path: "/main/teacher/chat", text: "Chat" },
-			{ path: "/main/teacher/reports", text: "Reports" },
 			{ path: "/main/teacher/profile", text: "Profile" },
 		],
 	};

@@ -27,8 +27,11 @@ export const getClients = async (req: Request, res: Response) => {
 		}
 		const clients = profile.Psychologist.clients;
 
+		const schools = await prismaClient.school.findMany();
+
 		return res.status(200).json({
 			clients,
+			schools,
 		});
 	} catch (error) {
 		console.log(error);

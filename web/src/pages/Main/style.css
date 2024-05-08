@@ -41,6 +41,10 @@
   height: 100vh;
 }
 
+.clients-cards-container>h2{
+  margin-left: 20px;
+}
+
 .clients-search-wrapper{
   padding: 20px;
   gap: 15px;
@@ -63,6 +67,7 @@
   padding: 10px;
   border-radius: 10px;
   border: 1px solid var(--input-bor-col);
+  outline: none;
 }
 
 .search-input::placeholder{
@@ -72,6 +77,10 @@
 .students-cards-container{
   padding: 60px 20px 0 20px;
   height: 100vh;
+}
+
+.students-cards-container>h2{
+  margin-left: 20px;
 }
 
 .students-search-wrapper{

@@ -36,6 +36,11 @@ const Child = () => {
 	const { children } = useSelector((global) => global[childrenSliceName]);
 	const { schools } = useSelector((global) => global[schoolsSliceName]);
 
+	const filteredReports = reports.filter((report) => report.childId == id);
+	const filteredInstructions = instructions.filter(
+		(instruction) => instruction.childId == id
+	);
+
 	const [inputText, setInputText] = useState("");
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -158,8 +163,8 @@ const Child = () => {
 						</div>
 						<div className="flex column instrucions-container">
 							{isTeacherPath ? (
-								reports.length !== 0 ? (
-									reports?.map((reports) => (
+								filteredReports.length !== 0 ? (
+									filteredReports?.map((reports) => (
 										<ReportContainer
 											key={reports.id}
 											dateTime={reports.createdAt}
@@ -170,8 +175,8 @@ const Child = () => {
 								) : (
 									<h4>No Reports Yet.</h4>
 								)
-							) : instructions.length !== 0 ? (
-								instructions?.map((instruction) => (
+							) : filteredInstructions.length !== 0 ? (
+								filteredInstructions?.map((instruction) => (
 									<ReportContainer
 										key={instruction.id}
 										dateTime={instruction.createdAt}

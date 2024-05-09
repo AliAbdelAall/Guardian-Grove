@@ -6,6 +6,7 @@ import childrenReducer, { childrenSliceName } from "./children"
 import userProfileReducer, { userProfileSliceName } from "./userProfile"
 import shcoolsReducer, { schoolsSliceName } from "./shcools"
 import reviewsReducer, { reviewsSliceName } from "./reviews"
+import reportsReducer, { reportsSliceName } from "./reports"
 
 // Logger
 import logger from "redux-logger"
@@ -17,6 +18,7 @@ export const store = configureStore({
     [userProfileSliceName]: userProfileReducer,
     [schoolsSliceName]: shcoolsReducer,
     [reviewsSliceName]: reviewsReducer,
+    [reportsSliceName]: reportsReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 })

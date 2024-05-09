@@ -12,7 +12,12 @@ const reportsSlice = createSlice({
       return {
         ...state, reports: [...action.payload]
       }
-    }
+    },
+    addReport: (state, action) => {
+      return {
+        ...state, reports: [...state.reports, action.payload]
+      }
+    },
   }
 })
 

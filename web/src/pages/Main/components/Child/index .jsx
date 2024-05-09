@@ -1,19 +1,26 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
+// Styles
 import "./style.css";
 
-import InfoBar from "../../../../components/InfoBar";
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { childrenSliceName } from "../../../../core/redux/children";
 import { schoolsSliceName } from "../../../../core/redux/shcools";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { userProfileSliceName } from "../../../../core/redux/userProfile";
+import { addReport, reportsSliceName } from "../../../../core/redux/reports";
+import { instructionsSliceName } from "../../../../core/redux/instructions";
+
+// Components
+import InfoBar from "../../../../components/InfoBar";
 import SmallButton from "../../../../components/SmallButton";
 import ReportContainer from "../../../../components/ReportContainer";
+
+// Tools
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
 import { toast } from "react-toastify";
-import { userProfileSliceName } from "../../../../core/redux/userProfile";
-import { reportsSliceName } from "../../../../core/redux/reports";
-import { instructionsSliceName } from "../../../../core/redux/instructions";
 
 const Child = () => {
 	const { id } = useParams();
@@ -49,6 +56,27 @@ const Child = () => {
 	const getSchoolName = (schoolId) => {
 		const school = schools.find((school) => school.id === schoolId);
 		return school.name;
+	};
+	const handleSendRequest = () => {
+		if (isTeacherPath) {
+			handleSendReport();
+		}
+	};
+	const handleSendReport = () => {
+		sendRequest(requestMethods.POST, "api/teacher/send-report", {
+			childId: JSON.parse(id),
+			report: inputText,
+		})
+			.then((response) => {
+				if (response.status === 201) {
+					toast.success(response.data.message);
+					dispatch(addReport(response.data.report));
+					setInputText("");
+				}
+			})
+			.catch((error) => {
+				toast.error(error.response.error);
+			});
 	};
 
 	return (
@@ -103,13 +131,14 @@ const Child = () => {
 								value={inputText}
 								onChange={(e) => setInputText(e.target.value)}
 							/>
-							<button onClick={handleSendReport}>Send</button>
+							<button onClick={handleSendRequest}>Send</button>
 						</div>
 						<div className="flex column instrucions-container">
 							{isTeacherPath ? (
 								reports.length !== 0 ? (
 									reports?.map((reports) => (
 										<ReportContainer
+											key={reports.id}
 											dateTime={reports.createdAt}
 											id={reports.id}
 											report={reports.report}
@@ -121,6 +150,7 @@ const Child = () => {
 							) : instructions.length !== 0 ? (
 								instructions?.map((instruction) => (
 									<ReportContainer
+										key={instruction.id}
 										dateTime={instruction.createdAt}
 										id={instruction.id}
 										report={instruction.insrtuction}

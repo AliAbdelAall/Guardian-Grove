@@ -2,52 +2,41 @@ import React, { useState } from "react";
 import "./style.css";
 
 import InfoBar from "../../../../components/InfoBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { childrenSliceName } from "../../../../core/redux/children";
 import { schoolsSliceName } from "../../../../core/redux/shcools";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import StudentCard from "../../../../components/StudentCard";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import SmallButton from "../../../../components/SmallButton";
+import ReportContainer from "../../../../components/ReportContainer";
+import { useSendRequest } from "../../../../core/tools/remote/request";
+import { requestMethods } from "../../../../core/enums/requestMethods";
+import { toast } from "react-toastify";
+import { userProfileSliceName } from "../../../../core/redux/userProfile";
+import { reportsSliceName } from "../../../../core/redux/reports";
+import { instructionsSliceName } from "../../../../core/redux/instructions";
 
 const Child = () => {
 	const { id } = useParams();
 
+	const user = useSelector((global) => global[userProfileSliceName]);
+	const { reports } = useSelector((global) => global[reportsSliceName]);
+	const { instructions } = useSelector(
+		(global) => global[instructionsSliceName]
+	);
+	const { children } = useSelector((global) => global[childrenSliceName]);
+	const { schools } = useSelector((global) => global[schoolsSliceName]);
+
+	const [inputText, setInputText] = useState("");
 	const location = useLocation();
+	const navigate = useNavigate();
+	const sendRequest = useSendRequest();
+	const dispatch = useDispatch();
 
 	const path = location.pathname;
 	const isTeacherPath = path.includes("teacher");
 	const isPsychologistPath = path.includes("psychologist");
 
-	const { children } = useSelector((global) => global[childrenSliceName]);
-	const { schools } = useSelector((global) => global[schoolsSliceName]);
-	const [inputText, setInputText] = useState("");
-	console.log(inputText);
-	const navigate = useNavigate();
-
 	const child = children.find((child) => child.id == id);
-
-	const instructionsList = [
-		{
-			id: 1,
-			date: "2024-02-24T00:00:00.000Z",
-			insrtuction:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet lectus nec dolor imperdiet consectetur. Donec non ex quis leo vehicula mattis. ",
-		},
-		{
-			id: 2,
-			date: "2024-02-27T00:00:00.000Z",
-			insrtuction:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet lectus nec dolor imperdiet consectetur. Donec non ex quis leo vehicula mattis. ",
-		},
-		{
-			id: 3,
-			date: "2024-03-14T00:00:00.000Z",
-			insrtuction:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sit amet lectus nec dolor imperdiet consectetur. Donec non ex quis leo vehicula mattis. ",
-		},
-	];
-
-	const [instructions, setInstructions] = useState(instructionsList);
 
 	const calculateAge = (dateOfBirth) => {
 		const dob = new Date(dateOfBirth);
@@ -60,19 +49,6 @@ const Child = () => {
 	const getSchoolName = (schoolId) => {
 		const school = schools.find((school) => school.id === schoolId);
 		return school.name;
-	};
-
-	const handleInputChange = () => {
-		console.log(instructions[instructions.length - 1]);
-		setInstructions([
-			...instructions,
-			{
-				id: instructions[instructions.length - 1].id + 1,
-				date: new Date().toString(),
-				insrtuction: inputText,
-			},
-		]);
-		setInputText("");
 	};
 
 	return (
@@ -117,7 +93,7 @@ const Child = () => {
 				<div className="client-chlidren-container">
 					<h3>{isTeacherPath ? "Reports" : "Instructions"}</h3>
 					<div className="flex column">
-						<div className="flex input-bar-container">
+						<div className="flex full-width input-bar-container">
 							<textarea
 								className="text-acient"
 								placeholder={
@@ -127,34 +103,31 @@ const Child = () => {
 								value={inputText}
 								onChange={(e) => setInputText(e.target.value)}
 							/>
-							<button onClick={handleInputChange}>Send</button>
+							<button onClick={handleSendReport}>Send</button>
 						</div>
 						<div className="flex column instrucions-container">
-							{instructions.length !== 0 ? (
+							{isTeacherPath ? (
+								reports.length !== 0 ? (
+									reports?.map((reports) => (
+										<ReportContainer
+											dateTime={reports.createdAt}
+											id={reports.id}
+											report={reports.report}
+										/>
+									))
+								) : (
+									<h4>No Reports Yet.</h4>
+								)
+							) : instructions.length !== 0 ? (
 								instructions?.map((instruction) => (
-									<div
-										key={instruction.id}
-										className="flex column instruction-wrapper"
-									>
-										<div className="flex space-between datetime-wrapper">
-											<p className="text-lg font-medium">
-												{instruction.date.slice(0, 10)}
-											</p>
-											<p className="text-sm">
-												{instruction.date.slice(11, 16)}
-											</p>
-										</div>
-										<p className="text-acient">
-											{instruction.insrtuction}
-										</p>
-									</div>
+									<ReportContainer
+										dateTime={instruction.createdAt}
+										id={instruction.id}
+										report={instruction.insrtuction}
+									/>
 								))
 							) : (
-								<h4>
-									{isTeacherPath
-										? "No Reports Yet."
-										: "No Instructions yet."}
-								</h4>
+								<h4>No Instructions yet.</h4>
 							)}
 						</div>
 					</div>

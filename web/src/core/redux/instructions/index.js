@@ -12,7 +12,12 @@ const instructionsSlice = createSlice({
       return {
         ...state, instructions: [...action.payload]
       }
-    }
+    },
+    addInstruction: (state, action) => {
+      return {
+        ...state, reports: [...state.instructions, action.payload]
+      }
+    },
   }
 })
 

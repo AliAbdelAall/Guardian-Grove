@@ -15,13 +15,13 @@ const instructionsSlice = createSlice({
     },
     addInstruction: (state, action) => {
       return {
-        ...state, reports: [...state.instructions, action.payload]
+        ...state, instructions: [...state.instructions, action.payload]
       }
     },
   }
 })
 
-export const { setInstructions } = instructionsSlice.actions
+export const { setInstructions, addInstruction } = instructionsSlice.actions
 
 export const instructionsSliceName = instructionsSlice.name
 

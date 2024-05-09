@@ -21,7 +21,7 @@ const reportsSlice = createSlice({
   }
 })
 
-export const { setReports } = reportsSlice.actions
+export const { setReports, addReport } = reportsSlice.actions
 
 export const reportsSliceName = reportsSlice.name
 

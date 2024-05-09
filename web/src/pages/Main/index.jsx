@@ -20,7 +20,8 @@ import { toast } from "react-toastify";
 // Redux
 import { setSchools } from "../../core/redux/shcools";
 import { setReviews } from "../../core/redux/reviews";
-
+import { setReports } from "../../core/redux/reports";
+import { setInstructions } from "../../core/redux/instructions";
 
 const Main = () => {
 	const navigate = useNavigate();
@@ -71,11 +72,10 @@ const Main = () => {
 						console.log(students);
 						studentsList.push(studentInfo);
 					});
-					console.log(studentsList);
-					console.log(parentsList);
 					dispatch(setParents(parentsList));
 					dispatch(setchildren(studentsList));
 					dispatch(setSchools(response.data.schools));
+					dispatch(setReports(response.data.reports));
 					toast.success("load successful");
 				}
 			})
@@ -101,11 +101,10 @@ const Main = () => {
 						console.log(children);
 						childrenList.push(...children);
 					});
-					console.log(childrenList);
-					console.log(parentsList);
 					dispatch(setParents(parentsList));
 					dispatch(setchildren(childrenList));
 					dispatch(setSchools(response.data.schools));
+					dispatch(setInstructions(response.data.instructions));
 					toast.success("load successful");
 				}
 			})

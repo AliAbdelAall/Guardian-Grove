@@ -74,29 +74,33 @@ model Psychologist {
   clients           Parent[]
   Reviews           Review[]
   ScheduledMeeting  ScheduledMeeting[]
+  Instruction       Instruction[]
 }
 
 model Teacher {
-  id         Int     @id @default(autoincrement())
-  speciality String?
-  profileId  Int     @unique
-  profile    Profile @relation(fields: [profileId], references: [id])
-  students   Child[]
-  School     School? @relation(fields: [schoolId], references: [id])
-  schoolId   Int?
+  id            Int             @id @default(autoincrement())
+  speciality    String?
+  profileId     Int             @unique
+  profile       Profile         @relation(fields: [profileId], references: [id])
+  students      Child[]
+  School        School?         @relation(fields: [schoolId], references: [id])
+  schoolId      Int?
+  TeacherReport TeacherReport[]
 }
 
 model Child {
-  id         Int      @id @default(autoincrement())
-  name       String
-  dob        DateTime
-  profilePic String   @default("default-profile.png")
-  parent     Parent   @relation(fields: [parentId], references: [id])
-  parentId   Int
-  teacher    Teacher? @relation(fields: [teacherId], references: [id])
-  teacherId  Int?
-  School     School?  @relation(fields: [schoolId], references: [id])
-  schoolId   Int?
+  id            Int             @id @default(autoincrement())
+  name          String
+  dob           DateTime
+  profilePic    String          @default("default-profile.png")
+  parent        Parent          @relation(fields: [parentId], references: [id])
+  parentId      Int
+  teacher       Teacher?        @relation(fields: [teacherId], references: [id])
+  teacherId     Int?
+  School        School?         @relation(fields: [schoolId], references: [id])
+  schoolId      Int?
+  TeacherReport TeacherReport[]
+  Instruction   Instruction[]
 }
 
 model PasswordReset {
@@ -129,5 +133,19 @@ model ScheduledMeeting {
 model TeacherReport {
   id        Int      @id @default(autoincrement())
   report    String
+  teacherId Int
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  childId   Int
+  child     Child    @relation(fields: [childId], references: [id])
   createdAt DateTime @default(now())
+}
+
+model Instruction {
+  id             Int          @id @default(autoincrement())
+  Instruction    String
+  psychologistId Int
+  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+  childId        Int
+  child          Child        @relation(fields: [childId], references: [id])
+  createdAt      DateTime     @default(now())
 }

@@ -129,3 +129,29 @@ export const updateSchool = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const sendReport = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+		const { report, childId } = req.body;
+		const teacher = await prismaClient.profile.findFirst({
+			where: { userId: id },
+			include: { Teacher: true },
+		});
+		const newReport = await prismaClient.teacherReport.create({
+			data: {
+				childId,
+				report,
+				teacherId: teacher!.Teacher!.id,
+			},
+		});
+
+		return res.status(201).json({
+			message: "report created successfully",
+			report: newReport,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

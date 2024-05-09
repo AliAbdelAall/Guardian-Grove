@@ -4,6 +4,7 @@ import teacherMiddleware from "../middlewares/teacher.middleware";
 import {
 	addStudent,
 	getStudents,
+	sendReport,
 	updateSchool,
 	updateSpeciality,
 } from "../controllers/teacher.controller";
@@ -35,6 +36,13 @@ teacherRoutes.post(
 	authMiddleware,
 	teacherMiddleware,
 	updateSchool
+);
+
+teacherRoutes.post(
+	"/send-report",
+	authMiddleware,
+	teacherMiddleware,
+	sendReport
 );
 
 export default teacherRoutes;

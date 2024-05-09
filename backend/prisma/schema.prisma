@@ -117,6 +117,7 @@ model School {
 
 model ScheduledMeeting {
   id             Int          @id @default(autoincrement())
+  title          String
   start          DateTime
   end            DateTime
   Psychologist   Psychologist @relation(fields: [psychologistId], references: [id])

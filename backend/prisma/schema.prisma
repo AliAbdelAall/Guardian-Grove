@@ -125,3 +125,9 @@ model ScheduledMeeting {
   parent         Parent?      @relation(fields: [parentId], references: [id])
   parentId       Int?
 }
+
+model TeacherReport {
+  id        Int      @id @default(autoincrement())
+  report    String
+  createdAt DateTime @default(now())
+}

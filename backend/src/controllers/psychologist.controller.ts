@@ -99,3 +99,29 @@ export const updateYearsOfExperience = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const sendInstruction = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+		const { instruction, childId } = req.body;
+		const Psychologist = await prismaClient.profile.findFirst({
+			where: { userId: id },
+			include: { Psychologist: true },
+		});
+		const newInstruction = await prismaClient.instruction.create({
+			data: {
+				childId,
+				instruction,
+				psychologistId: Psychologist!.Psychologist!.id,
+			},
+		});
+
+		return res.status(201).json({
+			message: "instruction created successfully",
+			instruction: newInstruction,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

@@ -3,6 +3,7 @@ import authMiddleware from "../middlewares/auth.middleware";
 import psychologistMiddleware from "../middlewares/psychologist.middleware";
 import {
 	getClients,
+	sendInstruction,
 	updateSpeciality,
 	updateYearsOfExperience,
 } from "../controllers/psychologist.controller";
@@ -27,6 +28,13 @@ psychologistRoutes.post(
 	authMiddleware,
 	psychologistMiddleware,
 	updateYearsOfExperience
+);
+
+psychologistRoutes.post(
+	"/send-instruction",
+	authMiddleware,
+	psychologistMiddleware,
+	sendInstruction
 );
 
 export default psychologistRoutes;

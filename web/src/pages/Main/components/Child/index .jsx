@@ -10,7 +10,10 @@ import { childrenSliceName } from "../../../../core/redux/children";
 import { schoolsSliceName } from "../../../../core/redux/shcools";
 import { userProfileSliceName } from "../../../../core/redux/userProfile";
 import { addReport, reportsSliceName } from "../../../../core/redux/reports";
-import { instructionsSliceName } from "../../../../core/redux/instructions";
+import {
+	addInstruction,
+	instructionsSliceName,
+} from "../../../../core/redux/instructions";
 
 // Components
 import InfoBar from "../../../../components/InfoBar";
@@ -60,8 +63,28 @@ const Child = () => {
 	const handleSendRequest = () => {
 		if (isTeacherPath) {
 			handleSendReport();
+		} else {
+			handleSendInstruction();
 		}
 	};
+
+	const handleSendInstruction = () => {
+		sendRequest(requestMethods.POST, "api/psychologist/send-instruction", {
+			childId: JSON.parse(id),
+			instruction: inputText,
+		})
+			.then((response) => {
+				if (response.status === 201) {
+					toast.success(response.data.message);
+					dispatch(addInstruction(response.data.instruction));
+					setInputText("");
+				}
+			})
+			.catch((error) => {
+				toast.error(error.response.error);
+			});
+	};
+
 	const handleSendReport = () => {
 		sendRequest(requestMethods.POST, "api/teacher/send-report", {
 			childId: JSON.parse(id),
@@ -153,7 +176,7 @@ const Child = () => {
 										key={instruction.id}
 										dateTime={instruction.createdAt}
 										id={instruction.id}
-										report={instruction.insrtuction}
+										report={instruction.instruction}
 									/>
 								))
 							) : (

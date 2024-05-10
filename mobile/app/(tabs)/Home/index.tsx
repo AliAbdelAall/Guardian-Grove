@@ -78,15 +78,16 @@ const Main = () => {
 							We make parenting easy
 						</Text>
 						<Text style={styles.heroText}>
-							Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit
+							Raising a family is no small feat. With our support,
+							you'll find that parenting can be more manageable
+							than ever before.
 						</Text>
 					</View>
 				</View>
 
 				<View style={styles.sectionTitleWrapper}>
 					<Text style={styles.sectionTitle}>Popular Specialists</Text>
-					<Pressable>
+					<Pressable onPress={() => router.push("/Psychologists")}>
 						<Text style={styles.seeAll}>See All</Text>
 					</Pressable>
 				</View>
@@ -109,32 +110,27 @@ const Main = () => {
 						} = psychologist.item;
 
 						return (
-							<PsychologistCard
-								key={id}
-								id={id}
-								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-								name={`${firstName} ${lastName}`}
-								speciality={speciality}
-								rating={rating}
-							/>
+							<Pressable
+								onPress={() =>
+									router.push(`/PsychologistProfile/${id}`)
+								}
+							>
+								<PsychologistCard
+									key={id}
+									id={id}
+									profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+									name={`${firstName} ${lastName}`}
+									speciality={speciality}
+									rating={rating}
+								/>
+							</Pressable>
 						);
 					}}
 				/>
 
 				<View style={styles.sectionTitleWrapper}>
 					<Text style={styles.sectionTitle}>Popular Teachers</Text>
-					<Pressable
-						onPress={() => {
-							Toast.show({
-								type: "success",
-								text1: "Hello",
-								text1Style: { fontSize: 20 },
-								text2: "This is some something :wave:",
-								text2Style: { fontSize: 14 },
-							});
-							ToastAndroid.show("This is some something", 35);
-						}}
-					>
+					<Pressable onPress={() => router.push("/Teachers")}>
 						<Text style={styles.seeAll}>See All</Text>
 					</Pressable>
 				</View>
@@ -155,14 +151,20 @@ const Main = () => {
 						} = teacher.item;
 						console.log(teacher);
 						return (
-							<TeacherCard
-								key={id}
-								id={id}
-								profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-								name={`${firstName} ${lastName}`}
-								school={school}
-								speciality={speciality}
-							/>
+							<Pressable
+								onPress={() =>
+									router.push(`/TeacherProfile/${id}`)
+								}
+							>
+								<TeacherCard
+									key={id}
+									id={id}
+									profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+									name={`${firstName} ${lastName}`}
+									school={school}
+									speciality={speciality}
+								/>
+							</Pressable>
 						);
 					}}
 				/>

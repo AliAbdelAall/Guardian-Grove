@@ -54,7 +54,7 @@ const ChildReports = () => {
 					headerTintColor: "white",
 				}}
 			/>
-			<ScrollView style={ChildStyles.ReportsContainer}>
+			<View style={ChildStyles.ReportsContainer}>
 				<ChildNameImage
 					key={student.name}
 					name={student.name}
@@ -73,7 +73,7 @@ const ChildReports = () => {
 						);
 					}}
 				/>
-			</ScrollView>
+			</View>
 		</View>
 	);
 };

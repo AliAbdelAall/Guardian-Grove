@@ -1,13 +1,6 @@
 import React from "react";
-import {
-	View,
-	Text,
-	ScrollView,
-	FlatList,
-	Image,
-	Pressable,
-} from "react-native";
-import { Stack, router } from "expo-router";
+import { View, ScrollView, FlatList } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 // Styles
 import { ChildStyles } from "../../Styles/ChildReport";
@@ -24,8 +17,7 @@ import ReportContainer from "../../components/ReportContainer";
 import ChildNameImage from "../../components/ChildNameImage";
 
 const ChildReports = () => {
-	const id = 1;
-	const childId = 1;
+	const { id } = useLocalSearchParams();
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
@@ -36,20 +28,33 @@ const ChildReports = () => {
 		(global: RootState) => global[reportsSliceName]
 	);
 
-	const teacher = teachers.find((teacher) => (teacher.id = id));
+	const student = children.find((child) => child.id === JSON.parse(id[0]));
 
-	const student = children.find((child) => child.teacherId === childId);
+	const teacher = teachers.find(
+		(teacher) => teacher.id === student.teacherId
+	);
 
-	const childreports = reports.filter((report) => report.childId === childId);
+	const childreports = reports.filter(
+		(report) => report.childId === JSON.parse(id[0])
+	);
 
 	return (
 		<View>
 			<Stack.Screen
 				options={{
 					title: `${teacher.firstName} ${teacher.lastName}`,
+					headerStyle: {
+						backgroundColor: "#75AB19",
+					},
+					headerTitleStyle: {
+						color: "white",
+						fontSize: 24,
+					},
+					headerShadowVisible: false,
+					headerTintColor: "white",
 				}}
 			/>
-			<View style={ChildStyles.ReportsContainer}>
+			<ScrollView style={ChildStyles.ReportsContainer}>
 				<ChildNameImage
 					key={student.name}
 					name={student.name}
@@ -68,7 +73,7 @@ const ChildReports = () => {
 						);
 					}}
 				/>
-			</View>
+			</ScrollView>
 		</View>
 	);
 };

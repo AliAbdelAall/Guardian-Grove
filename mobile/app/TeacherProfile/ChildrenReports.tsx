@@ -18,6 +18,8 @@ import { childrenSliceName } from "../../core/redux/children";
 import { useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { reportsSliceName } from "../../core/redux/reports";
+import ChildNameImage from "../../components/ChildNameImage";
+import ReportContainer from "../../components/ReportContainer";
 
 const ChildrenReports = () => {
 	const id = 1;
@@ -60,62 +62,17 @@ const ChildrenReports = () => {
 						return (
 							report && (
 								<View key={id}>
-									<View style={ChildStyles.childInfoWrapper}>
-										<Image
-											src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-											style={{
-												height: 55,
-												width: 55,
-												borderRadius: 28,
-											}}
-										/>
-										<Text style={ChildStyles.childInfoName}>
-											{name}
-										</Text>
-									</View>
-									<View style={ChildStyles.reportContainer}>
-										<View>
-											<View
-												style={
-													ChildStyles.dateTimeWrapper
-												}
-											>
-												<Text
-													style={ChildStyles.dateText}
-												>
-													{`Last Report ${report.createdAt.slice(
-														0,
-														10
-													)}`}
-												</Text>
-												<Text>
-													{report.createdAt.slice(
-														11,
-														16
-													)}
-												</Text>
-											</View>
-											<Text
-												style={ChildStyles.reportText}
-											>
-												{report.report}
-											</Text>
-										</View>
-
-										<Pressable
-											onPress={() =>
-												router.push(
-													"/TeacherProfile/ChildReports"
-												)
-											}
-										>
-											<Text
-												style={ChildStyles.seeAllText}
-											>
-												See All
-											</Text>
-										</Pressable>
-									</View>
+									<ChildNameImage
+										key={name}
+										name={name}
+										profilePic={profilePic}
+									/>
+									<ReportContainer
+										key={id}
+										dateTime={report.createdAt}
+										report={report.report}
+										route="/TeacherProfile/ChildReports"
+									/>
 								</View>
 							)
 						);

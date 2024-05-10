@@ -25,12 +25,6 @@ const RootLayout = () => {
 						headerShown: false,
 					}}
 				/>
-				<Stack.Screen
-					name="TeacherProfile"
-					options={{
-						headerShown: false,
-					}}
-				/>
 			</Stack>
 		</Provider>
 	);

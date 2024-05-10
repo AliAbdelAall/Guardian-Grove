@@ -1,13 +1,6 @@
 import React from "react";
-import {
-	View,
-	Text,
-	ScrollView,
-	FlatList,
-	Image,
-	Pressable,
-} from "react-native";
-import { Stack, router } from "expo-router";
+import { View, ScrollView, FlatList } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 // Styles
 import { ChildStyles } from "../../Styles/ChildReport";
@@ -18,11 +11,13 @@ import { childrenSliceName } from "../../core/redux/children";
 import { useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { reportsSliceName } from "../../core/redux/reports";
+
+// components
 import ChildNameImage from "../../components/ChildNameImage";
 import ReportContainer from "../../components/ReportContainer";
 
 const ChildrenReports = () => {
-	const id = 1;
+	const { id } = useLocalSearchParams();
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
@@ -33,9 +28,13 @@ const ChildrenReports = () => {
 		(global: RootState) => global[reportsSliceName]
 	);
 
-	const teacher = teachers.find((teacher) => (teacher.id = id));
+	const teacher = teachers.find(
+		(teacher) => teacher.id === JSON.parse(id[0])
+	);
 
-	const students = children.filter((child) => child.teacherId === id);
+	const students = children.filter(
+		(child) => child.teacherId === JSON.parse(id[0])
+	);
 
 	const studentsWithReport = students.map((student) => {
 		const latestReport = reports.find(
@@ -51,34 +50,43 @@ const ChildrenReports = () => {
 			<Stack.Screen
 				options={{
 					title: `${teacher.firstName} ${teacher.lastName}`,
+					headerStyle: {
+						backgroundColor: "#75AB19",
+					},
+					headerTitleStyle: {
+						color: "white",
+						fontSize: 24,
+					},
+					headerShadowVisible: false,
+					headerTintColor: "white",
 				}}
 			/>
-			<ScrollView style={ChildStyles.ReportsContainer}>
+			<View style={ChildStyles.ReportsContainer}>
 				<FlatList
 					data={studentsWithReport}
 					scrollEnabled={false}
 					renderItem={(student) => {
-						const { id, name, profilePic, report } = student.item;
+						const { name, profilePic, report } = student.item;
 						return (
 							report && (
-								<View key={id}>
+								<View key={student.item.id}>
 									<ChildNameImage
 										key={name}
 										name={name}
 										profilePic={profilePic}
 									/>
 									<ReportContainer
-										key={id}
+										key={student.item.id}
 										dateTime={report.createdAt}
 										report={report.report}
-										route="/TeacherProfile/ChildReports"
+										route={`/ChildReports/${student.item.id}`}
 									/>
 								</View>
 							)
 						);
 					}}
 				/>
-			</ScrollView>
+			</View>
 		</View>
 	);
 };

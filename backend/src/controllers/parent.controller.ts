@@ -84,6 +84,7 @@ export const getPsychologistsAndTeachers = async (
 		};
 
 		const children = user?.parent?.children;
+		const childrentIds = children?.map((child) => child.id);
 
 		const psychologists = await prismaClient.psychologist.findMany({
 			include: {
@@ -137,12 +138,24 @@ export const getPsychologistsAndTeachers = async (
 
 		const schools = await prismaClient.school.findMany();
 
+		const reports = await prismaClient.teacherReport.findMany();
+		const filtereReports = reports.filter((report) =>
+			childrentIds?.includes(report.childId)
+		);
+
+		const instructions = await prismaClient.instruction.findMany();
+		const filtereInstructions = instructions.filter((instruction) =>
+			childrentIds?.includes(instruction.childId)
+		);
+
 		return res.status(200).json({
 			user: userProfile,
 			children,
 			psychologists: psychologistsWithAvgRating,
 			teachers: teachersWithCustomProfiles,
 			schools,
+			reports: filtereReports,
+			instructions: filtereInstructions,
 		});
 	} catch (error) {
 		console.error("Error:", error);

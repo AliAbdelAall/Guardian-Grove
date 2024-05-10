@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface child {
 	id: number;
 	parentId: number;
-	teacherId: string | null;
+	teacherId: number | null;
 	profilePic: String;
 	name: string;
 	schoolId: number;

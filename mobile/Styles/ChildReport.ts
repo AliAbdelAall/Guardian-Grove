@@ -26,6 +26,11 @@ export const ChildStyles = StyleSheet.create({
 	reportWrapper: {
 		padding: 10,
 	},
+	dateTimeWrapper: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
 	dateText: {
 		fontSize: 18,
 		fontWeight: "500",

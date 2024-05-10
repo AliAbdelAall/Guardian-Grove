@@ -17,6 +17,8 @@ import { teachersSliceName } from "../../core/redux/teachers";
 import { childrenSliceName } from "../../core/redux/children";
 import { useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
+import { reportsSliceName } from "../../core/redux/reports";
+
 const ChildrenReports = () => {
 	const id = 1;
 	const teachers = useSelector(
@@ -25,11 +27,23 @@ const ChildrenReports = () => {
 	const children = useSelector(
 		(global: RootState) => global[childrenSliceName]
 	);
+	const reports = useSelector(
+		(global: RootState) => global[reportsSliceName]
+	);
+
 	const teacher = teachers.find((teacher) => (teacher.id = id));
 
-	const students = children.filter(
-		(child) => parseInt(child.teacherId) === id
-	);
+	const students = children.filter((child) => child.teacherId === id);
+
+	const studentsWithReport = students.map((student) => {
+		const latestReport = reports.find(
+			(report) => report.childId === student.id
+		);
+		return { ...student, report: latestReport };
+	});
+
+	console.log(studentsWithReport);
+
 	return (
 		<View>
 			<Stack.Screen
@@ -39,52 +53,71 @@ const ChildrenReports = () => {
 			/>
 			<ScrollView style={ChildStyles.ReportsContainer}>
 				<FlatList
-					data={students}
+					data={studentsWithReport}
 					scrollEnabled={false}
 					renderItem={(student) => {
-						const { id, name, profilePic } = student.item;
+						const { id, name, profilePic, report } = student.item;
 						return (
-							<View>
-								<View style={ChildStyles.childInfoWrapper}>
-									<Image
-										src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-										style={{
-											height: 55,
-											width: 55,
-											borderRadius: 28,
-										}}
-									/>
-									<Text style={ChildStyles.childInfoName}>
-										{name}
-									</Text>
-								</View>
-								<View style={ChildStyles.reportContainer}>
-									<View>
-										<Text style={ChildStyles.dateText}>
-											Last Report 03/4/2024
-										</Text>
-										<Text style={ChildStyles.reportText}>
-											Lorem ipsum dolor sit amet,
-											consectetur adipiscing elit. Vivamus
-											sit amet lectus nec dolor imperdiet
-											consectetur. Donec non ex quis leo
-											vehicula mattis.{" "}
+							report && (
+								<View key={id}>
+									<View style={ChildStyles.childInfoWrapper}>
+										<Image
+											src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+											style={{
+												height: 55,
+												width: 55,
+												borderRadius: 28,
+											}}
+										/>
+										<Text style={ChildStyles.childInfoName}>
+											{name}
 										</Text>
 									</View>
+									<View style={ChildStyles.reportContainer}>
+										<View>
+											<View
+												style={
+													ChildStyles.dateTimeWrapper
+												}
+											>
+												<Text
+													style={ChildStyles.dateText}
+												>
+													{`Last Report ${report.createdAt.slice(
+														0,
+														10
+													)}`}
+												</Text>
+												<Text>
+													{report.createdAt.slice(
+														11,
+														16
+													)}
+												</Text>
+											</View>
+											<Text
+												style={ChildStyles.reportText}
+											>
+												{report.report}
+											</Text>
+										</View>
 
-									<Pressable
-										onPress={() =>
-											router.push(
-												"/TeacherProfile/ChildReports"
-											)
-										}
-									>
-										<Text style={ChildStyles.seeAllText}>
-											See All
-										</Text>
-									</Pressable>
+										<Pressable
+											onPress={() =>
+												router.push(
+													"/TeacherProfile/ChildReports"
+												)
+											}
+										>
+											<Text
+												style={ChildStyles.seeAllText}
+											>
+												See All
+											</Text>
+										</Pressable>
+									</View>
 								</View>
-							</View>
+							)
 						);
 					}}
 				/>

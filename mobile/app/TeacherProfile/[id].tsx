@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
-import { Stack, router } from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 
 // styles
 import { psychoProfileStyles } from "../../Styles/psychologists/profile";
@@ -16,12 +16,14 @@ import LoginButton from "../../components/LoginButton";
 import ProfileInput from "../../components/ProfileInput";
 
 const TeacherProfile = () => {
-	const id = 3;
+	const { id } = useLocalSearchParams();
 
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
-	const teacher = teachers.find((teacher) => (teacher.id = id));
+	const teacher = teachers.find(
+		(teacher) => teacher.id === JSON.parse(id[0])
+	);
 
 	const calculateStudentAge = (dob: string) => {
 		const birthDate = new Date(dob);
@@ -39,6 +41,16 @@ const TeacherProfile = () => {
 			<Stack.Screen
 				options={{
 					title: `${teacher.firstName} ${teacher.lastName}`,
+					headerStyle: {
+						backgroundColor: "#75AB19",
+					},
+					headerTitleStyle: {
+						color: "white",
+						fontSize: 24,
+					},
+
+					headerShadowVisible: false,
+					headerTintColor: "white",
 				}}
 			/>
 			<View>
@@ -70,7 +82,7 @@ const TeacherProfile = () => {
 						<LoginButton
 							text={"Reports"}
 							handlePress={() => {
-								router.push("/TeacherProfile/ChildrenReports");
+								router.push(`/ChildrenReports/${id}`);
 							}}
 						/>
 					</View>

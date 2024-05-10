@@ -4,6 +4,7 @@ import childrenReducer, { childrenSliceName } from "./children";
 import psychologistsReducer, { psychologistsSliceName } from "./Psychologists";
 import teachersReducer, { teachersSliceName } from "./teachers";
 import schooldReducer, { schoolSliceName } from "./schools";
+import reportsReducer, { reportsSliceName } from "./reports";
 
 // Logger
 import logger from "redux-logger";
@@ -15,6 +16,7 @@ export const store = configureStore({
 		[psychologistsSliceName]: psychologistsReducer,
 		[teachersSliceName]: teachersReducer,
 		[schoolSliceName]: schooldReducer,
+		[reportsSliceName]: reportsReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -23,9 +23,9 @@ const Feedback = () => {
 	console.log(parentReviews);
 
 	return (
-		<div className="feedback-container">
+		<div className="feedback-container full-width">
 			<h2>Users Feedback</h2>
-			{parentReviews.length !== 0 && (
+			{parentReviews.length !== 0 ? (
 				<table className="table full-width">
 					<thead>
 						<tr className="text-acient">
@@ -60,6 +60,10 @@ const Feedback = () => {
 						})}
 					</tbody>
 				</table>
+			) : (
+				<div className="flex full-width center">
+					<h3>You have no Feedback yet.</h3>
+				</div>
 			)}
 		</div>
 	);

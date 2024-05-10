@@ -39,57 +39,62 @@ const Clients = () => {
 	return (
 		<div className="flex column full-width clients-cards-container">
 			<h2 className="text-acient"> My Clients </h2>
+			{filteredParents.length !== 0 ? (
+				<div className="flex column full-width clients-search-wrapper">
+					<div>
+						<input
+							className="search-input "
+							placeholder="Search"
+							type="text"
+							onChange={(e) => handleParentSearch(e)}
+						/>
+					</div>
 
-			<div className="flex column full-width clients-search-wrapper">
-				<div>
-					<input
-						className="search-input "
-						placeholder="Search"
-						type="text"
-						onChange={(e) => handleParentSearch(e)}
-					/>
-				</div>
-
-				<div className="flex wrap clients-cards-wrapper">
-					{filteredParents?.map((parent) => {
-						const { id, profile } = parent;
-						const parentChildren = children.filter(
-							(child) => child.parentId === parent.id
-						);
-						const calculateAge = (dateOfBirth) => {
-							const dob = new Date(dateOfBirth);
-							const currentDate = new Date();
-							let ageDiff = currentDate - dob;
-							let ageDate = new Date(ageDiff);
-							let calculatedAge = Math.abs(
-								ageDate.getUTCFullYear() - 1970
+					<div className="flex wrap clients-cards-wrapper">
+						{filteredParents?.map((parent) => {
+							const { id, profile } = parent;
+							const parentChildren = children.filter(
+								(child) => child.parentId === parent.id
 							);
-							return calculatedAge;
-						};
-						const childrenNames = [];
-						parentChildren.forEach((child) => {
-							childrenNames.push(child.name);
-						});
-						return (
-							<Link
-								key={id}
-								to={`/main/psychologist/clients/client/${id}`}
-							>
-								<ClientCard
-									id={profile.id}
-									name={`${profile.firstName} ${profile.lastName}`}
-									age={calculateAge(profile.dob)}
-									profilePic={`${
-										import.meta.env.VITE_PROFILE_PIC_URL
-									}${profile.profilePic}`}
-									email={profile.email}
-									children={childrenNames.join(", ")}
-								/>
-							</Link>
-						);
-					})}
+							const calculateAge = (dateOfBirth) => {
+								const dob = new Date(dateOfBirth);
+								const currentDate = new Date();
+								let ageDiff = currentDate - dob;
+								let ageDate = new Date(ageDiff);
+								let calculatedAge = Math.abs(
+									ageDate.getUTCFullYear() - 1970
+								);
+								return calculatedAge;
+							};
+							const childrenNames = [];
+							parentChildren.forEach((child) => {
+								childrenNames.push(child.name);
+							});
+							return (
+								<Link
+									key={id}
+									to={`/main/psychologist/clients/client/${id}`}
+								>
+									<ClientCard
+										id={profile.id}
+										name={`${profile.firstName} ${profile.lastName}`}
+										age={calculateAge(profile.dob)}
+										profilePic={`${
+											import.meta.env.VITE_PROFILE_PIC_URL
+										}${profile.profilePic}`}
+										email={profile.email}
+										children={childrenNames.join(", ")}
+									/>
+								</Link>
+							);
+						})}
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className="flex full-width center">
+					<h3>You have no clients yet.</h3>
+				</div>
+			)}
 		</div>
 	);
 };

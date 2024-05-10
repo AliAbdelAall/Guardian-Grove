@@ -96,7 +96,7 @@ const Students = () => {
 					<h2>
 						{isSchool
 							? "There is no Students without a teacher keeping an eye on them."
-							: "You have no students to send reports check you school students."}
+							: "You have no students to send reports check your school students."}
 					</h2>
 				)}
 			</div>

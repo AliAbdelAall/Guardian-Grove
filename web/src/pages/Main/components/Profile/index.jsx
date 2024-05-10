@@ -210,7 +210,7 @@ const Profile = () => {
 					{location.pathname === "/main/psychologist/profile" && (
 						<StarRatings
 							numberOfStars={5}
-							rating={avgRating}
+							rating={avgRating ? avgRating : 0}
 							starSpacing="5px"
 							starDimension="40px"
 							starRatedColor="#FFB800"

@@ -10,6 +10,7 @@ import { profileStyles } from "../../Styles/main/profileStyles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { teachersSliceName } from "../../core/redux/teachers";
+import { reportsSliceName } from "../../core/redux/reports";
 
 // Components
 import LoginButton from "../../components/LoginButton";
@@ -18,11 +19,18 @@ import ProfileInput from "../../components/ProfileInput";
 const TeacherProfile = () => {
 	const { id } = useLocalSearchParams();
 
+	const reports = useSelector(
+		(global: RootState) => global[reportsSliceName]
+	);
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
 	const teacher = teachers.find(
 		(teacher) => teacher.id === JSON.parse(id[0])
+	);
+
+	const teacherReports = reports.filter(
+		(report) => report.teacherId === teacher.id
 	);
 
 	const calculateStudentAge = (dob: string) => {
@@ -69,7 +77,7 @@ const TeacherProfile = () => {
 						<ProfileInput
 							label={"Age"}
 							input={`${calculateStudentAge(
-								teacher.dob.toString()
+								teacher.dob?.toString()
 							)} years old`}
 						/>
 						<ProfileInput label={"Email"} input={teacher.email} />
@@ -79,12 +87,14 @@ const TeacherProfile = () => {
 						/>
 						<ProfileInput label={"School"} input={teacher.school} />
 
-						<LoginButton
-							text={"Reports"}
-							handlePress={() => {
-								router.push(`/ChildrenReports/${id}`);
-							}}
-						/>
+						{teacherReports.length !== 0 && (
+							<LoginButton
+								text={"Reports"}
+								handlePress={() => {
+									router.push(`/ChildrenReports/${id}`);
+								}}
+							/>
+						)}
 					</View>
 				</View>
 			</View>

@@ -1,0 +1,35 @@
+.feedback-container{
+  padding: 40px;
+  margin-top: 20px;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.table>thead>tr>th{
+  font-weight: var(--font-weight-medium);
+}
+
+.table th, .table td {
+  padding: 15px;
+}
+
+.tr-start {
+  background-color: #ebebeb;
+  border-radius:10px 0 0 10px;
+}
+.tr-middle{
+  background-color: #ebebeb;
+}
+.tr-end {
+  background-color: #ebebeb;
+  border-radius: 0 10px 10px 0;
+}
+
+.user-image{
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}

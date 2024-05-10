@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Image } from "react-native";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 
 // styles
 import { psychoProfileStyles } from "../../Styles/psychologists/profile";
@@ -10,6 +10,7 @@ import { profileStyles } from "../../Styles/main/profileStyles";
 import { useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { psychologistsSliceName } from "../../core/redux/Psychologists";
+import { instructionsSliceName } from "../../core/redux/instructions";
 
 // Tools
 import { StarRatingDisplay } from "react-native-star-rating-widget";
@@ -19,11 +20,18 @@ import ProfileInput from "../../components/ProfileInput";
 const PsichologisProfile = () => {
 	const { id } = useLocalSearchParams();
 
+	const instructions = useSelector(
+		(global: RootState) => global[instructionsSliceName]
+	);
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
 	const psychologist = psychologists.find(
 		(psychologist) => psychologist.id == parseInt(id[0])
+	);
+
+	const psychologistInstructions = instructions.filter(
+		(instruction) => instruction.psychologistId === parseInt(id[0])
 	);
 
 	const calculateStudentAge = (dob: string) => {
@@ -84,7 +92,7 @@ const PsichologisProfile = () => {
 						<ProfileInput
 							label={"Age"}
 							input={`${calculateStudentAge(
-								psychologist.dob.toString()
+								psychologist.dob?.toString()
 							)} years old`}
 						/>
 						<ProfileInput
@@ -104,6 +112,16 @@ const PsichologisProfile = () => {
 							text={"Book Appointment"}
 							handlePress={() => {}}
 						/>
+						{psychologistInstructions.length !== 0 && (
+							<LoginButton
+								text={"Instructions"}
+								handlePress={() =>
+									router.push(
+										`/ChildrenInstructions/${id[0]}`
+									)
+								}
+							/>
+						)}
 					</View>
 				</View>
 			</View>

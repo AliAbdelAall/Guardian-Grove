@@ -21,7 +21,7 @@ const teachers = () => {
 
 	const [searchText, setSearchText] = useState("");
 
-	const filteredTeaches = teachers.filter(
+	const filteredTeachers = teachers.filter(
 		(teacher) =>
 			`${teacher.firstName} ${teacher.lastName}`
 				.toLowerCase()
@@ -37,13 +37,11 @@ const teachers = () => {
 			<SearchInput value={searchText} handleTextChange={setSearchText} />
 
 			<FlatList
-				data={filteredTeaches}
-				numColumns={2}
+				data={filteredTeachers}
 				style={{ marginTop: 20 }}
 				ItemSeparatorComponent={() => {
 					return <View style={{ height: 8 }}></View>;
 				}}
-				columnWrapperStyle={{ justifyContent: "space-between" }}
 				renderItem={(psychologist) => {
 					const {
 						id,

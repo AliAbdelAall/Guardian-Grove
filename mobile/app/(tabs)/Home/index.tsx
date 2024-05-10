@@ -20,6 +20,8 @@ import styles from "./styles";
 // Components
 import PsychologistCard from "../../../components/PsychologistCard";
 import TeacherCard from "../../../components/TeacherCard";
+import PsychologistCardSkeleton from "../../../components/PsychologistCardSkeleton";
+import TeacherCardSkeleton from "../../../components/TeacherCardSkeleton";
 
 // Assets
 const profilePicc = require("../../../assets/profile/profile.jpg");
@@ -92,41 +94,49 @@ const Main = () => {
 					</Pressable>
 				</View>
 
-				<FlatList
-					horizontal={true}
-					showsHorizontalScrollIndicator={false}
-					data={psychologists}
-					ItemSeparatorComponent={() => {
-						return <View style={styles.horizontalSeparator}></View>;
-					}}
-					renderItem={(psychologist) => {
-						const {
-							id,
-							firstName,
-							lastName,
-							profilePic,
-							rating,
-							speciality,
-						} = psychologist.item;
+				{psychologists.length !== 0 ? (
+					<FlatList
+						horizontal={true}
+						showsHorizontalScrollIndicator={false}
+						data={psychologists}
+						ItemSeparatorComponent={() => {
+							return (
+								<View style={styles.horizontalSeparator}></View>
+							);
+						}}
+						renderItem={(psychologist) => {
+							const {
+								id,
+								firstName,
+								lastName,
+								profilePic,
+								rating,
+								speciality,
+							} = psychologist.item;
 
-						return (
-							<Pressable
-								onPress={() =>
-									router.push(`/PsychologistProfile/${id}`)
-								}
-							>
-								<PsychologistCard
-									key={id}
-									id={id}
-									profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-									name={`${firstName} ${lastName}`}
-									speciality={speciality}
-									rating={rating}
-								/>
-							</Pressable>
-						);
-					}}
-				/>
+							return (
+								<Pressable
+									onPress={() =>
+										router.push(
+											`/PsychologistProfile/${id}`
+										)
+									}
+								>
+									<PsychologistCard
+										key={id}
+										id={id}
+										profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+										name={`${firstName} ${lastName}`}
+										speciality={speciality}
+										rating={rating}
+									/>
+								</Pressable>
+							);
+						}}
+					/>
+				) : (
+					<PsychologistCardSkeleton />
+				)}
 
 				<View style={styles.sectionTitleWrapper}>
 					<Text style={styles.sectionTitle}>Popular Teachers</Text>
@@ -135,39 +145,43 @@ const Main = () => {
 					</Pressable>
 				</View>
 
-				<FlatList
-					data={teachers}
-					scrollEnabled={false}
-					renderItem={(teacher) => {
-						const {
-							id,
-							firstName,
-							lastName,
-							profilePic,
-							school,
-							speciality,
-							dob,
-							email,
-						} = teacher.item;
-						console.log(teacher);
-						return (
-							<Pressable
-								onPress={() =>
-									router.push(`/TeacherProfile/${id}`)
-								}
-							>
-								<TeacherCard
-									key={id}
-									id={id}
-									profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-									name={`${firstName} ${lastName}`}
-									school={school}
-									speciality={speciality}
-								/>
-							</Pressable>
-						);
-					}}
-				/>
+				{teachers.length !== 0 ? (
+					<FlatList
+						data={teachers}
+						scrollEnabled={false}
+						renderItem={(teacher) => {
+							const {
+								id,
+								firstName,
+								lastName,
+								profilePic,
+								school,
+								speciality,
+								dob,
+								email,
+							} = teacher.item;
+							console.log(teacher);
+							return (
+								<Pressable
+									onPress={() =>
+										router.push(`/TeacherProfile/${id}`)
+									}
+								>
+									<TeacherCard
+										key={id}
+										id={id}
+										profilePic={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+										name={`${firstName} ${lastName}`}
+										school={school}
+										speciality={speciality}
+									/>
+								</Pressable>
+							);
+						}}
+					/>
+				) : (
+					<TeacherCardSkeleton />
+				)}
 			</ScrollView>
 			<Toast />
 		</View>

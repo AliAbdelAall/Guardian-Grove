@@ -138,12 +138,16 @@ export const getPsychologistsAndTeachers = async (
 
 		const schools = await prismaClient.school.findMany();
 
-		const reports = await prismaClient.teacherReport.findMany();
+		const reports = await prismaClient.teacherReport.findMany({
+			orderBy: { createdAt: "desc" },
+		});
 		const filtereReports = reports.filter((report) =>
 			childrentIds?.includes(report.childId)
 		);
 
-		const instructions = await prismaClient.instruction.findMany();
+		const instructions = await prismaClient.instruction.findMany({
+			orderBy: { createdAt: "desc" },
+		});
 		const filtereInstructions = instructions.filter((instruction) =>
 			childrentIds?.includes(instruction.childId)
 		);

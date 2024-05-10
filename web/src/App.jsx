@@ -33,6 +33,7 @@ import PsychologistLayout from "./pages/Main/PsychologistLayout";
 import Client from "./pages/Main/components/Client";
 import Child from "./pages/Main/components/Child/index ";
 import Schedules from "./pages/Main/components/Schedules/index ";
+import Feedback from "./pages/Main/components/Feedback";
 
 function App() {
 	return (
@@ -95,7 +96,7 @@ function App() {
 							</Route>
 							<Route path="schedules" element={<Schedules />} />
 							<Route path="chat" element={<Clients />} />
-							<Route path="feedback" element={<Clients />} />
+							<Route path="feedback" element={<Feedback />} />
 							<Route path="profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>

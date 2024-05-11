@@ -101,6 +101,22 @@ const Schedules = () => {
 		handleSaveNewSlots(newEvents);
 	};
 
+	const handleSaveNewSlots = (events) => {
+		sendRequest(requestMethods.POST, "/api/psychologist/add-slots", {
+			schedules: events,
+		})
+			.then((response) => {
+				if (response.status === 201) {
+					toast.success(response.data.message);
+					console.log(response.data.schedules);
+					dispatch(addSchedules(response.data.schedules));
+				}
+			})
+			.catch((error) => {
+				toast.error(error.response.error);
+			});
+	};
+
 	const eventStyleGetter = (event) => {
 		let backgroundColor;
 		if (event.title === "Available Slot") {

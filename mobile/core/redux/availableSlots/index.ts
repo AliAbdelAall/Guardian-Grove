@@ -17,9 +17,12 @@ const availableSlotsSlice = createSlice({
 		setAvailableSlots: (state, action) => {
 			return [...action.payload];
 		},
+		removeSlot: (state, action) => {
+			return state.filter((schedule) => schedule.id !== action.payload);
+		},
 	},
 });
 
-export const { setAvailableSlots } = availableSlotsSlice.actions;
+export const { setAvailableSlots, removeSlot } = availableSlotsSlice.actions;
 export const availableSlotsSliceName = availableSlotsSlice.name;
 export default availableSlotsSlice.reducer;

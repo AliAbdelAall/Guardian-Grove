@@ -32,6 +32,34 @@ const AvailableSlots = () => {
 		(slot) => slot.psychologistId === psychologist.id
 	);
 
+	const [selectedDate, setSelectedDate] = useState(null);
+	const [selectedSlot, setSelectedSlot] = useState(null);
+
+	const markedDates = transformAvailableSlots(psychologistSlots);
+
+	function transformAvailableSlots(availableSlots: any) {
+		const formattedMarkedDates = {};
+		availableSlots.forEach((slot: any) => {
+			const startDate = slot.start.split("T")[0];
+			if (!formattedMarkedDates[startDate]) {
+				formattedMarkedDates[startDate] = { marked: true };
+				formattedMarkedDates[startDate].slots = [];
+			}
+			formattedMarkedDates[startDate].slots.push({
+				id: slot.id,
+				startTime: new Date(slot.start).toLocaleTimeString([], {
+					hour: "numeric",
+					minute: "2-digit",
+				}),
+				endTime: new Date(slot.end).toLocaleTimeString([], {
+					hour: "numeric",
+					minute: "2-digit",
+				}),
+			});
+		});
+		return formattedMarkedDates;
+	}
+
 	return (
 		<>
 			<Stack.Screen

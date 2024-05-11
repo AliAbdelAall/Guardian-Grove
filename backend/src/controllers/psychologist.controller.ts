@@ -129,3 +129,26 @@ export const sendInstruction = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const addSlots = async (req: Request, res: Response) => {
+	try {
+		const { schedules } = req.body;
+
+		await prismaClient.scheduledMeeting.createMany({
+			data: schedules,
+		});
+		const newSlots = schedules.map((schedule: any) => ({
+			...schedule,
+			parentId: null,
+		}));
+		console.log(newSlots);
+
+		return res.status(201).json({
+			message: "Slots created successfully",
+			schedules: newSlots,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

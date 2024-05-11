@@ -2,6 +2,7 @@ import { Router } from "express";
 import authMiddleware from "../middlewares/auth.middleware";
 import psychologistMiddleware from "../middlewares/psychologist.middleware";
 import {
+	addSlots,
 	getClients,
 	sendInstruction,
 	updateSpeciality,
@@ -37,4 +38,10 @@ psychologistRoutes.post(
 	sendInstruction
 );
 
+psychologistRoutes.post(
+	"/add-slots",
+	authMiddleware,
+	psychologistMiddleware,
+	addSlots
+);
 export default psychologistRoutes;

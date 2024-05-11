@@ -110,7 +110,9 @@ const PsichologisProfile = () => {
 
 						<LoginButton
 							text={"Book Appointment"}
-							handlePress={() => {}}
+							handlePress={() =>
+								router.push(`/AvailableSlots/${id[0]}`)
+							}
 						/>
 						{psychologistInstructions.length !== 0 && (
 							<LoginButton

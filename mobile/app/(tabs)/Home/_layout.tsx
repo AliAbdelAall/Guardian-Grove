@@ -10,6 +10,7 @@ import { setChildren } from "../../../core/redux/children";
 import { setInstructions } from "../../../core/redux/instructions";
 import { setReports } from "../../../core/redux/reports";
 import { setpsychologists } from "../../../core/redux/Psychologists";
+import { setAvailableSlots } from "../../../core/redux/availableSlots";
 
 // Tools
 import { useSendRequest } from "../../../core/tools/remote/request";
@@ -40,6 +41,7 @@ const HomeLayout = () => {
 						schools,
 						reports,
 						instructions,
+						schedules,
 					} = response.data;
 					dispatch(setTeachers(teachers));
 					dispatch(setpsychologists(psychologists));
@@ -48,6 +50,7 @@ const HomeLayout = () => {
 					dispatch(setSchools(schools));
 					dispatch(setReports(reports));
 					dispatch(setInstructions(instructions));
+					dispatch(setAvailableSlots(schedules));
 				}
 			})
 			.catch((error) => {

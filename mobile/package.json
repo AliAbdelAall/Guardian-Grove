@@ -27,6 +27,7 @@
     "react-content-loader": "^7.0.0",
     "react-dom": "18.2.0",
     "react-native": "0.73.6",
+    "react-native-calendars": "^1.1304.1",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-star-rating-widget": "^1.7.3",
     "react-native-toast-message": "^2.2.0",

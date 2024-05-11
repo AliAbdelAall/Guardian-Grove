@@ -154,8 +154,11 @@ export const getPsychologistsAndTeachers = async (
 
 		const schedules = await prismaClient.scheduledMeeting.findMany({
 			where: { parent: null },
-			orderBy: { start: "desc" },
 		});
+
+		const filteredSchedules = schedules.filter(
+			(schedule) => schedule.start > new Date()
+		);
 
 		return res.status(200).json({
 			user: userProfile,
@@ -165,7 +168,7 @@ export const getPsychologistsAndTeachers = async (
 			schools,
 			reports: filtereReports,
 			instructions: filtereInstructions,
-			schedules,
+			schedules: filteredSchedules,
 		});
 	} catch (error) {
 		console.error("Error:", error);

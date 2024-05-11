@@ -150,6 +150,11 @@ export const sendReport = async (req: Request, res: Response) => {
 			},
 		});
 
+		await prismaClient.child.update({
+			where: { id: childId },
+			data: { teacherId: teacher?.Teacher?.id },
+		});
+
 		return res.status(201).json({
 			message: "report created successfully",
 			report: newReport,

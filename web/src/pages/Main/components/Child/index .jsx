@@ -6,7 +6,10 @@ import "./style.css";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { childrenSliceName } from "../../../../core/redux/children";
+import {
+	childrenSliceName,
+	updateTeacherId,
+} from "../../../../core/redux/children";
 import { schoolsSliceName } from "../../../../core/redux/shcools";
 import { userProfileSliceName } from "../../../../core/redux/userProfile";
 import { addReport, reportsSliceName } from "../../../../core/redux/reports";
@@ -99,6 +102,12 @@ const Child = () => {
 				if (response.status === 201) {
 					toast.success(response.data.message);
 					dispatch(addReport(response.data.report));
+					dispatch(
+						updateTeacherId({
+							id: JSON.parse(id),
+							teacherId: user.teacher.id,
+						})
+					);
 					setInputText("");
 				}
 			})

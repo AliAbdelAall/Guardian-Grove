@@ -10,6 +10,11 @@
 
 .table>thead>tr>th{
   font-weight: var(--font-weight-medium);
+  align-self: flex-start;
+}
+
+.table>thead>tr{
+  text-align: left;
 }
 
 .table th, .table td {

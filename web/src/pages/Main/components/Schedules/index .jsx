@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+
+// Styles
 import "./style.css";
+
+// Calendar
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import format from "date-fns/format";
@@ -7,9 +11,27 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import enUS from "date-fns/locale/en-US";
-import SmallButton from "../../../../components/SmallButton";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { userProfileSliceName } from "../../../../core/redux/userProfile";
+
+// Tools
+import { useSendRequest } from "../../../../core/tools/remote/request";
+import { requestMethods } from "../../../../../../mobile/core/enum/requestMetods";
+import { toast } from "react-toastify";
+import {
+	addSchedules,
+	schedulesSliceName,
+} from "../../../../core/redux/schedules";
 
 const Schedules = () => {
+	const psychologist = useSelector((global) => global[userProfileSliceName]);
+	const { schedules } = useSelector((global) => global[schedulesSliceName]);
+
+	const sendRequest = useSendRequest();
+	const dispatch = useDispatch();
+
 	const locales = {
 		"en-US": enUS,
 	};
@@ -21,6 +43,13 @@ const Schedules = () => {
 		getDay,
 		locales,
 	});
+
+	const currentEvents = schedules.map((schedule) => ({
+		id: schedule.id,
+		start: new Date(schedule.start),
+		end: new Date(schedule.end),
+		title: schedule.title,
+	}));
 
 	const initialEvents = [
 		{
@@ -37,7 +66,6 @@ const Schedules = () => {
 		},
 	];
 
-	const [events, setEvents] = useState(initialEvents);
 	const [meetingDuration, setMeetingDuration] = useState(30);
 
 	const handleAddSlotSelection = ({ start, end }) => {
@@ -57,21 +85,20 @@ const Schedules = () => {
 		for (let i = 0; i < numSlots; i++) {
 			const currentEndTime =
 				currentStartTime + meetingDuration * 60 * 1000;
+
+			const formattedStartDate = new Date(currentStartTime).toISOString();
+			const formattedEndDate = new Date(currentEndTime).toISOString();
+
 			newEvents.push({
-				id: events.length + i + 1,
-				start: new Date(currentStartTime),
-				end: new Date(currentEndTime),
+				psychologistId: psychologist.psychologist.id,
+				start: formattedStartDate,
+				end: formattedEndDate,
 				title: "Available Slot",
 			});
 			currentStartTime = currentEndTime;
 		}
 
-		setEvents([...events, ...newEvents]);
-	};
-
-	const handleEventDelete = (eventId) => {
-		const updatedEvents = events.filter((event) => event.id !== eventId);
-		setEvents(updatedEvents);
+		handleSaveNewSlots(newEvents);
 	};
 
 	const eventStyleGetter = (event) => {
@@ -103,7 +130,7 @@ const Schedules = () => {
 				<Calendar
 					selectable
 					localizer={localizer}
-					events={events}
+					events={currentEvents}
 					startAccessor="start"
 					endAccessor="end"
 					onSelectSlot={handleAddSlotSelection}

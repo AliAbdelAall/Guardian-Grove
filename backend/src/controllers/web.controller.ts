@@ -23,10 +23,15 @@ export const checkRole = async (req: Request, res: Response) => {
 				where: { psychologistId: psychologist?.Psychologist?.id },
 			});
 
+			const schedules = await prismaClient.scheduledMeeting.findMany({
+				where: { psychologistId: psychologist?.Psychologist?.id },
+			});
+
 			return res.status(200).json({
 				userRole: user?.role.name,
 				profile: { ...psychologist, roleId: user.roleId },
 				reviews,
+				schedules,
 			});
 		}
 		if (user?.roleId === 2) {

@@ -152,6 +152,11 @@ export const getPsychologistsAndTeachers = async (
 			childrentIds?.includes(instruction.childId)
 		);
 
+		const schedules = await prismaClient.scheduledMeeting.findMany({
+			where: { parent: null },
+			orderBy: { start: "desc" },
+		});
+
 		return res.status(200).json({
 			user: userProfile,
 			children,
@@ -160,6 +165,7 @@ export const getPsychologistsAndTeachers = async (
 			schools,
 			reports: filtereReports,
 			instructions: filtereInstructions,
+			schedules,
 		});
 	} catch (error) {
 		console.error("Error:", error);

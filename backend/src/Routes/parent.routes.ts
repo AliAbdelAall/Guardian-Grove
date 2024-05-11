@@ -2,6 +2,7 @@ import { Router } from "express";
 import authMiddleware from "../middlewares/auth.middleware";
 import {
 	UpdateProfilePic,
+	bookMeeting,
 	connectParentPsychologist,
 	getPsychologistsAndTeachers,
 	ratePsychologist,
@@ -39,6 +40,13 @@ parentRoutes.post(
 	parentMiddleware,
 	UpdateProfilePic,
 	multerMiddlware
+);
+
+parentRoutes.post(
+	"/book-meeting",
+	authMiddleware,
+	parentMiddleware,
+	bookMeeting
 );
 
 export default parentRoutes;

@@ -275,3 +275,30 @@ export const UpdateProfilePic = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const bookMeeting = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+
+		const { slotId } = req.body;
+		const parent = await prismaClient.profile.findFirst({
+			where: { userId: id },
+			include: { parent: true },
+		});
+
+		await prismaClient.scheduledMeeting.update({
+			where: { id: slotId },
+			data: {
+				parentId: parent?.parent?.id,
+				title: `Meeting With ${parent?.firstName} ${parent?.lastName}`,
+			},
+		});
+
+		return res.status(200).json({
+			message: "Meeting booked successfully",
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

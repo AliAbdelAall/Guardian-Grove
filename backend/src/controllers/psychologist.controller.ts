@@ -152,3 +152,18 @@ export const addSlots = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const deleteSlot = async (req: Request, res: Response) => {
+	try {
+		const { eventId } = req.body;
+
+		await prismaClient.scheduledMeeting.delete({ where: { id: eventId } });
+
+		return res.status(200).json({
+			message: "Event deleted successfully",
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

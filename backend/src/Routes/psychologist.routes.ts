@@ -3,6 +3,7 @@ import authMiddleware from "../middlewares/auth.middleware";
 import psychologistMiddleware from "../middlewares/psychologist.middleware";
 import {
 	addSlots,
+	deleteSlot,
 	getClients,
 	sendInstruction,
 	updateSpeciality,
@@ -44,4 +45,12 @@ psychologistRoutes.post(
 	psychologistMiddleware,
 	addSlots
 );
+
+psychologistRoutes.post(
+	"/delete-slot",
+	authMiddleware,
+	psychologistMiddleware,
+	deleteSlot
+);
+
 export default psychologistRoutes;

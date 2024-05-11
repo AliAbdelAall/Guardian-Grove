@@ -35,6 +35,9 @@ const AvailableSlots = () => {
 	const [selectedDate, setSelectedDate] = useState(null);
 	const [selectedSlot, setSelectedSlot] = useState(null);
 
+	const sendRequest = useSendRequest();
+	const dispatch = useDispatch();
+
 	const markedDates = transformAvailableSlots(psychologistSlots);
 
 	function transformAvailableSlots(availableSlots: any) {
@@ -59,6 +62,37 @@ const AvailableSlots = () => {
 		});
 		return formattedMarkedDates;
 	}
+
+	const handleDayPress = (date: any) => {
+		setSelectedDate(date.dateString);
+		setSelectedSlot(null);
+	};
+
+	const handleSlotSelection = (slot: any) => {
+		setSelectedSlot(slot);
+	};
+
+	const handleBookSlot = async () => {
+		sendRequest(requestMethods.POST, "/api/parent/book-meeting", {
+			slotId: selectedSlot.id,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(removeSlot(selectedSlot.id));
+					Toast.show({
+						type: "success",
+						text1: response.data.message,
+					});
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				Toast.show({
+					type: "error",
+					text1: "Something went wrong.",
+				});
+			});
+	};
 
 	return (
 		<>

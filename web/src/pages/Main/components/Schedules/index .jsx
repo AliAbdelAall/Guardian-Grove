@@ -15,15 +15,16 @@ import enUS from "date-fns/locale/en-US";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileSliceName } from "../../../../core/redux/userProfile";
+import {
+	addSchedules,
+	deleteSchedule,
+	schedulesSliceName,
+} from "../../../../core/redux/schedules";
 
 // Tools
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../../../mobile/core/enum/requestMetods";
 import { toast } from "react-toastify";
-import {
-	addSchedules,
-	schedulesSliceName,
-} from "../../../../core/redux/schedules";
 
 const Schedules = () => {
 	const psychologist = useSelector((global) => global[userProfileSliceName]);
@@ -127,6 +128,20 @@ const Schedules = () => {
 		return { style: { backgroundColor } };
 	};
 
+	const handleEventDelete = (id) => {
+		sendRequest(requestMethods.POST, "/api/psychologist/delete-slot", {
+			eventId: id,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(deleteSchedule(id));
+					toast.success(response.data.message);
+				}
+			})
+			.catch((error) => {
+				toast.error(error.response.error);
+			});
+	};
 	return (
 		<div className="full-width">
 			<div className="full-width calendar-container">

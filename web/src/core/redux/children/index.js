@@ -12,11 +12,18 @@ const childrenSlice = createSlice({
       return {
         ...state, children: [...action.payload]
       }
-    }
+    },
+    updateTeacherId: (state, action) => {
+      state.children.forEach((child) => {
+        if (child.id === action.payload.id) {
+          child.teacherId = action.payload.teacherId
+        }
+      })
+    },
   }
 })
 
-export const { setchildren } = childrenSlice.actions
+export const { setchildren, updateTeacherId } = childrenSlice.actions
 
 export const childrenSliceName = childrenSlice.name
 

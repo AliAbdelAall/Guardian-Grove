@@ -18,10 +18,15 @@ const schedulesSlice = createSlice({
         ...state, schedules: [...state.schedules, ...action.payload]
       }
     },
+    deleteSchedule: (state, action) => {
+      return {
+        ...state, schedules: state.schedules.filter((schedule) => schedule.id !== JSON.parse(action.payload))
+      }
+    },
   }
 })
 
-export const { setSchedules, addSchedules } = schedulesSlice.actions
+export const { setSchedules, addSchedules, deleteSchedule } = schedulesSlice.actions
 
 export const schedulesSliceName = schedulesSlice.name
 

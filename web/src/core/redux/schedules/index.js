@@ -21,7 +21,7 @@ const schedulesSlice = createSlice({
   }
 })
 
-export const { setSchedules, schedules } = schedulesSlice.actions
+export const { setSchedules, addSchedules } = schedulesSlice.actions
 
 export const schedulesSliceName = schedulesSlice.name
 

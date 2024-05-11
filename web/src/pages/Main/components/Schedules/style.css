@@ -1,0 +1,58 @@
+.calendar-container{
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.rbc-toolbar-label{
+  color: var(--acients-col) !important;
+  font-weight: var(--font-weight-medium);
+  font-size: 21px !important;
+}
+.rbc-btn-group {
+  margin: 0 10px;
+}
+.rbc-month-view{
+  border-radius: 10px;
+}
+.columnheader{
+  color: var(--acients-col);
+}
+
+.rbc-btn-group>button:not(.rbc-active){
+  color: var(--acients-col) !important;
+  font-weight: var(--font-weight-medium);
+
+}
+.rbc-active {
+  background-color: var(--primary-col) !important;
+  font-weight: var(--font-weight-medium);
+  color: #fff !important;
+  border-color: var(--primary-col) !important;
+}
+
+.rbc-month-header{
+  color: var(--acients-col) !important;
+  font-weight: var(--font-weight-medium);
+}
+
+.rbc-event {
+  color: #fff;
+  font-size: 12px !important;
+  margin-bottom: 3px !important;
+  border: none !important;
+}
+.rbc-event-content{
+  font-size: 12px !important;
+}
+
+.rbc-agenda-table> thead{
+  color: var(--acients-col) !important;
+}
+.rbc-agenda-table tbody{
+  color: #fff !important;
+}
+
+.rbc-timeslot-group{
+  color: var(--acients-col) !important;
+  font-weight: var(--acients-col);
+}

@@ -35,6 +35,11 @@ import Child from "./pages/Main/components/Child/index ";
 import Schedules from "./pages/Main/components/Schedules/index ";
 import Feedback from "./pages/Main/components/Feedback";
 
+// Sockets
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000");
+
 function App() {
 	return (
 		<Provider store={store}>

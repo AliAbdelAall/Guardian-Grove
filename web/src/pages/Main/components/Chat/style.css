@@ -1,0 +1,134 @@
+.chat-container{
+  padding: 40px;
+  width: 100%;
+}
+
+.consesations-search-wrapper{
+  padding: 0 10px 0 10px;
+  border-right: 1px solid var(--input-bor-col);
+}
+.consesations-search-wrapper > input{
+  padding: 8px 10px 8px 35px;
+  border: 1px solid var(--input-bor-col);
+  border-radius: 10px;
+  color: var(--acients-col);
+  outline: none;
+  font-weight: 450;
+  margin-bottom: 20px;
+}
+
+.consesations-search-wrapper > input::placeholder{
+  color: var(--input-bor-col);
+}
+
+.conversation{
+  padding:10px;
+  width: 300px;
+  /* background-color: rgb(233, 233, 233); */
+  /* border-radius: 10px; */
+  border-bottom: 1px solid rgb(229, 229, 229);
+}
+
+.conversation-info> img{
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.conversation-info> p{
+font-size: 18px ;
+}
+
+.dot-marker{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--primary-col);
+}
+
+.messages-container{
+  width: 100%;
+  max-height: calc(100%-80px);
+
+
+}
+
+.messages-header{
+  height: 10px;
+  background-color: var(--acients-col);
+} 
+
+.messages-wrapper{
+  padding: 20px;
+  flex-grow: 1;
+  gap: 10px;
+  overflow-y: scroll;
+  max-height: 780px;
+  
+}
+
+.messages-wrapper::-webkit-scrollbar{
+  display: none;
+}
+
+.messages-date{
+  padding: 5px;
+  align-self: center;
+  border-radius: 5px;
+  color: var(--acients-col);
+}
+
+.recieved-message-wrapper{
+  align-self: flex-start;
+  max-width: 70%;
+  background-color: #B3B9CA;
+  padding: 15px;
+  border-radius: 5px;
+  color: #fff;
+
+}
+.sent-message-wrapper{
+  align-self: flex-end;
+  max-width: 70%;
+  border-radius: 5px;
+  background-color: var(--primary-col);
+  padding: 15px;
+  color: #fff;
+}
+.message-time{
+  align-self: flex-end;
+  font-size: 12px;
+  margin: 5px -10px -10px 0;
+}
+.message-input-wrapper{
+  width: 100%;
+  padding: 8px 20px 8px 20px;
+  gap: 10px;
+}
+.message-input{
+  width: 100%;
+  padding: 8px 10px 8px 15px;
+  border: 1px solid var(--input-bor-col);
+  border-radius: 7px;
+  color: var(--acients-col);
+  outline: none;
+  font-weight: 450;
+  min-height: fit-content;
+  max-height: 40px;
+  resize: none;
+}
+
+.message-input::placeholder{
+  color: var(--input-bor-col);
+
+}
+
+.message-send-btn{
+  width: 70px;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  background-color: var(--primary-col);
+  color: #fff;
+}

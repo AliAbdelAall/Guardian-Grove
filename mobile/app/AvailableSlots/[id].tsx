@@ -92,6 +92,7 @@ const AvailableSlots = () => {
 						type: "success",
 						text1: response.data.message,
 					});
+					setSelectedSlot(null);
 				}
 			})
 			.catch((error) => {

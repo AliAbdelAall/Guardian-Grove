@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface psychologist {
 	id: number;
+	ProfileId: number;
 	firstName: string;
 	lastName: string;
 	email: string;

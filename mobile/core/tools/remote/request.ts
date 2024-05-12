@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { getLocalUser, removeLocalUser } from "../local/user";
 import { useRouter } from "expo-router";
 
-axios.defaults.baseURL = "http://192.168.42.127:3000";
+axios.defaults.baseURL = process.env.EXPO_PUBLIC_LOCAL_IPV4;
 
 interface ErrorResponse {
 	response: {

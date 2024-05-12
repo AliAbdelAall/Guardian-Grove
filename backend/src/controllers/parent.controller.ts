@@ -45,7 +45,6 @@ export const connectParentPsychologist = async (
 			where: { profileId: psychologist.id },
 			include: { clients: true },
 		});
-
 		return res.status(200).json({
 			parent: updatedParent,
 			psychologist: updatedPsychologist,
@@ -75,7 +74,8 @@ export const getPsychologistsAndTeachers = async (
 		});
 
 		const userProfile = {
-			id: user?.id,
+			id: user?.parent?.id,
+			profileId: user?.id,
 			firstName: user?.firstName,
 			lastName: user?.lastName,
 			email: user?.email,
@@ -110,6 +110,7 @@ export const getPsychologistsAndTeachers = async (
 
 			return {
 				id: psychologist.id,
+				profileId: psychologist.profile.id,
 				firstName: psychologist.profile.firstName,
 				lastName: psychologist.profile.lastName,
 				email: psychologist.profile.email,
@@ -127,6 +128,7 @@ export const getPsychologistsAndTeachers = async (
 
 		const teachersWithCustomProfiles = teachers.map((teacher) => ({
 			id: teacher.id,
+			profileId: teacher.profile.id,
 			firstName: teacher.profile.firstName,
 			lastName: teacher.profile.lastName,
 			email: teacher.profile.email,
@@ -285,12 +287,22 @@ export const bookMeeting = async (req: Request, res: Response) => {
 			where: { userId: id },
 			include: { parent: true },
 		});
-
+		const slot = await prismaClient.scheduledMeeting.findFirst({
+			where: { id: slotId },
+		});
 		await prismaClient.scheduledMeeting.update({
 			where: { id: slotId },
 			data: {
 				parentId: parent?.parent?.id,
 				title: `Meeting With ${parent?.firstName} ${parent?.lastName}`,
+			},
+		});
+		await prismaClient.parent.update({
+			where: { profileId: parent!.id },
+			data: {
+				psychologists: {
+					connect: { id: slot?.psychologistId },
+				},
 			},
 		});
 

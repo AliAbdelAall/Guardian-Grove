@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Pressable } from "react-native";
-import { Calendar } from "react-native-calendars";
+import { Stack, useLocalSearchParams } from "expo-router";
+
+// Styles
+import { slotsStyles } from "../../Styles/availableSlots";
+import { customTheme } from "../../Styles/calendarStyles";
+
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import {
@@ -8,12 +14,15 @@ import {
 	removeSlot,
 } from "../../core/redux/availableSlots";
 import { psychologistsSliceName } from "../../core/redux/Psychologists";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { slotsStyles } from "../../Styles/availableSlots";
-import LoginButton from "../../components/LoginButton";
+
+// Tools
+import Toast from "react-native-toast-message";
 import { useSendRequest } from "../../core/tools/remote/request";
 import { requestMethods } from "../../core/enum/requestMetods";
-import Toast from "react-native-toast-message";
+import { Calendar } from "react-native-calendars";
+
+// Components
+import LoginButton from "../../components/LoginButton";
 
 const AvailableSlots = () => {
 	const { id } = useLocalSearchParams();
@@ -114,6 +123,7 @@ const AvailableSlots = () => {
 				<Calendar
 					markedDates={markedDates}
 					markingType="custom"
+					theme={customTheme}
 					onDayPress={handleDayPress}
 				/>
 				<View style={slotsStyles.avilableSlots}>

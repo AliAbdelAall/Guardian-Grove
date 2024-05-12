@@ -37,6 +37,7 @@ import Feedback from "./pages/Main/components/Feedback";
 
 // Sockets
 import io from "socket.io-client";
+import Chat from "./pages/Main/components/Chat";
 
 const socket = io.connect("http://localhost:3000");
 
@@ -81,7 +82,7 @@ function App() {
 								<Route path="student/:id" element={<Child />} />
 							</Route>
 							<Route path="school" element={<Students />} />
-							<Route path="chat" element={<Students />} />
+							<Route path="chat" element={<Chat />} />
 							<Route path="profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>
@@ -100,7 +101,7 @@ function App() {
 								<Route path="child/:id" element={<Child />} />
 							</Route>
 							<Route path="schedules" element={<Schedules />} />
-							<Route path="chat" element={<Clients />} />
+							<Route path="chat" element={<Chat />} />
 							<Route path="feedback" element={<Feedback />} />
 							<Route path="profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />

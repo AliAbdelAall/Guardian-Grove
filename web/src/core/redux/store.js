@@ -9,8 +9,7 @@ import reviewsReducer, { reviewsSliceName } from "./reviews"
 import reportsReducer, { reportsSliceName } from "./reports"
 import instructionsReducer, { instructionsSliceName } from "./instructions"
 import schedulesReducer, { schedulesSliceName } from "./schedules"
-import convesationsReducer, { convesationsSliceName } from "./convesations"
-import messagesReducer, { messagesSliceName } from "./messages"
+import conversationsReducer, { conversationsSliceName } from "./convesations"
 
 // Logger
 import logger from "redux-logger"
@@ -25,8 +24,7 @@ export const store = configureStore({
     [reportsSliceName]: reportsReducer,
     [instructionsSliceName]: instructionsReducer,
     [schedulesSliceName]: schedulesReducer,
-    [convesationsSliceName]: convesationsReducer,
-    [messagesSliceName]: messagesReducer,
+    [conversationsSliceName]: conversationsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 })

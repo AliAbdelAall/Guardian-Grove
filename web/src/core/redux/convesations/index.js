@@ -1,28 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  convesations: []
+  conversations: []
 }
 
-const convesationsSlice = createSlice({
+const conversationsSlice = createSlice({
   initialState,
-  name: "convesationsSlice",
+  name: "conversationsSlice",
   reducers: {
-    setConvesations: (state, action) => {
+    setConversations: (state, action) => {
       return {
-        ...state, convesations: [...action.payload]
+        ...state, conversations: [...action.payload]
       }
     },
-    addConvesation: (state, action) => {
+    addConversation: (state, action) => {
       return {
-        ...state, convesations: [...state.convesations, action.payload]
+        ...state, conversations: [...state.conversations, action.payload]
       }
     },
   }
 })
 
-export const { setConvesations, addConvesations } = convesationsSlice.actions
+export const { setConversations, addConversations } = conversationsSlice.actions
 
-export const convesationsSliceName = convesationsSlice.name
+export const conversationsSliceName = conversationsSlice.name
 
-export default convesationsSlice.reducer
+export default conversationsSlice.reducer

@@ -55,7 +55,7 @@ psychologistRoutes.post(
 );
 
 psychologistRoutes.post(
-	"create-conversation",
+	"/create-conversation",
 	authMiddleware,
 	psychologistMiddleware,
 	createConversation

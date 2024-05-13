@@ -3,6 +3,7 @@ import authMiddleware from "../middlewares/auth.middleware";
 import teacherMiddleware from "../middlewares/teacher.middleware";
 import {
 	addStudent,
+	createConversation,
 	getStudents,
 	sendReport,
 	updateSchool,
@@ -43,6 +44,13 @@ teacherRoutes.post(
 	authMiddleware,
 	teacherMiddleware,
 	sendReport
+);
+
+teacherRoutes.post(
+	"/create-conversation",
+	authMiddleware,
+	teacherMiddleware,
+	createConversation
 );
 
 export default teacherRoutes;

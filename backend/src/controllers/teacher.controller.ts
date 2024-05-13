@@ -164,3 +164,26 @@ export const sendReport = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const createConversation = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+		const { parentId } = req.body;
+
+		const teacher = await prismaClient.profile.findFirst({
+			where: { userId: id },
+			include: { Teacher: true },
+		});
+
+		await prismaClient.conversation.create({
+			data: { parentId, teacherId: teacher?.Teacher?.id },
+		});
+
+		return res
+			.status(201)
+			.json({ message: "Conversation created succssfully" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

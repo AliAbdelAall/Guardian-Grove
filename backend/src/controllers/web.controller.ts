@@ -16,7 +16,14 @@ export const checkRole = async (req: Request, res: Response) => {
 		if (user?.roleId === 3) {
 			const psychologist = await prismaClient.profile.findFirst({
 				where: { userId: user.id },
-				include: { Psychologist: { include: { Reviews: true } } },
+				include: {
+					Psychologist: {
+						include: {
+							Reviews: true,
+							Conversation: { include: { Message: true } },
+						},
+					},
+				},
 			});
 
 			const reviews = await prismaClient.review.findMany({
@@ -32,6 +39,7 @@ export const checkRole = async (req: Request, res: Response) => {
 				profile: { ...psychologist, roleId: user.roleId },
 				reviews,
 				schedules,
+				conversations: psychologist?.Psychologist?.Conversation,
 			});
 		}
 		if (user?.roleId === 2) {
@@ -39,13 +47,17 @@ export const checkRole = async (req: Request, res: Response) => {
 				where: { userId: user.id },
 				include: {
 					Teacher: {
-						include: { School: { select: { name: true } } },
+						include: {
+							School: { select: { name: true } },
+							Conversation: { include: { Message: true } },
+						},
 					},
 				},
 			});
 			return res.status(200).json({
 				userRole: user?.role.name,
 				profile: { ...teacher, roleId: user.roleId },
+				conversations: teacher?.Teacher?.Conversation,
 			});
 		}
 	} catch (error) {

@@ -13,7 +13,7 @@ const convesationsSlice = createSlice({
         ...state, convesations: [...action.payload]
       }
     },
-    addConvesations: (state, action) => {
+    addConvesation: (state, action) => {
       return {
         ...state, convesations: [...state.convesations, action.payload]
       }

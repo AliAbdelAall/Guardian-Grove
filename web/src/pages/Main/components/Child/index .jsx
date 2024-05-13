@@ -27,6 +27,7 @@ import ReportContainer from "../../../../components/ReportContainer";
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
 import { toast } from "react-toastify";
+import LoginButton from "../../../../components/LoginButton";
 
 const Child = () => {
 	const { id } = useParams();
@@ -151,6 +152,16 @@ const Child = () => {
 							<InfoBar
 								label={"School"}
 								text={getSchoolName(child.schoolId)}
+							/>
+						)}
+						{isTeacherPath && (
+							<LoginButton
+								text={"chat with Parent"}
+								handleClick={() =>
+									navigate(
+										`/main/teacher/chat/${child.parentId}`
+									)
+								}
 							/>
 						)}
 					</div>

@@ -1,14 +1,20 @@
 import React from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+
+// Styles
 import "./style.css";
 
-import InfoBar from "../../../../components/InfoBar";
+// Redux
 import { useSelector } from "react-redux";
 import { parentsSliceName } from "../../../../core/redux/parents";
 import { childrenSliceName } from "../../../../core/redux/children";
 import { schoolsSliceName } from "../../../../core/redux/shcools";
-import { Link, useNavigate, useParams } from "react-router-dom";
+
+// Components
+import InfoBar from "../../../../components/InfoBar";
 import StudentCard from "../../../../components/StudentCard";
 import SmallButton from "../../../../components/SmallButton";
+import LoginButton from "../../../../components/LoginButton";
 
 const Client = () => {
 	const { id } = useParams();
@@ -66,6 +72,12 @@ const Client = () => {
 							text={calculateAge(client.profile.dob)}
 						/>
 						<InfoBar label={"Email"} text={client.profile.email} />
+						<LoginButton
+							text={"chat with Parent"}
+							handleClick={() =>
+								navigate(`/main/psychologist/chat/${client.id}`)
+							}
+						/>
 					</div>
 				</div>
 				<div className="client-chlidren-container">

@@ -53,6 +53,7 @@ model Parent {
   psychologists    Psychologist[]
   Review           Review[]
   ScheduledMeeting ScheduledMeeting[]
+  Conversation     Conversation[]
 }
 
 model Review {
@@ -75,6 +76,7 @@ model Psychologist {
   Reviews           Review[]
   ScheduledMeeting  ScheduledMeeting[]
   Instruction       Instruction[]
+  Conversation      Conversation[]
 }
 
 model Teacher {
@@ -86,6 +88,7 @@ model Teacher {
   School        School?         @relation(fields: [schoolId], references: [id])
   schoolId      Int?
   TeacherReport TeacherReport[]
+  Conversation  Conversation[]
 }
 
 model Child {
@@ -148,4 +151,14 @@ model Instruction {
   childId        Int
   child          Child        @relation(fields: [childId], references: [id])
   createdAt      DateTime     @default(now())
+}
+
+model Conversation {
+  id             Int           @id @default(autoincrement())
+  parent         Parent        @relation(fields: [parentId], references: [id])
+  parentId       Int
+  teacher        Teacher?      @relation(fields: [teacherId], references: [id])
+  teacherId      Int?
+  psychologist   Psychologist? @relation(fields: [psychologistId], references: [id])
+  psychologistId Int?
 }

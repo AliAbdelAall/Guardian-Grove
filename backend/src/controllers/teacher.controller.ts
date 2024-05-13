@@ -175,13 +175,22 @@ export const createConversation = async (req: Request, res: Response) => {
 			include: { Teacher: true },
 		});
 
-		const coversation = await prismaClient.conversation.create({
+		const conversation = await prismaClient.conversation.findFirst({
+			where: { parentId, teacherId: teacher?.Teacher?.id },
+		});
+		if (conversation) {
+			return res
+				.status(400)
+				.json({ message: "Conversation already exists" });
+		}
+
+		const newConversation = await prismaClient.conversation.create({
 			data: { parentId, teacherId: teacher?.Teacher?.id },
 		});
 
 		return res
 			.status(201)
-			.json({ message: "Conversation created succssfully", coversation });
+			.json({ message: "Conversation created succssfully", coversation: newConversation});
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });

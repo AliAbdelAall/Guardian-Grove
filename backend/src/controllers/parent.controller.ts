@@ -331,7 +331,14 @@ export const createConversationWithTeacher = async (
 			where: { userId: id },
 			include: { parent: true },
 		});
-
+		const conversation = await prismaClient.conversation.findFirst({
+			where: { parentId: parent?.parent?.id, teacherId },
+		});
+		if (conversation) {
+			return res
+				.status(400)
+				.json({ message: "Conversation already exists" });
+		}
 		const coversation = await prismaClient.conversation.create({
 			data: {
 				parentId: parent!.parent!.id,
@@ -356,25 +363,31 @@ export const createConversationWithPsychologist = async (
 		const { id } = req.user!;
 		const { psychologistId } = req.body;
 
-		if (!psychologistId || typeof psychologistId !== "number") {
-			return res.status(400).json({ message: "Invalid teacherId" });
-		}
-
 		const parent = await prismaClient.profile.findFirst({
 			where: { userId: id },
 			include: { parent: true },
 		});
 
-		const coversation = await prismaClient.conversation.create({
+		const conversation = await prismaClient.conversation.findFirst({
+			where: { parentId: parent?.parent?.id, psychologistId },
+		});
+		if (conversation) {
+			return res
+				.status(400)
+				.json({ message: "Conversation already exists" });
+		}
+
+		const newConversation = await prismaClient.conversation.create({
 			data: {
 				parentId: parent!.parent!.id,
 				psychologistId,
 			},
 		});
 
-		return res
-			.status(201)
-			.json({ message: "Conversation created succssfully", coversation });
+		return res.status(201).json({
+			message: "Conversation created succssfully",
+			conversation: newConversation,
+		});
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });

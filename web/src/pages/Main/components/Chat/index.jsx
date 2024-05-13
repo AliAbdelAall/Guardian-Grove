@@ -23,6 +23,39 @@ const Chat = () => {
 	const [message, setMessage] = useState("");
 	console.log(conversations);
 
+	const conversationsWithParents = conversations?.map((conversation) => {
+		const parent = parents.find(
+			(parent) => parent.id === conversation.parentId
+		);
+		console.log("parent: ", parent);
+		const messagesByDate = conversation.Message.reduce((acc, message) => {
+			const messageDate = new Date(message.createdAt);
+			const dateKey = messageDate.toISOString().split("T")[0];
+			const time = messageDate.toLocaleString("en-US", {
+				hour: "numeric",
+				minute: "numeric",
+				hour12: true,
+			});
+
+			acc[dateKey] = acc[dateKey] || [];
+			acc[dateKey].push({
+				id: message.id,
+				text: message.text,
+				senderId: message.senderId,
+				createdAt: message.createdAt,
+				time: time,
+			});
+
+			return acc;
+		}, {});
+		return {
+			id: conversation.id,
+			parentId: parent.id,
+			name: `${parent.profile.firstName} ${parent.profile.lastName}`,
+			profilePic: parent.profile.profilePic,
+			messages: messagesByDate,
+		};
+	});
 	console.log(conversationsWithParents);
 
 	const sendMessage = () => {

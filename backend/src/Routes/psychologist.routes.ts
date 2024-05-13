@@ -3,6 +3,7 @@ import authMiddleware from "../middlewares/auth.middleware";
 import psychologistMiddleware from "../middlewares/psychologist.middleware";
 import {
 	addSlots,
+	createConversation,
 	deleteSlot,
 	getClients,
 	sendInstruction,
@@ -51,6 +52,13 @@ psychologistRoutes.post(
 	authMiddleware,
 	psychologistMiddleware,
 	deleteSlot
+);
+
+psychologistRoutes.post(
+	"create-conversation",
+	authMiddleware,
+	psychologistMiddleware,
+	createConversation
 );
 
 export default psychologistRoutes;

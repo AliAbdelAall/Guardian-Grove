@@ -115,7 +115,7 @@ export const sendInstruction = async (req: Request, res: Response) => {
 		const newInstruction = await prismaClient.instruction.create({
 			data: {
 				childId,
-				instruction,
+				Instruction: instruction,
 				psychologistId: Psychologist!.Psychologist!.id,
 			},
 		});
@@ -162,6 +162,29 @@ export const deleteSlot = async (req: Request, res: Response) => {
 		return res.status(200).json({
 			message: "Event deleted successfully",
 		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};
+
+export const createConversation = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+		const { parentId } = req.body;
+
+		const psychologist = await prismaClient.profile.findFirst({
+			where: { userId: id },
+			include: { Psychologist: true },
+		});
+
+		await prismaClient.conversation.create({
+			data: { parentId, psychologistId: psychologist?.Psychologist?.id },
+		});
+
+		return res
+			.status(201)
+			.json({ message: "Conversation created succssfully" });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });

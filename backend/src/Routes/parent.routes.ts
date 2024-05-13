@@ -4,6 +4,8 @@ import {
 	UpdateProfilePic,
 	bookMeeting,
 	connectParentPsychologist,
+	createConversationWithPsychologist,
+	createConversationWithTeacher,
 	getPsychologistsAndTeachers,
 	ratePsychologist,
 	updateUserDob,
@@ -47,6 +49,20 @@ parentRoutes.post(
 	authMiddleware,
 	parentMiddleware,
 	bookMeeting
+);
+
+parentRoutes.post(
+	"/create-conversation-teacher",
+	authMiddleware,
+	parentMiddleware,
+	createConversationWithTeacher
+);
+
+parentRoutes.post(
+	"/create-conversation-psychologist",
+	authMiddleware,
+	parentMiddleware,
+	createConversationWithPsychologist
 );
 
 export default parentRoutes;

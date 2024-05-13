@@ -314,3 +314,36 @@ export const bookMeeting = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const createConversationWithTeacher = async (
+	req: Request,
+	res: Response
+) => {
+	try {
+		const { id } = req.user!;
+		const { teacherId } = req.body;
+
+		if (!teacherId || typeof teacherId !== "number") {
+			return res.status(400).json({ message: "Invalid teacherId" });
+		}
+
+		const parent = await prismaClient.profile.findFirst({
+			where: { userId: id },
+			include: { parent: true },
+		});
+
+		const coversation = await prismaClient.conversation.create({
+			data: {
+				parentId: parent!.parent!.id,
+				teacherId,
+			},
+		});
+
+		return res
+			.status(201)
+			.json({ message: "Conversation created succssfully", coversation });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

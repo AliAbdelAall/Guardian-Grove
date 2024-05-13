@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import rootRouter from "./Routes/root.routes";
 import cors from "cors";
 import http from "http";
-import { Server } from "socket.io";
+import { socketConnection } from "./socket/connection";
 
 const app: Express = express();
 
@@ -21,32 +21,8 @@ export const prismaClient = new PrismaClient({
 });
 
 const server = http.createServer(app);
-if (
-	!process.env.SOCKET_WEB_SERVER_URL ||
-	!process.env.SOCKET_MOBILE_SERVER_URL
-) {
-	console.log("ENV NOT CONNECTED!");
-} else {
-	console.log(process.env.SOCKET_WEB_SERVER_URL);
-	console.log(process.env.SOCKET_MOBILE_SERVER_URL);
-}
-const io = new Server(server, {
-	cors: {
-		origin: [
-			process.env.SOCKET_WEB_SERVER_URL!,
-			process.env.SOCKET_MOBILE_SERVER_URL!,
-		],
-		methods: ["GET", "POST", "PUT", "DELETE"],
-	},
-});
-
-io.on("connection", (socket) => {
-	console.log("User Connected: ", socket.id);
-	socket.on("disconnect", () => {
-		console.log("User disconnected: ", socket.id);
-	});
-});
 
 server.listen(port, () => {
+	socketConnection(server);
 	console.log(`app is working on port ${port}`);
 });

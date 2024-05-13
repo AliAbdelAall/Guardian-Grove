@@ -34,10 +34,10 @@ import Client from "./pages/Main/components/Client";
 import Child from "./pages/Main/components/Child/index ";
 import Schedules from "./pages/Main/components/Schedules/index ";
 import Feedback from "./pages/Main/components/Feedback";
+import Chat from "./pages/Main/components/Chat";
 
 // Sockets
 import io from "socket.io-client";
-import Chat from "./pages/Main/components/Chat";
 
 const socket = io.connect("http://localhost:3000");
 

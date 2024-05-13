@@ -23,6 +23,7 @@ import { setReviews } from "../../core/redux/reviews";
 import { setReports } from "../../core/redux/reports";
 import { setInstructions } from "../../core/redux/instructions";
 import { setSchedules } from "../../core/redux/schedules";
+import { setConversations } from "../../core/redux/convesations";
 
 const Main = () => {
 	const navigate = useNavigate();
@@ -38,8 +39,13 @@ const Main = () => {
 		sendRequest(requestMethods.GET, "/api/web/check-role")
 			.then((response) => {
 				if (response.status === 200) {
-					const { userRole, profile, reviews, schedules } =
-						response.data;
+					const {
+						userRole,
+						profile,
+						reviews,
+						schedules,
+						conversations,
+					} = response.data;
 					setRole(userRole);
 					dispatch(setProfile(profile));
 					if (reviews) {
@@ -48,6 +54,7 @@ const Main = () => {
 					if (schedules) {
 						dispatch(setSchedules(schedules));
 					}
+					dispatch(setConversations(conversations));
 					userRole === "Teacher" ? loadStudents() : loadClients();
 				}
 			})

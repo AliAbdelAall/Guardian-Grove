@@ -1,7 +1,8 @@
 import React from "react";
 import "./style.css";
 
-import ProfilePic from "../../../../assets/images/profile-pictures/profile.jpg";
+import Conversation from "../../../../components/Conversation";
+import Message from "../../../../components/Message";
 
 const Chat = () => {
 	return (
@@ -10,21 +11,19 @@ const Chat = () => {
 				<input type="text" placeholder="Search" />
 
 				<div className="flex column conversations-wrapper">
-					<div className="flex space-between conversation">
-						<div className="flex center conversation-info">
-							<img src={ProfilePic} alt="image" />
-							<p>name name</p>
-						</div>
-						<div className="dot-marker"></div>
-					</div>
+					<Conversation
+						key={1}
+						name={"jhon Doe"}
+						dot={true}
+						profilePic={"1714905175140-639219459.jpg"}
+					/>
 
-					<div className="flex space-between conversation">
-						<div className="flex center conversation-info">
-							<img src={ProfilePic} alt="image" />
-							<p>name name</p>
-						</div>
-						<div className="dot-marker"></div>
-					</div>
+					<Conversation
+						key={2}
+						name={"jhon Doe"}
+						dot={true}
+						profilePic={"1714905175140-639219459.jpg"}
+					/>
 				</div>
 			</div>
 			<div className="flex column messages-container">
@@ -33,20 +32,22 @@ const Chat = () => {
 				<div className="flex column messages-wrapper">
 					<p className="messages-date">2024-04-23</p>
 
-					<div className="flex column recieved-message-wrapper">
-						<p className="recieved-message">
-							hello i just want to check if you can take care of
-							my child reports ?
-						</p>
-						<p className="message-time">3:00 pm</p>
-					</div>
-					<div className="flex column sent-message-wrapper">
-						<p className="sent-message">
-							sure what is you son name so i can start sending
-							reports starting tomoorw
-						</p>
-						<p className="message-time">3:00 pm</p>
-					</div>
+					<Message
+						key={1}
+						message={
+							"hello i just want to check if you can take care ofmy child reports ?"
+						}
+						time={"3:00 pm"}
+						sent={false}
+					/>
+					<Message
+						key={2}
+						message={
+							"sure what is you son name so i can start sendingreports starting tomoorw"
+						}
+						time={"3:00 pm"}
+						sent={true}
+					/>
 				</div>
 				<div className="flex message-input-wrapper">
 					<textarea

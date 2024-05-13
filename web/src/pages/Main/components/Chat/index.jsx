@@ -1,61 +1,88 @@
-import React from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import "./style.css";
 
 import Conversation from "../../../../components/Conversation";
 import Message from "../../../../components/Message";
+import io from "socket.io-client";
+import { useSelector } from "react-redux";
+import { parentsSliceName } from "../../../../core/redux/parents";
+import { conversationsSliceName } from "../../../../core/redux/convesations";
+
+const socket = io.connect("http://localhost:3000");
+socket.on("connect", () => {
+	console.log(`you connected with Id ${socket.id}`);
+	socket.emit("test", 10, "hello", { test: "tis is a test" });
+});
 
 const Chat = () => {
+	const { parents } = useSelector((global) => global[parentsSliceName]);
+	const { conversations } = useSelector(
+		(global) => global[conversationsSliceName]
+	);
+
+	const [message, setMessage] = useState("");
+	console.log(conversations);
+
+	console.log(conversationsWithParents);
+
+	const sendMessage = () => {
+		if (message) {
+			socket.emit("send-message", message);
+			setMessage("");
+		}
+	};
+
 	return (
 		<div className="flex chat-container">
 			<div className="flex column consesations-search-wrapper">
 				<input type="text" placeholder="Search" />
 
 				<div className="flex column conversations-wrapper">
-					<Conversation
-						key={1}
-						name={"jhon Doe"}
-						dot={true}
-						profilePic={"1714905175140-639219459.jpg"}
-					/>
-
-					<Conversation
-						key={2}
-						name={"jhon Doe"}
-						dot={true}
-						profilePic={"1714905175140-639219459.jpg"}
-					/>
+					{conversationsWithParents?.map((conversation) => (
+						<Conversation
+							key={conversation.id}
+							name={conversation.name}
+							dot={true}
+							profilePic={conversation.profilePic}
+						/>
+					))}
 				</div>
 			</div>
 			<div className="flex column messages-container">
 				<div className="messages-header"></div>
 
 				<div className="flex column messages-wrapper">
-					<p className="messages-date">2024-04-23</p>
-
-					<Message
-						key={1}
-						message={
-							"hello i just want to check if you can take care ofmy child reports ?"
-						}
-						time={"3:00 pm"}
-						sent={false}
-					/>
-					<Message
-						key={2}
-						message={
-							"sure what is you son name so i can start sendingreports starting tomoorw"
-						}
-						time={"3:00 pm"}
-						sent={true}
-					/>
+					{conversationsWithParents?.map((conversation) =>
+						Object.entries(conversation.messages).map(
+							([date, messages]) => (
+								<Fragment key={date}>
+									<p className="messages-date">{date}</p>
+									{messages.map((message) => (
+										<Message
+											key={message.id}
+											message={message.text}
+											time={message.time}
+											sent={
+												message.senderId !==
+												conversation.parentId
+											}
+										/>
+									))}
+								</Fragment>
+							)
+						)
+					)}
 				</div>
 				<div className="flex message-input-wrapper">
 					<textarea
 						className="message-input"
 						placeholder="Message..."
 						type="text"
+						onChange={(e) => setMessage(e.target.value)}
 					/>
-					<button className="message-send-btn">Send</button>
+					<button className="message-send-btn" onClick={sendMessage}>
+						Send
+					</button>
 				</div>
 			</div>
 		</div>

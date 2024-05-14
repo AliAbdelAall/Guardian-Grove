@@ -33,7 +33,6 @@ const AvailableSlots = () => {
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
-
 	const psychologist = psychologists.find(
 		(psychologist) => psychologist.id === JSON.parse(id[0])
 	);

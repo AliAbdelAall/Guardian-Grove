@@ -18,10 +18,24 @@ const conversationsSlice = createSlice({
         ...state, conversations: [...state.conversations, action.payload]
       }
     },
+    addMessage: (state, action) => {
+      const { conversationId, message } = action.payload;
+      return {
+        ...state,
+        conversations: state.conversations.map(conversation =>
+          conversation.id === conversationId
+            ? {
+              ...conversation,
+              message: [...conversation.message, message]
+            }
+            : conversation
+        )
+      };
+    }
   }
 })
 
-export const { setConversations, addConversations } = conversationsSlice.actions
+export const { setConversations, addConversations, addMessage } = conversationsSlice.actions
 
 export const conversationsSliceName = conversationsSlice.name
 

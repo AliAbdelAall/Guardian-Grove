@@ -191,7 +191,7 @@ export const createConversation = async (req: Request, res: Response) => {
 
 		return res.status(201).json({
 			message: "Conversation created succssfully",
-			coversation: newCoversation,
+			conversation: newCoversation,
 		});
 	} catch (error) {
 		console.log(error);

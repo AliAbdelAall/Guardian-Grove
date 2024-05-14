@@ -190,7 +190,10 @@ export const createConversation = async (req: Request, res: Response) => {
 
 		return res
 			.status(201)
-			.json({ message: "Conversation created succssfully", coversation: newConversation});
+			.json({
+				message: "Conversation created succssfully",
+				conversation: newConversation,
+			});
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });

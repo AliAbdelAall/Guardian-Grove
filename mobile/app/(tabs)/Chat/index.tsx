@@ -31,6 +31,7 @@ const Chat = () => {
 	);
 
 	const [activeButton, setActiveButton] = useState("All");
+	const [searchText, setSearchText] = useState("");
 
 	const conversationsWithInfo = conversations?.map((conversation) => {
 		if (conversation.psychologistId !== null) {
@@ -57,12 +58,29 @@ const Chat = () => {
 		}
 	});
 
+	const filteredConversations = conversationsWithInfo.filter(
+		(conversation) => {
+			if (activeButton !== "All" && conversation.role !== activeButton) {
+				return false;
+			}
+			if (
+				searchText.trim() !== "" &&
+				!conversation.name
+					.toLowerCase()
+					.includes(searchText.toLowerCase())
+			) {
+				return false;
+			}
+			return true;
+		}
+	);
+
 	const handlePress = (buttonName: string) => {
 		setActiveButton(buttonName);
 	};
 	return (
 		<View style={chatStyles.chatContainer}>
-			<SearchInput value="" handleTextChange={() => {}} />
+			<SearchInput value={searchText} handleTextChange={setSearchText} />
 			<View style={psychologistsStyles.filterButtonsWrapper}>
 				<FilterButton
 					isActive={activeButton === "All"}
@@ -80,41 +98,57 @@ const Chat = () => {
 					handlePress={() => handlePress("Teachers")}
 				/>
 			</View>
-			<View>
-				<FlatList
-					data={conversationsWithInfo}
-					renderItem={(conversation) => {
-						const { id, name, profilePic } = conversation.item;
-						return (
-							<Pressable
-								key={id}
-								onPress={() =>
-									router.push(`/Conversation/${id}`)
-								}
-							>
-								<View style={chatStyles.conversationWrapper}>
+			{filteredConversations.length !== 0 ? (
+				<View>
+					<FlatList
+						data={filteredConversations}
+						renderItem={(conversation) => {
+							const { id, name, profilePic } = conversation.item;
+							return (
+								<Pressable
+									key={id}
+									onPress={() =>
+										router.push(`/Conversation/${id}`)
+									}
+								>
 									<View
-										style={
-											chatStyles.conversationInfoWrapper
-										}
+										style={chatStyles.conversationWrapper}
 									>
-										<Image
-											style={chatStyles.conversationImage}
-											src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
-										/>
-										<Text
-											style={chatStyles.conversationName}
+										<View
+											style={
+												chatStyles.conversationInfoWrapper
+											}
 										>
-											{name}
-										</Text>
+											<Image
+												style={
+													chatStyles.conversationImage
+												}
+												src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+											/>
+											<Text
+												style={
+													chatStyles.conversationName
+												}
+											>
+												{name}
+											</Text>
+										</View>
+										<View
+											style={chatStyles.onlineDot}
+										></View>
 									</View>
-									<View style={chatStyles.onlineDot}></View>
-								</View>
-							</Pressable>
-						);
-					}}
-				/>
-			</View>
+								</Pressable>
+							);
+						}}
+					/>
+				</View>
+			) : (
+				<Text style={chatStyles.emptyStateText}>
+					{conversations.length !== 0
+						? "No conversation with this filter"
+						: "No coversations yet."}
+				</Text>
+			)}
 		</View>
 	);
 };

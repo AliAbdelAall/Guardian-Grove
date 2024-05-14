@@ -35,7 +35,7 @@ const conversationsSlice = createSlice({
   }
 })
 
-export const { setConversations, addConversations, addMessage } = conversationsSlice.actions
+export const { setConversations, addConversation, addMessage } = conversationsSlice.actions
 
 export const conversationsSliceName = conversationsSlice.name
 

@@ -21,14 +21,14 @@ const Sidebar = ({ role }) => {
 		Psychologist: [
 			{ path: "/main/psychologist/clients", text: "Clients" },
 			{ path: "/main/psychologist/schedules", text: "Schedules" },
-			{ path: "/main/psychologist/chat", text: "Chat" },
+			{ path: `/main/psychologist/chat`, text: "Chat" },
 			{ path: "/main/psychologist/feedback", text: "Feedback" },
 			{ path: "/main/psychologist/profile", text: "Profile" },
 		],
 		Teacher: [
 			{ path: "/main/teacher/students", text: "Students" },
 			{ path: "/main/teacher/school", text: "School" },
-			{ path: "/main/teacher/chat", text: "Chat" },
+			{ path: "/main/teacher/chat/0", text: "Chat" },
 			{ path: "/main/teacher/profile", text: "Profile" },
 		],
 	};
@@ -55,7 +55,11 @@ const Sidebar = ({ role }) => {
 				{userLinks.map((link, index) => (
 					<Link
 						key={index}
-						to={link.path}
+						to={
+							link.path === `/main/${role.toLowerCase()}/chat`
+								? `${link.path}/0`
+								: link.path
+						}
 						className={`sidebar-btn ${
 							isActive(link.path)
 								? "sidebar-active white"

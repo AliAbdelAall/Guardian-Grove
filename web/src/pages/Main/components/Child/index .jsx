@@ -17,6 +17,10 @@ import {
 	addInstruction,
 	instructionsSliceName,
 } from "../../../../core/redux/instructions";
+import {
+	addConversation,
+	conversationsSliceName,
+} from "../../../../core/redux/convesations";
 
 // Components
 import InfoBar from "../../../../components/InfoBar";
@@ -39,7 +43,14 @@ const Child = () => {
 	);
 	const { children } = useSelector((global) => global[childrenSliceName]);
 	const { schools } = useSelector((global) => global[schoolsSliceName]);
+	const { conversations } = useSelector(
+		(global) => global[conversationsSliceName]
+	);
 
+	const child = children.find((child) => child.id == id);
+	const conversation = conversations.find(
+		(conversation) => conversation.parentId === child.parentId
+	);
 	const filteredReports = reports.filter((report) => report.childId == id);
 	const filteredInstructions = instructions.filter(
 		(instruction) => instruction.childId == id
@@ -54,8 +65,6 @@ const Child = () => {
 	const path = location.pathname;
 	const isTeacherPath = path.includes("teacher");
 	const isPsychologistPath = path.includes("psychologist");
-
-	const child = children.find((child) => child.id == id);
 
 	const calculateAge = (dateOfBirth) => {
 		const dob = new Date(dateOfBirth);
@@ -74,6 +83,31 @@ const Child = () => {
 			handleSendReport();
 		} else {
 			handleSendInstruction();
+		}
+	};
+	console.log(conversation);
+	const handleCreateConversation = () => {
+		if (conversation.length !== 0) {
+			navigate(`/main/teacher/chat/${conversation.id}`);
+		} else {
+			sendRequest(
+				requestMethods.POST,
+				"/api/teacher/create-conversation",
+				{
+					parentId: child.parentId,
+				}
+			)
+				.then((response) => {
+					if (response.status === 201) {
+						const { conversation } = response.data;
+						dispatch(addConversation(conversation));
+						toast.success("conversation created successfully");
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+					toast.error(error.response);
+				});
 		}
 	};
 
@@ -157,11 +191,7 @@ const Child = () => {
 						{isTeacherPath && (
 							<LoginButton
 								text={"chat with Parent"}
-								handleClick={() =>
-									navigate(
-										`/main/teacher/chat/${child.parentId}`
-									)
-								}
+								handleClick={handleCreateConversation}
 							/>
 						)}
 					</div>

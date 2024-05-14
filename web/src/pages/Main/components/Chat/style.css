@@ -24,9 +24,17 @@
 .conversation{
   padding:10px;
   width: 300px;
-  /* background-color: rgb(233, 233, 233); */
-  /* border-radius: 10px; */
   border-bottom: 1px solid rgb(229, 229, 229);
+  user-select: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.conversation:hover:not(.active-conversation){
+  background-color: #e1e3e9;
+}
+
+.active-conversation{
+  background-color: #d4e5c0;
 }
 
 .conversation-info> img{

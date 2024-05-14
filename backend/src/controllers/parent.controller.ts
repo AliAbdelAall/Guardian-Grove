@@ -162,6 +162,11 @@ export const getPsychologistsAndTeachers = async (
 			(schedule) => schedule.start > new Date()
 		);
 
+		const conversations = await prismaClient.conversation.findMany({
+			where: { parentId: user?.parent?.id },
+			include: { Message: true },
+		});
+
 		return res.status(200).json({
 			user: userProfile,
 			children,
@@ -171,6 +176,7 @@ export const getPsychologistsAndTeachers = async (
 			reports: filtereReports,
 			instructions: filtereInstructions,
 			schedules: filteredSchedules,
+			conversations,
 		});
 	} catch (error) {
 		console.error("Error:", error);
@@ -346,12 +352,10 @@ export const createConversationWithTeacher = async (
 			},
 		});
 
-		return res
-			.status(201)
-			.json({
-				message: "Conversation created succssfully",
-				conversation: newConversation,
-			});
+		return res.status(201).json({
+			message: "Conversation created succssfully",
+			conversation: newConversation,
+		});
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({ error: "Internal server error!" });

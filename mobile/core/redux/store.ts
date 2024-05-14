@@ -10,6 +10,7 @@ import availableSlotsReducer, {
 	availableSlotsSliceName,
 } from "./availableSlots";
 import conversationsReducer, { conversationsSliceName } from "./conversations";
+import messagesReducer, { messagesSliceName } from "./messages";
 
 // Logger
 import logger from "redux-logger";
@@ -25,6 +26,7 @@ export const store = configureStore({
 		[instructionsSliceName]: instructionsReducer,
 		[availableSlotsSliceName]: availableSlotsReducer,
 		[conversationsSliceName]: conversationsReducer,
+		[messagesSliceName]: messagesReducer,
 	},
 	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Fragment } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 // Styles
 import "./style.css";
@@ -22,15 +23,20 @@ socket.on("connect", () => {
 });
 
 const Chat = () => {
+	const { id } = useParams();
+
 	const { parents } = useSelector((global) => global[parentsSliceName]);
 	const { conversations } = useSelector(
 		(global) => global[conversationsSliceName]
 	);
-
+	const navigate = useNavigate();
+	const location = useLocation();
 	const [message, setMessage] = useState("");
 	console.log(conversations);
 
-	const [conversationId, setConversationId] = useState(0);
+	const isTeacher = location.pathname.includes("teacher");
+
+	const conversationId = id ? parseInt(id) : 0;
 
 	let conversationsWithParents = [];
 
@@ -80,6 +86,14 @@ const Chat = () => {
 		}
 	};
 
+	const redirectConversation = (id) => {
+		if (isTeacher) {
+			navigate(`/main/teacher/chat/${id}`);
+		} else {
+			navigate(`/main/psychologist/chat/${id}`);
+		}
+	};
+
 	return (
 		<div className="flex chat-container">
 			<div className="flex column consesations-search-wrapper">
@@ -95,7 +109,7 @@ const Chat = () => {
 								dot={true}
 								profilePic={conversation.profilePic}
 								handleClick={() =>
-									setConversationId(conversation.id)
+									redirectConversation(conversation.id)
 								}
 							/>
 						))

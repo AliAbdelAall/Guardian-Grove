@@ -11,6 +11,8 @@ import { setInstructions } from "../../../core/redux/instructions";
 import { setReports } from "../../../core/redux/reports";
 import { setpsychologists } from "../../../core/redux/Psychologists";
 import { setAvailableSlots } from "../../../core/redux/availableSlots";
+import { setConversations } from "../../../core/redux/conversations";
+import { setMessages } from "../../../core/redux/messages";
 
 // Tools
 import { useSendRequest } from "../../../core/tools/remote/request";
@@ -42,6 +44,7 @@ const HomeLayout = () => {
 						reports,
 						instructions,
 						schedules,
+						conversations,
 					} = response.data;
 					dispatch(setTeachers(teachers));
 					dispatch(setpsychologists(psychologists));
@@ -51,6 +54,15 @@ const HomeLayout = () => {
 					dispatch(setReports(reports));
 					dispatch(setInstructions(instructions));
 					dispatch(setAvailableSlots(schedules));
+					const allConversations = [];
+					const allMessages = [];
+					conversations?.forEach((conversation: any) => {
+						const { Message, ...rest } = conversation;
+						allConversations.push({ ...rest });
+						allMessages.push(...Message);
+					});
+					dispatch(setConversations(allConversations));
+					dispatch(setMessages(allMessages));
 				}
 			})
 			.catch((error) => {

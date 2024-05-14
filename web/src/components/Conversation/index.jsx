@@ -1,8 +1,13 @@
 import React from "react";
 
-const Conversation = ({ profilePic, name, dot }) => {
+const Conversation = ({ profilePic, name, dot, handleClick, isActive }) => {
 	return (
-		<div className="flex space-between conversation">
+		<div
+			className={`flex space-between conversation ${
+				isActive ? "active-conversation" : ""
+			}`}
+			onClick={handleClick}
+		>
 			<div className="flex center conversation-info">
 				<img
 					src={`${import.meta.env.VITE_PROFILE_PIC_URL}${profilePic}`}

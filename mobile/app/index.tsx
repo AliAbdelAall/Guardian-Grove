@@ -5,7 +5,11 @@ import { StyleSheet, View } from "react-native";
 import { Redirect, Stack } from "expo-router";
 import { Provider } from "react-redux";
 import { store } from "../core/redux/store";
-
+import io from "socket.io-client";
+const socket = io("http://localhost:3000");
+socket.emit("connection", () => {
+	console.log(socket);
+});
 const App = () => {
 	return (
 		<>

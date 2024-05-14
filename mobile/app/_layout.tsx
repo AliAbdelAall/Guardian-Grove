@@ -2,7 +2,12 @@ import { Stack } from "expo-router";
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "../core/redux/store";
+import io from "socket.io-client";
 
+const socket = io("http://localhost:3000");
+socket.emit("connection", () => {
+	console.log(socket);
+});
 const RootLayout = () => {
 	return (
 		<Provider store={store}>

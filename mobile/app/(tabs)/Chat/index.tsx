@@ -1,5 +1,6 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Image, Pressable, FlatList } from "react-native";
 import React, { useState } from "react";
+import { router } from "expo-router";
 
 // Styles
 import { psychologistsStyles } from "../../../Styles/psychologists/psycholoists";
@@ -13,11 +14,48 @@ import FilterButton from "../../../components/FilterButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../core/redux/store";
 import { userSliceName } from "../../../core/redux/user/index.";
-import { router } from "expo-router";
+import { conversationsSliceName } from "../../../core/redux/conversations";
+import { teachersSliceName } from "../../../core/redux/teachers";
+import { psychologistsSliceName } from "../../../core/redux/Psychologists";
 
 const Chat = () => {
 	const user = useSelector((global: RootState) => global[userSliceName]);
+	const conversations = useSelector(
+		(global: RootState) => global[conversationsSliceName]
+	);
+	const teachers = useSelector(
+		(global: RootState) => global[teachersSliceName]
+	);
+	const psychologists = useSelector(
+		(global: RootState) => global[psychologistsSliceName]
+	);
+
 	const [activeButton, setActiveButton] = useState("All");
+
+	const conversationsWithInfo = conversations?.map((conversation) => {
+		if (conversation.psychologistId !== null) {
+			const user = psychologists.find(
+				(psychologist) =>
+					psychologist.id === conversation.psychologistId
+			);
+			return {
+				...conversation,
+				name: `Dr. ${user.firstName} ${user.lastName}`,
+				profilePic: user.profilePic,
+				role: "Psychologists",
+			};
+		} else {
+			const user = teachers.find(
+				(teacher) => teacher.id === conversation.teacherId
+			);
+			return {
+				...conversation,
+				name: `${user.firstName} ${user.lastName}`,
+				profilePic: user.profilePic,
+				role: "Teachers",
+			};
+		}
+	});
 
 	const handlePress = (buttonName: string) => {
 		setActiveButton(buttonName);
@@ -43,20 +81,39 @@ const Chat = () => {
 				/>
 			</View>
 			<View>
-				<Pressable onPress={() => router.push("/Conversation/1")}>
-					<View style={chatStyles.conversationWrapper}>
-						<View style={chatStyles.conversationInfoWrapper}>
-							<Image
-								style={chatStyles.conversationImage}
-								src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}1714905175140-639219459.jpg`}
-							/>
-							<Text
-								style={chatStyles.conversationName}
-							>{`${user.firstName}${user.lastName}`}</Text>
-						</View>
-						<View style={chatStyles.onlineDot}></View>
-					</View>
-				</Pressable>
+				<FlatList
+					data={conversationsWithInfo}
+					renderItem={(conversation) => {
+						const { id, name, profilePic } = conversation.item;
+						return (
+							<Pressable
+								key={id}
+								onPress={() =>
+									router.push(`/Conversation/${id}`)
+								}
+							>
+								<View style={chatStyles.conversationWrapper}>
+									<View
+										style={
+											chatStyles.conversationInfoWrapper
+										}
+									>
+										<Image
+											style={chatStyles.conversationImage}
+											src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${profilePic}`}
+										/>
+										<Text
+											style={chatStyles.conversationName}
+										>
+											{name}
+										</Text>
+									</View>
+									<View style={chatStyles.onlineDot}></View>
+								</View>
+							</Pressable>
+						);
+					}}
+				/>
 			</View>
 		</View>
 	);

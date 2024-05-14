@@ -1,12 +1,19 @@
 import React, { useEffect, useState, Fragment } from "react";
+
+// Styles
 import "./style.css";
 
-import Conversation from "../../../../components/Conversation";
-import Message from "../../../../components/Message";
-import io from "socket.io-client";
+// Redux
 import { useSelector } from "react-redux";
 import { parentsSliceName } from "../../../../core/redux/parents";
 import { conversationsSliceName } from "../../../../core/redux/convesations";
+
+// Components
+import Conversation from "../../../../components/Conversation";
+import Message from "../../../../components/Message";
+
+// Socket
+import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:3000");
 socket.on("connect", () => {
@@ -23,7 +30,12 @@ const Chat = () => {
 	const [message, setMessage] = useState("");
 	console.log(conversations);
 
-	const conversationsWithParents = conversations?.map((conversation) => {
+	const [conversationId, setConversationId] = useState(0);
+
+	let conversationsWithParents = [];
+
+	useEffect(() => {}, [conversationId]);
+	conversationsWithParents = conversations?.map((conversation) => {
 		const parent = parents.find(
 			(parent) => parent.id === conversation.parentId
 		);
@@ -56,7 +68,10 @@ const Chat = () => {
 			messages: messagesByDate,
 		};
 	});
-	console.log(conversationsWithParents);
+	const conversation = conversationsWithParents?.find(
+		(conversation) => conversation.id === conversationId
+	);
+	console.log(conversationId, conversation);
 
 	const sendMessage = () => {
 		if (message) {
@@ -71,22 +86,37 @@ const Chat = () => {
 				<input type="text" placeholder="Search" />
 
 				<div className="flex column conversations-wrapper">
-					{conversationsWithParents?.map((conversation) => (
-						<Conversation
-							key={conversation.id}
-							name={conversation.name}
-							dot={true}
-							profilePic={conversation.profilePic}
-						/>
-					))}
+					{conversationsWithParents.length !== 0 ? (
+						conversationsWithParents?.map((conversation) => (
+							<Conversation
+								key={conversation.id}
+								isActive={conversationId === conversation.id}
+								name={conversation.name}
+								dot={true}
+								profilePic={conversation.profilePic}
+								handleClick={() =>
+									setConversationId(conversation.id)
+								}
+							/>
+						))
+					) : (
+						<div className="flex center full-width">
+							<h4 className="text-acient">
+								You have no conversations yet.
+							</h4>
+						</div>
+					)}
 				</div>
 			</div>
-			<div className="flex column messages-container">
-				<div className="messages-header"></div>
+			{conversationId !== 0 ? (
+				<div className="flex column messages-container">
+					<div className="messages-header"></div>
 
-				<div className="flex column messages-wrapper">
-					{conversationsWithParents?.map((conversation) =>
-						Object.entries(conversation.messages).map(
+					<div className="flex column messages-wrapper">
+						{Object.keys(conversation.messages).length === 0 && (
+							<p>Send a message to start a conversation.</p>
+						)}
+						{Object.entries(conversation.messages).map(
 							([date, messages]) => (
 								<Fragment key={date}>
 									<p className="messages-date">{date}</p>
@@ -103,21 +133,30 @@ const Chat = () => {
 									))}
 								</Fragment>
 							)
-						)
-					)}
+						)}
+					</div>
+					<div className="flex message-input-wrapper">
+						<textarea
+							className="message-input"
+							placeholder="Message..."
+							type="text"
+							onChange={(e) => setMessage(e.target.value)}
+						/>
+						<button
+							className="message-send-btn"
+							onClick={sendMessage}
+						>
+							Send
+						</button>
+					</div>
 				</div>
-				<div className="flex message-input-wrapper">
-					<textarea
-						className="message-input"
-						placeholder="Message..."
-						type="text"
-						onChange={(e) => setMessage(e.target.value)}
-					/>
-					<button className="message-send-btn" onClick={sendMessage}>
-						Send
-					</button>
+			) : (
+				<div className="flex center full-width">
+					<h2 className="text-acient">
+						Select a conversation and Start Chatting
+					</h2>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 };

@@ -58,7 +58,9 @@ const Students = () => {
 
 	return (
 		<div className="flex column full-width students-cards-container">
-			<h2 className="text-acient"> My Students </h2>
+			<h2 className="text-acient">{`${
+				isSchool ? "My School Students" : "My Students"
+			} `}</h2>
 
 			<div className="flex column full-width students-search-wrapper">
 				<div>

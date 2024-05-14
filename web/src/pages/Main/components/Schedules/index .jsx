@@ -52,21 +52,6 @@ const Schedules = () => {
 		title: schedule.title,
 	}));
 
-	const initialEvents = [
-		{
-			id: 1,
-			start: new Date(2024, 4, 10, 10, 0),
-			end: new Date(2024, 4, 10, 12, 0),
-			title: "Meeting with Client A",
-		},
-		{
-			id: 2,
-			start: new Date(2024, 4, 12, 14, 0),
-			end: new Date(2024, 4, 12, 16, 0),
-			title: "Presentation at Conference",
-		},
-	];
-
 	const [meetingDuration, setMeetingDuration] = useState(30);
 
 	const handleAddSlotSelection = ({ start, end }) => {

@@ -201,7 +201,7 @@ const Child = () => {
 										key={instruction.id}
 										dateTime={instruction.createdAt}
 										id={instruction.id}
-										report={instruction.instruction}
+										report={instruction.Instruction}
 									/>
 								))
 							) : (

@@ -1,35 +1,76 @@
 import { View, Text } from "react-native";
 import React, { useCallback, useState, useEffect } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
+
+// Styles
+import { conversationStyles } from "../../Styles/conversationStyles";
+
+// Redux
 import { useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { psychologistsSliceName } from "../../core/redux/Psychologists";
-import { Bubble, Day, GiftedChat, Send, Time } from "react-native-gifted-chat";
-import { conversationStyles } from "../../Styles/conversationStyles";
+import { userSliceName } from "../../core/redux/user/index.";
+
+// Tools
+import {
+	Bubble,
+	Day,
+	GiftedChat,
+	IMessage,
+	Send,
+	Time,
+} from "react-native-gifted-chat";
 import IonIcons from "@expo/vector-icons/Ionicons";
+import { messagesSliceName } from "../../core/redux/messages";
+import { conversationsSliceName } from "../../core/redux/conversations";
+import { teachersSliceName } from "../../core/redux/teachers";
+
+type user = {
+	profileId: number;
+	name: string;
+};
 
 const Conversation = () => {
 	const { id } = useLocalSearchParams();
+	const conversations = useSelector(
+		(global: RootState) => global[conversationsSliceName]
+	);
+	const messages = useSelector(
+		(global: RootState) => global[messagesSliceName]
+	);
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
-
-	const psychologist = psychologists.find(
-		(psychologist) => psychologist.id === JSON.parse(id[0])
+	const teachers = useSelector(
+		(global: RootState) => global[teachersSliceName]
 	);
-	const [messages, setMessages] = useState([]);
-	useEffect(() => {
-		setMessages([
-			{
-				_id: 1,
-				text: "Hello developer",
-				createdAt: new Date("2024-05-13T18:12:55.352Z"),
+	const parent = useSelector((global: RootState) => global[userSliceName]);
+
+	const conversation = conversations.find(
+		(conversation) => conversation.id === parseInt(id[0])
+	);
+	const conversationMessages = messages.filter(
+		(message) => message.conversationId === conversation.id
+	);
+	const [user, setUser] = useState<user>();
+	const isTeacher = conversation.teacherId !== null;
+
+	const mappedMessages: IMessage[] = conversationMessages.map(
+		(message): IMessage => {
+			const senderId = message.senderId;
+			const createdAt = new Date(message.createdAt);
+			return {
+				_id: message.id.toString(),
+				text: message.text,
+				createdAt,
 				user: {
-					_id: 2,
+					_id: senderId,
 				},
-			},
-		]);
-	}, []);
+			};
+		}
+	);
+
+	const [testMessages, setMessages] = useState(mappedMessages);
 
 	const onSend = useCallback((messages = []) => {
 		setMessages((previousMessages) =>
@@ -41,7 +82,7 @@ const Conversation = () => {
 		<>
 			<Stack.Screen
 				options={{
-					title: `${psychologist.firstName} ${psychologist.lastName}`,
+					title: user ? user.name : "",
 					headerStyle: {
 						backgroundColor: "#75AB19",
 					},
@@ -56,7 +97,7 @@ const Conversation = () => {
 			/>
 			<GiftedChat
 				renderAvatar={null}
-				messages={messages}
+				messages={testMessages}
 				onSend={(messages) => onSend(messages)}
 				renderDay={(props) => (
 					<Day
@@ -97,7 +138,7 @@ const Conversation = () => {
 					</Send>
 				)}
 				user={{
-					_id: 1,
+					_id: parent.profileId,
 				}}
 			/>
 		</>

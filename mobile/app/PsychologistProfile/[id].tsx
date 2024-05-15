@@ -27,7 +27,7 @@ import { useSendRequest } from "../../core/tools/remote/request";
 import { requestMethods } from "../../core/enum/requestMetods";
 import Toast from "react-native-toast-message";
 
-const PsichologistProfile = () => {
+const PsychologistProfile = () => {
 	const { id } = useLocalSearchParams();
 	const psychologistId = Array.isArray(id) ? id[0] : id;
 	const sendRequest = useSendRequest();
@@ -40,14 +40,15 @@ const PsichologistProfile = () => {
 		(global: RootState) => global[psychologistsSliceName]
 	);
 	const psychologist = psychologists.find(
-		(psychologist) => psychologist.id == parseInt(psychologistId)
+		(psychologist) => psychologist.id == JSON.parse(psychologistId)
 	);
 	const conversations = useSelector(
 		(global: RootState) => global[conversationsSliceName]
 	);
 
 	const psychologistInstructions = instructions.filter(
-		(instruction) => instruction.psychologistId === parseInt(psychologistId)
+		(instruction) =>
+			instruction.psychologistId === JSON.parse(psychologistId)
 	);
 	const conversation = conversations.find(
 		(conversation) => conversation.psychologistId === psychologist.id
@@ -186,4 +187,4 @@ const PsichologistProfile = () => {
 	);
 };
 
-export default PsichologistProfile;
+export default PsychologistProfile;

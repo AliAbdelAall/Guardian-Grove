@@ -9,6 +9,7 @@ export const psychoProfileStyles = StyleSheet.create({
 		paddingTop: 5,
 		borderBottomRightRadius: 30,
 		borderBottomLeftRadius: 30,
+		position: "relative",
 	},
 	profileImage: {
 		width: 200,
@@ -19,5 +20,11 @@ export const psychoProfileStyles = StyleSheet.create({
 		marginTop: 20,
 		paddingLeft: 20,
 		paddingRight: 20,
+	},
+	chatIcon: {
+		color: "#fff",
+		position: "absolute",
+		right: 25,
+		bottom: 20,
 	},
 });

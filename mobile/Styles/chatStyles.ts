@@ -34,4 +34,8 @@ export const chatStyles = StyleSheet.create({
 		backgroundColor: "#75AB19",
 		borderRadius: 8,
 	},
+	emptyStateText: {
+		fontSize: 18,
+		color: "#677294",
+	},
 });

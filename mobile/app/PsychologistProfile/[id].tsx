@@ -12,12 +12,15 @@ import { RootState } from "../../core/redux/store";
 import { psychologistsSliceName } from "../../core/redux/Psychologists";
 import { instructionsSliceName } from "../../core/redux/instructions";
 
-// Tools
-import { StarRatingDisplay } from "react-native-star-rating-widget";
+// Components
 import LoginButton from "../../components/LoginButton";
 import ProfileInput from "../../components/ProfileInput";
 
-const PsichologisProfile = () => {
+// Tools
+import { StarRatingDisplay } from "react-native-star-rating-widget";
+import IonIcons from "@expo/vector-icons/Ionicons";
+
+const PsichologistProfile = () => {
 	const { id } = useLocalSearchParams();
 
 	const instructions = useSelector(
@@ -82,6 +85,11 @@ const PsichologisProfile = () => {
 						starStyle={{ marginHorizontal: 0 }}
 						style={{ marginVertical: 10 }}
 					/>
+					<IonIcons
+						name="chatbubble-ellipses-outline"
+						size={30}
+						style={psychoProfileStyles.chatIcon}
+					/>
 				</View>
 				<View style={psychoProfileStyles.profileBodyWrapper}>
 					<View style={profileStyles.inputContainer}>
@@ -131,4 +139,4 @@ const PsichologisProfile = () => {
 	);
 };
 
-export default PsichologisProfile;
+export default PsichologistProfile;

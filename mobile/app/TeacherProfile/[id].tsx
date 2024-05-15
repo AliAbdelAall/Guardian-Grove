@@ -16,6 +16,9 @@ import { reportsSliceName } from "../../core/redux/reports";
 import LoginButton from "../../components/LoginButton";
 import ProfileInput from "../../components/ProfileInput";
 
+// Tools
+import IonIcons from "@expo/vector-icons/Ionicons";
+
 const TeacherProfile = () => {
 	const { id } = useLocalSearchParams();
 
@@ -66,6 +69,11 @@ const TeacherProfile = () => {
 					<Image
 						style={psychoProfileStyles.profileImage}
 						src={`${process.env.EXPO_PUBLIC_PROFILE_PICS_URL}${teacher.profilePic}`}
+					/>
+					<IonIcons
+						name="chatbubble-ellipses-outline"
+						size={30}
+						style={psychoProfileStyles.chatIcon}
 					/>
 				</View>
 				<View style={psychoProfileStyles.profileBodyWrapper}>

@@ -82,7 +82,10 @@ function App() {
 								<Route path="student/:id" element={<Child />} />
 							</Route>
 							<Route path="school" element={<Students />} />
-							<Route path="chat/:id" element={<Chat />} />
+							<Route
+								path="chat/:id"
+								element={<Chat socket={socket} />}
+							/>
 							<Route path="profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />
 						</Route>
@@ -101,7 +104,10 @@ function App() {
 								<Route path="child/:id" element={<Child />} />
 							</Route>
 							<Route path="schedules" element={<Schedules />} />
-							<Route path="chat/:id" element={<Chat />} />
+							<Route
+								path="chat/:id"
+								element={<Chat socket={socket} />}
+							/>
 							<Route path="feedback" element={<Feedback />} />
 							<Route path="profile" element={<Profile />} />
 							<Route path="*" element={<NotFound />} />

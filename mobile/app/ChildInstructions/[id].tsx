@@ -18,7 +18,7 @@ import ChildNameImage from "../../components/ChildNameImage";
 
 const ChildInstructions = () => {
 	const { id } = useLocalSearchParams();
-
+	const childId = Array.isArray(id) ? id[0] : id;
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
@@ -29,10 +29,10 @@ const ChildInstructions = () => {
 		(global: RootState) => global[childrenSliceName]
 	);
 
-	const child = children.find((child) => child.id === JSON.parse(id[0]));
+	const child = children.find((child) => child.id === JSON.parse(childId));
 
 	const childInstructions = instructions.filter(
-		(instruction) => instruction.childId === JSON.parse(id[0])
+		(instruction) => instruction.childId === JSON.parse(childId)
 	);
 
 	const psychologist = psychologists.find(

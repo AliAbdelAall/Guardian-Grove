@@ -18,6 +18,7 @@ import ReportContainer from "../../components/ReportContainer";
 
 const ChildrenReports = () => {
 	const { id } = useLocalSearchParams();
+	const teacherId = Array.isArray(id) ? id[0] : id;
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
@@ -29,11 +30,11 @@ const ChildrenReports = () => {
 	);
 
 	const teacher = teachers.find(
-		(teacher) => teacher.id === JSON.parse(id[0])
+		(teacher) => teacher.id === JSON.parse(teacherId)
 	);
 
 	const students = children.filter(
-		(child) => child.teacherId === JSON.parse(id[0])
+		(child) => child.teacherId === JSON.parse(teacherId)
 	);
 
 	const studentsWithReport = students.map((student) => {

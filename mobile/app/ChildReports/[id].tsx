@@ -18,6 +18,7 @@ import ChildNameImage from "../../components/ChildNameImage";
 
 const ChildReports = () => {
 	const { id } = useLocalSearchParams();
+	const childId = Array.isArray(id) ? id[0] : id;
 	const teachers = useSelector(
 		(global: RootState) => global[teachersSliceName]
 	);
@@ -28,14 +29,14 @@ const ChildReports = () => {
 		(global: RootState) => global[reportsSliceName]
 	);
 
-	const student = children.find((child) => child.id === JSON.parse(id[0]));
+	const student = children.find((child) => child.id === JSON.parse(childId));
 
 	const teacher = teachers.find(
 		(teacher) => teacher.id === student.teacherId
 	);
 
 	const childreports = reports.filter(
-		(report) => report.childId === JSON.parse(id[0])
+		(report) => report.childId === JSON.parse(childId)
 	);
 
 	return (

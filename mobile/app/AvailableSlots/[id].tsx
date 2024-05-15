@@ -26,7 +26,7 @@ import LoginButton from "../../components/LoginButton";
 
 const AvailableSlots = () => {
 	const { id } = useLocalSearchParams();
-
+	const psychologistId = Array.isArray(id) ? id[0] : id;
 	const slots = useSelector(
 		(global: RootState) => global[availableSlotsSliceName]
 	);
@@ -34,7 +34,7 @@ const AvailableSlots = () => {
 		(global: RootState) => global[psychologistsSliceName]
 	);
 	const psychologist = psychologists.find(
-		(psychologist) => psychologist.id === JSON.parse(id[0])
+		(psychologist) => psychologist.id === JSON.parse(psychologistId)
 	);
 	const psychologistSlots = slots.filter(
 		(slot) => slot.psychologistId === psychologist.id

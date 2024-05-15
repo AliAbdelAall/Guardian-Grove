@@ -18,7 +18,7 @@ import ReportContainer from "../../components/ReportContainer";
 
 const ChildrenInstructions = () => {
 	const { id } = useLocalSearchParams();
-
+	const psychologistId = Array.isArray(id) ? id[0] : id;
 	const psychologists = useSelector(
 		(global: RootState) => global[psychologistsSliceName]
 	);
@@ -30,7 +30,7 @@ const ChildrenInstructions = () => {
 	);
 
 	const psychologist = psychologists.find(
-		(psychologist) => psychologist.id === JSON.parse(id[0])
+		(psychologist) => psychologist.id === JSON.parse(psychologistId)
 	);
 
 	const childrenWithInstruction = children.map((child) => {

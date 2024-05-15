@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React, { useCallback, useState, useEffect } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 
@@ -32,6 +31,8 @@ type user = {
 
 const Conversation = () => {
 	const { id } = useLocalSearchParams();
+	const conversationId = Array.isArray(id) ? id[0] : id;
+
 	const conversations = useSelector(
 		(global: RootState) => global[conversationsSliceName]
 	);
@@ -47,7 +48,7 @@ const Conversation = () => {
 	const parent = useSelector((global: RootState) => global[userSliceName]);
 
 	const conversation = conversations.find(
-		(conversation) => conversation.id === parseInt(id[0])
+		(conversation) => conversation.id === JSON.parse(conversationId)
 	);
 	const conversationMessages = messages.filter(
 		(message) => message.conversationId === conversation.id

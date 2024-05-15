@@ -5,33 +5,32 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./style.css";
 
 // Redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { parentsSliceName } from "../../../../core/redux/parents";
-import { conversationsSliceName } from "../../../../core/redux/convesations";
+import {
+	addMessage,
+	conversationsSliceName,
+} from "../../../../core/redux/convesations";
+import { userProfileSliceName } from "../../../../core/redux/userProfile";
 
 // Components
 import Conversation from "../../../../components/Conversation";
 import Message from "../../../../components/Message";
+import { toast } from "react-toastify";
 
-// Socket
-import io from "socket.io-client";
-
-const socket = io.connect("http://localhost:3000");
-socket.on("connect", () => {
-	console.log(`you connected with Id ${socket.id}`);
-	socket.emit("test", 10, "hello", { test: "tis is a test" });
-});
-
-const Chat = () => {
+const Chat = ({ socket }) => {
 	const { id } = useParams();
 
 	const { parents } = useSelector((global) => global[parentsSliceName]);
 	const { conversations } = useSelector(
 		(global) => global[conversationsSliceName]
 	);
+	const user = useSelector((global) => global[userProfileSliceName]);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const dispatch = useDispatch();
 	const [message, setMessage] = useState("");
+	const [messageId, setMessageId] = useState(0);
 	console.log(conversations);
 
 	const isTeacher = location.pathname.includes("teacher");
@@ -40,7 +39,37 @@ const Chat = () => {
 
 	let conversationsWithParents = [];
 
-	useEffect(() => {}, [conversationId]);
+	useEffect(() => {
+		let mounted = true;
+
+		if (conversationId !== 0) {
+			socket.emit(
+				"join-conversation",
+				conversationId.toString(),
+				(conversation) => {
+					toast.success(`joined conversation: ${conversation}`);
+					console.log(conversation);
+				}
+			);
+			if (mounted) {
+				socket.on("receive-message", (message) => {
+					console.log("newMessage in room: ", message);
+					dispatch(
+						addMessage({
+							conversationId: message.conversationId,
+							message,
+						})
+					);
+					setMessageId(message.id);
+				});
+			}
+		}
+		return () => {
+			mounted = false;
+			socket.off("receive-message");
+		};
+	}, [conversationId]);
+
 	conversationsWithParents = conversations?.map((conversation) => {
 		const parent = parents.find(
 			(parent) => parent.id === conversation.parentId
@@ -83,7 +112,13 @@ const Chat = () => {
 
 	const sendMessage = () => {
 		if (message) {
-			socket.emit("send-message", message);
+			const newMessage = {
+				conversationId,
+				text: message,
+				senderId: user.id,
+				createdAt: new Date(),
+			};
+			socket.emit("send-message", newMessage);
 			setMessage("");
 		}
 	};
@@ -156,6 +191,7 @@ const Chat = () => {
 							className="message-input"
 							placeholder="Message..."
 							type="text"
+							value={message}
 							onChange={(e) => setMessage(e.target.value)}
 						/>
 						<button

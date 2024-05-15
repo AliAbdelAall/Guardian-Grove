@@ -26,7 +26,7 @@ const conversationsSlice = createSlice({
           conversation.id === conversationId
             ? {
               ...conversation,
-              message: [...conversation.message, message]
+              Message: [...conversation.Message, message]
             }
             : conversation
         )

@@ -73,7 +73,7 @@ const ChildrenInstructions = () => {
 									<ReportContainer
 										key={student.item.id}
 										dateTime={instruction.createdAt}
-										report={instruction.instruction}
+										report={instruction.Instruction}
 										route={`/ChildInstructions/${student.item.id}`}
 									/>
 								</View>

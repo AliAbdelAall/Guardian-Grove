@@ -4,7 +4,7 @@ interface instruction {
 	id: number;
 	childId: number;
 	psychologistId: number;
-	instruction: string;
+	Instruction: string;
 	createdAt: string;
 }
 

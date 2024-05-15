@@ -63,13 +63,13 @@ const ChildInstructions = () => {
 				<FlatList
 					data={childInstructions}
 					renderItem={(childInstruction) => {
-						const { id, instruction, createdAt } =
+						const { id, Instruction, createdAt } =
 							childInstruction.item;
 						return (
 							<ReportContainer
 								key={id}
 								dateTime={createdAt}
-								report={instruction}
+								report={Instruction}
 							/>
 						);
 					}}

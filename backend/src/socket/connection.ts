@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
+import { prismaClient } from "..";
 
-export const socketConnection = (server: any) => {
+export const socketConnection = async (server: any) => {
 	const io = new Server(server, {
 		cors: {
 			origin: [
@@ -18,11 +19,25 @@ export const socketConnection = (server: any) => {
 		socket.on("disconnect", () => {
 			console.log("User disconnected: ", socket.id);
 		});
-		socket.on("test", (num, str, obj) => {
-			console.log(num, str, obj);
+		socket.on("join-conversation", (conversationId: string, cb) => {
+			socket.join(conversationId);
+			cb(conversationId);
 		});
-		socket.on("send-message", (message) => {
-			console.log(message);
+		socket.on("send-message", async (message) => {
+			const savedMessage = await prismaClient.message.create({
+				data: {
+					conversationId: message.conversationId,
+					text: message.text,
+					senderId: message.senderId,
+					createdAt: new Date(message.createdAt),
+				},
+			});
+			console.log("saved Message: ", savedMessage);
+
+			io.to(message.conversationId.toString()).emit(
+				"receive-message",
+				savedMessage
+			);
 		});
 	});
 };

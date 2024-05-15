@@ -55,6 +55,10 @@ const Conversation = () => {
 	const [user, setUser] = useState<user>();
 	const isTeacher = conversation.teacherId !== null;
 
+	useEffect(() => {
+		getUser();
+	}, []);
+
 	const mappedMessages: IMessage[] = conversationMessages.map(
 		(message): IMessage => {
 			const senderId = message.senderId;
@@ -69,6 +73,29 @@ const Conversation = () => {
 			};
 		}
 	);
+
+	const getUser = () => {
+		let user: user;
+		if (isTeacher) {
+			const teacher = teachers.find(
+				(teacher) => teacher.id === conversation.teacherId
+			);
+			user = {
+				profileId: teacher.profileId,
+				name: `${teacher.firstName} ${teacher.lastName}`,
+			};
+		} else {
+			const psychologist = psychologists.find(
+				(psychologist) =>
+					psychologist.id === conversation.psychologistId
+			);
+			user = {
+				profileId: psychologist.profileId,
+				name: `Dr. ${psychologist.firstName} ${psychologist.lastName}`,
+			};
+		}
+		setUser(user);
+	};
 
 	const [testMessages, setMessages] = useState(mappedMessages);
 

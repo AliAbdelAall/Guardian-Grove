@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface message {
 	id: number;
@@ -14,12 +14,15 @@ const messagesSlice = createSlice({
 	initialState,
 	name: "messagesSlice",
 	reducers: {
-		setMessages: (state, action) => {
+		setMessages: (state, action: PayloadAction<message[]>) => {
 			return [...action.payload];
+		},
+		addMessage: (state, action: PayloadAction<message>) => {
+			return [action.payload, ...state];
 		},
 	},
 });
 
-export const { setMessages } = messagesSlice.actions;
+export const { setMessages, addMessage } = messagesSlice.actions;
 export const messagesSliceName = messagesSlice.name;
 export default messagesSlice.reducer;

@@ -164,7 +164,7 @@ export const getPsychologistsAndTeachers = async (
 
 		const conversations = await prismaClient.conversation.findMany({
 			where: { parentId: user?.parent?.id },
-			include: { Message: true },
+			include: { Message: { orderBy: { createdAt: "desc" } } },
 		});
 
 		return res.status(200).json({

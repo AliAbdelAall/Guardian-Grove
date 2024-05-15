@@ -4,10 +4,15 @@ import { Provider } from "react-redux";
 import { store } from "../core/redux/store";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:3000");
-socket.emit("connection", () => {
-	console.log(socket);
+const socket = io("http://192.168.0.201:3000");
+socket.on("connect", () => {
+	console.log("Connected to server");
 });
+
+socket.on("disconnect", () => {
+	console.log("Disconnected from server");
+});
+
 const RootLayout = () => {
 	return (
 		<Provider store={store}>

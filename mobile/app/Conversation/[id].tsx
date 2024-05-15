@@ -5,10 +5,13 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { conversationStyles } from "../../Styles/conversationStyles";
 
 // Redux
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../core/redux/store";
 import { psychologistsSliceName } from "../../core/redux/Psychologists";
 import { userSliceName } from "../../core/redux/user/index.";
+import { addMessage, messagesSliceName } from "../../core/redux/messages";
+import { conversationsSliceName } from "../../core/redux/conversations";
+import { teachersSliceName } from "../../core/redux/teachers";
 
 // Tools
 import {
@@ -20,9 +23,7 @@ import {
 	Time,
 } from "react-native-gifted-chat";
 import IonIcons from "@expo/vector-icons/Ionicons";
-import { messagesSliceName } from "../../core/redux/messages";
-import { conversationsSliceName } from "../../core/redux/conversations";
-import { teachersSliceName } from "../../core/redux/teachers";
+import socket from "../../core/socket";
 
 type user = {
 	profileId: number;
@@ -46,19 +47,37 @@ const Conversation = () => {
 		(global: RootState) => global[teachersSliceName]
 	);
 	const parent = useSelector((global: RootState) => global[userSliceName]);
-
+	const dispatch = useDispatch();
 	const conversation = conversations.find(
 		(conversation) => conversation.id === JSON.parse(conversationId)
 	);
 	const conversationMessages = messages.filter(
 		(message) => message.conversationId === conversation.id
 	);
-	const [user, setUser] = useState<user>();
+	const [messageId, setMessageId] = useState(0);
 	const isTeacher = conversation.teacherId !== null;
 
 	useEffect(() => {
-		getUser();
-	}, []);
+		if (JSON.parse(conversationId) !== 0) {
+			socket.emit(
+				"join-conversation",
+				conversationId,
+				(conversation: string) => {
+					console.log(`Joined conversation: ${conversation}`);
+				}
+			);
+			socket.on("receive-message", (message) => {
+				console.log("Received message:", message);
+
+				dispatch(addMessage(message));
+				setMessageId(message.conversationId);
+			});
+		}
+
+		return () => {
+			socket.off("receive-message");
+		};
+	}, [conversationId]);
 
 	const mappedMessages: IMessage[] = conversationMessages.map(
 		(message): IMessage => {
@@ -75,35 +94,38 @@ const Conversation = () => {
 		}
 	);
 
-	const getUser = () => {
-		let user: user;
-		if (isTeacher) {
-			const teacher = teachers.find(
-				(teacher) => teacher.id === conversation.teacherId
-			);
-			user = {
-				profileId: teacher.profileId,
-				name: `${teacher.firstName} ${teacher.lastName}`,
-			};
-		} else {
-			const psychologist = psychologists.find(
-				(psychologist) =>
-					psychologist.id === conversation.psychologistId
-			);
-			user = {
-				profileId: psychologist.profileId,
-				name: `Dr. ${psychologist.firstName} ${psychologist.lastName}`,
-			};
-		}
-		setUser(user);
-	};
-
-	const [testMessages, setMessages] = useState(mappedMessages);
-
-	const onSend = useCallback((messages = []) => {
-		setMessages((previousMessages) =>
-			GiftedChat.append(previousMessages, messages)
+	let user: user;
+	if (isTeacher) {
+		const teacher = teachers.find(
+			(teacher) => teacher.id === conversation.teacherId
 		);
+		user = {
+			profileId: teacher.profileId,
+			name: `${teacher.firstName} ${teacher.lastName}`,
+		};
+	} else {
+		const psychologist = psychologists.find(
+			(psychologist) => psychologist.id === conversation.psychologistId
+		);
+		user = {
+			profileId: psychologist.profileId,
+			name: `Dr. ${psychologist.firstName} ${psychologist.lastName}`,
+		};
+	}
+
+	const sendMessage = useCallback((messages = []) => {
+		const lastMessage = messages[messages.length - 1];
+		const messageText = lastMessage.text;
+
+		if (messageText) {
+			const newMessage = {
+				conversationId: JSON.parse(conversationId),
+				text: messageText,
+				senderId: user.profileId,
+				createdAt: new Date(),
+			};
+			socket.emit("send-message", newMessage);
+		}
 	}, []);
 
 	return (
@@ -125,8 +147,8 @@ const Conversation = () => {
 			/>
 			<GiftedChat
 				renderAvatar={null}
-				messages={testMessages}
-				onSend={(messages) => onSend(messages)}
+				messages={mappedMessages}
+				onSend={(messages) => sendMessage(messages)}
 				renderDay={(props) => (
 					<Day
 						{...props}

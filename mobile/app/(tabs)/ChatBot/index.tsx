@@ -21,10 +21,36 @@ const ChatBot = () => {
 	const sendRequest = useSendRequest();
 	const parent = useSelector((global: RootState) => global[userSliceName]);
 
+	const generateResponse = (newMessages = []) => {
+		setMessages((previousMessages) =>
+			GiftedChat.append(previousMessages, newMessages)
+		);
+		const userMessage = newMessages[0];
+		console.log(userMessage);
+		sendRequest(requestMethods.POST, "/api/chatbot/generate-response", {
+			prompt: userMessage.text,
+		}).then((response) => {
+			if (response.status === 200) {
+				const botMessage: IMessage = {
+					_id: new Date().toISOString(),
+					text: response.data.generatedText,
+					createdAt: new Date(),
+					user: {
+						_id: "bot",
+					},
+				};
+				setMessages((previousMessages) =>
+					GiftedChat.append(previousMessages, [botMessage])
+				);
+			}
+		});
+	};
+
 	return (
 		<GiftedChat
 			renderAvatar={null}
 			messages={messages}
+			onSend={(messages) => generateResponse(messages)}
 			renderDay={(props) => (
 				<Day {...props} textStyle={conversationStyles.dayTextStyle} />
 			)}

@@ -26,8 +26,8 @@ const Login = () => {
 		message: "",
 	});
 	const [credentials, setCredentials] = useState({
-		username: "parent1",
-		password: "parent12345",
+		username: "",
+		password: "",
 	});
 
 	const [isbottomSheetVisible, setBottomSheetVisibility] = useState(false);

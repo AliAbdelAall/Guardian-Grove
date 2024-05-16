@@ -7,6 +7,7 @@ import childRoutes from "./child.routes";
 import webRoutes from "./web.routes";
 import teacherRoutes from "./teacher.routes";
 import messageRoutes from "./message.routes";
+import chatBotRoutes from "./chatbot.routes";
 
 const rootRouter = Router();
 
@@ -18,5 +19,5 @@ rootRouter.use("/child", childRoutes);
 rootRouter.use("/web", webRoutes);
 rootRouter.use("/teacher", teacherRoutes);
 rootRouter.use("/message", messageRoutes);
-
+rootRouter.use("/chatbot", chatBotRoutes);
 export default rootRouter;

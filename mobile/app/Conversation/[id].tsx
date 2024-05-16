@@ -121,7 +121,7 @@ const Conversation = () => {
 			const newMessage = {
 				conversationId: JSON.parse(conversationId),
 				text: messageText,
-				senderId: user.profileId,
+				senderId: parent.profileId,
 				createdAt: new Date(),
 			};
 			socket.emit("send-message", newMessage);

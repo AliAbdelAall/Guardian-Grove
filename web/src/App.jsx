@@ -68,7 +68,7 @@ function App() {
 							element={<ResetPassword />}
 						/>
 					</Route>
-					<Route path="/main/" element={<Main />}>
+					<Route path="/main/" element={<Main socket={socket} />}>
 						<Route
 							path={"teacher"}
 							element={

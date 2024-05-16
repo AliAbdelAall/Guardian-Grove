@@ -25,12 +25,14 @@ import { setInstructions } from "../../core/redux/instructions";
 import { setSchedules } from "../../core/redux/schedules";
 import { setConversations } from "../../core/redux/convesations";
 
-const Main = () => {
+const Main = ({ socket }) => {
 	const navigate = useNavigate();
 	const sendRequest = useSendRequest();
 	const dispatch = useDispatch();
 	const [role, setRole] = useState("");
-
+	socket.on("connect", () => {
+		console.log(`connected: ${socket.id}`);
+	});
 	useEffect(() => {
 		checkRole();
 	}, []);

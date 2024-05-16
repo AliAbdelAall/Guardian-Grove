@@ -5,9 +5,9 @@
 <!-- project philosophy -->
 <img src="./readme/title2.svg"/>
 
->An integrated platform across mobile, desktop, and web interfaces, dedicated to fostering a supportive community for parents and psychologists alike. Our mission is to bridge the gap between professional guidance and parental needs, empowering users in their journey of nurturing and growth.
+>Guardian Grove provides convenient access to professional guidance and support for parents.
 >
->Guardian Grove aims to provide seamless communication, access to professional advice, and a nurturing environment for sharing experiences. We believe in convenience, communication, and personalized support to enhance the well-being of families.
+>Our mission is to bridge the gap between professional advice and parental needs, empowering users in their journey of nurturing and growth through communication and personalized support.
 
 ## User Stories
 

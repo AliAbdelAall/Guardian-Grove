@@ -24,20 +24,24 @@ export const socketConnection = async (server: any) => {
 			cb(conversationId);
 		});
 		socket.on("send-message", async (message) => {
-			const savedMessage = await prismaClient.message.create({
-				data: {
-					conversationId: message.conversationId,
-					text: message.text,
-					senderId: message.senderId,
-					createdAt: new Date(message.createdAt),
-				},
-			});
-			console.log("saved Message: ", savedMessage);
+			try {
+				const savedMessage = await prismaClient.message.create({
+					data: {
+						conversationId: message.conversationId,
+						text: message.text,
+						senderId: message.senderId,
+						createdAt: new Date(message.createdAt),
+					},
+				});
+				console.log("saved Message: ", savedMessage);
 
-			io.to(message.conversationId.toString()).emit(
-				"receive-message",
-				savedMessage
-			);
+				io.to(message.conversationId.toString()).emit(
+					"receive-message",
+					savedMessage
+				);
+			} catch (error) {
+				console.log(error);
+			}
 		});
 	});
 };

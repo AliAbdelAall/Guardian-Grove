@@ -11,17 +11,23 @@
 
 ## User Stories
 
-### user
+### parent
 
-- As a user, I want to book appointments with psychologists through the app, so I can seek professional guidance conveniently.
-- As a user, I want to manage my social interactions, so I can ensure a comfortable environment for engagement.
-- As a user, I want to receive personalized recommendations based on my children's ages, so I can discover relevant content and resources for parenting.
+- As a parent, I want to book appointments with psychologists through the app, so I can seek professional guidance conveniently.
+- As a parent, I want to recieve techers reports, so I can track my child behaviour in the school.
+- As a parent, I want to chat with AI, so I can get immediate advice on samll details.
+
+### Teacher
+
+- As a teacher, i want to send reports to the prent's student, so that i can ensure the student is raised well
+- As a teacher, i want to edit my profile, so that i can represent my self properly for parents
+- As a teacher, i want to cht with the prent, so that i can discuss anything about their child  
 
 ### Psychologist
 
 - As a psychologist, I want to manage my schedule and make available times visible, so I can optimize my time and offer convenient slots to users.
 - As a psychologist, I want to receive feedback from users, so I can improve services and understand their needs better.
-- As a psychologist, I want to engage in follow-up discussions with users, so I can provide continuous assistance beyond scheduled appointments.
+- As a psychologist, I want to engage in follow-up chat discussions with parentss, so I can provide continuous assistance beyond scheduled appointments.
 
 ### Admin
 

@@ -18,12 +18,35 @@ import { setMessages } from "../../../core/redux/messages";
 import { useSendRequest } from "../../../core/tools/remote/request";
 import { requestMethods } from "../../../core/enum/requestMetods";
 import Toast from "react-native-toast-message";
+import {
+	registerForPushNotificationsAsync,
+	registerNotificationHandlers,
+} from "../../../services/notification/pushNotification";
 
 const HomeLayout = () => {
 	const dispatch = useDispatch();
 	const sendRequest = useSendRequest();
 
 	useEffect(() => {
+		const saveToken = async () => {
+			const token = await registerForPushNotificationsAsync();
+			console.log("Device Token", token);
+			if (token) {
+				sendRequest(requestMethods.POST, "/api/parent/save-token", {
+					token,
+				})
+					.then((response) => {
+						if (response.status === 201) {
+							console.log(response.data.message);
+						}
+					})
+					.catch((error) => {
+						console.log(error.response);
+					});
+			}
+		};
+		saveToken();
+		registerNotificationHandlers();
 		loadPsychologistAndTeachers();
 	}, []);
 

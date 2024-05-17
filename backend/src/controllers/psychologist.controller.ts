@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prismaClient } from "..";
+import { sendNotificationToParent } from "../firebase/config";
 
 export const getClients = async (req: Request, res: Response) => {
 	try {
@@ -120,6 +121,26 @@ export const sendInstruction = async (req: Request, res: Response) => {
 			},
 		});
 
+		const child = await prismaClient.child.findFirst({
+			where: { id: childId },
+			include: { parent: { include: { profile: true } } },
+		});
+		const deviceToken = await prismaClient.deviceToken.findFirst({
+			where: { userId: child?.parent.profile.userId },
+		});
+		if (!deviceToken) {
+			console.log("token does not exist");
+		} else {
+			console.log(deviceToken);
+
+			await sendNotificationToParent(
+				deviceToken?.token,
+				"New Instruction",
+				`For ${child?.name} from Dr. ${Psychologist?.firstName} ${Psychologist?.lastName}`,
+				"/ChildInstructions/",
+				child!.id
+			);
+		}
 		return res.status(201).json({
 			message: "instruction created successfully",
 			instruction: newInstruction,

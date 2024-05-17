@@ -10,18 +10,32 @@ admin.initializeApp({
 export const sendNotificationToParent = async (
 	deviceToken: string,
 	title: string,
-	body: string
+	body: string,
+	screen: string,
+	childId: number
 ) => {
 	try {
 		const message = {
-			token: deviceToken,
+			to: deviceToken,
+			sound: "default",
 			notification: {
 				title,
 				body,
 			},
+			data: {
+				screen,
+				childId,
+			},
 		};
 
-		await admin.messaging().send(message);
+		await fetch("https://exp.host/--/api/v2/push/send", {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(message),
+		});
 		console.log("Notification sent successfully!");
 	} catch (error) {
 		console.error("Error sending notification:", error);

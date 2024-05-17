@@ -44,3 +44,21 @@ export async function registerForPushNotificationsAsync() {
 			console.log(error.response);
 		});
 }
+
+export function registerNotificationHandlers() {
+	Notifications.setNotificationHandler({
+		handleNotification: async () => ({
+			shouldShowAlert: true,
+			shouldPlaySound: true,
+			shouldSetBadge: false,
+		}),
+	});
+
+	Notifications.addNotificationReceivedListener((notification) => {
+		console.log("Notification received:", notification);
+	});
+
+	Notifications.addNotificationResponseReceivedListener((response) => {
+		console.log("Notification response received:", response);
+	});
+}

@@ -2,11 +2,9 @@
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
 import * as Device from "expo-device";
-import { useSendRequest } from "../../core/tools/remote/request";
-import { requestMethods } from "../../core/enum/requestMetods";
+import { router } from "expo-router";
 
 export async function registerForPushNotificationsAsync() {
-	const sendRequest = useSendRequest();
 	if (!Device.isDevice) {
 		console.warn("Must use physical device for Push Notifications");
 		return;
@@ -32,17 +30,7 @@ export async function registerForPushNotificationsAsync() {
 	const token = (await Notifications.getExpoPushTokenAsync()).data;
 	console.log("FCM Token:", token);
 
-	sendRequest(requestMethods.POST, "/api/device-token/save-token", {
-		token,
-	})
-		.then((response) => {
-			if (response.status === 201) {
-				console.log(response.data.message);
-			}
-		})
-		.catch((error) => {
-			console.log(error.response);
-		});
+	return token ? token : "";
 }
 
 export function registerNotificationHandlers() {
@@ -60,5 +48,11 @@ export function registerNotificationHandlers() {
 
 	Notifications.addNotificationResponseReceivedListener((response) => {
 		console.log("Notification response received:", response);
+
+		const data = response.notification.request.content.data;
+
+		if (data.screen && data.childId) {
+			router.push(`${data.screen}${data.childId}`);
+		}
 	});
 }

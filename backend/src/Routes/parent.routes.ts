@@ -8,6 +8,7 @@ import {
 	createConversationWithTeacher,
 	getPsychologistsAndTeachers,
 	ratePsychologist,
+	saveToken,
 	updateUserDob,
 } from "../controllers/parent.controller";
 import parentMiddleware from "../middlewares/parent.middleware";
@@ -64,5 +65,7 @@ parentRoutes.post(
 	parentMiddleware,
 	createConversationWithPsychologist
 );
+
+parentRoutes.post("/save-token", authMiddleware, parentMiddleware, saveToken);
 
 export default parentRoutes;

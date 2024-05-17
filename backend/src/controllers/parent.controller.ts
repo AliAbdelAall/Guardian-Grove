@@ -400,3 +400,32 @@ export const createConversationWithPsychologist = async (
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const saveToken = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.user!;
+		const { token } = req.body;
+
+		const existingToken = await prismaClient.deviceToken.findFirst({
+			where: { userId: id },
+		});
+
+		if (existingToken) {
+			await prismaClient.deviceToken.update({
+				where: { userId: id },
+				data: token,
+			});
+		} else {
+			const newToken = await prismaClient.deviceToken.create({
+				data: {
+					userId: id,
+					token,
+				},
+			});
+		}
+		return res.status(201).json({ message: "taken added successfully" });
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

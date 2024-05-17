@@ -39,13 +39,18 @@
 <!-- Tech stack -->
 <img src="./readme/title3.svg"/>
 
-###  Coffee Express is built using the following technologies:
+###  Guardian Grove is built using the following technologies:
 
-- This project uses the [Flutter app development framework](https://flutter.dev/). Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
-- For persistent storage (database), the app uses the [Hive](https://hivedb.dev/) package which allows the app to create a custom storage schema and save it to a local database.
-- To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
-  - 🚨 Currently, notifications aren't working on macOS. This is a known issue that we are working to resolve!
-- The app uses the font ["Work Sans"](https://fonts.google.com/specimen/Work+Sans) as its main font, and the design of the app adheres to the material design guidelines.
+-This project uses [Node.js](https://nodejs.org/en) for its backend runtime environment. Node.js allows us to build scalable and efficient server-side applications using JavaScript.
+-[Express](https://expressjs.com/) is used as the web application framework for building the RESTful API. Express simplifies routing and handling HTTP requests and responses.
+-For database interactions, the project uses [Prisma](https://www.prisma.io/), an ORM that makes database access easy with type safety and auto-generated queries.
+-The entire backend is written in [TypeScript](https://www.typescriptlang.org/), which adds static types to JavaScript, enhancing code quality and maintainability.
+-For real-time communication and live chatting, [Socket.IO](https://socket.io/) is implemented, providing bi-directional communication between clients and servers.
+-Notifications are handled using [Firebase](https://firebase.google.com/), a platform that provides various tools including cloud messaging for sending push notifications.
+-The web application is built using [Vite](https://vitejs.dev/), a next-generation frontend tooling that provides fast build times and a smooth development experience.
+-React is used for building the user interface. [React](https://react.dev/) is a powerful library for creating dynamic and responsive web applications.
+-The mobile application is developed using [Expo](https://expo.dev/), a framework and platform for universal React applications. Expo simplifies the development and deployment process for mobile apps.
+-For handling push notifications on mobile devices, the project uses [Expo Notifications](https://docs.expo.dev/push-notifications/sending-notifications/), which supports sending and receiving push notifications on both iOS and Android platforms.
 
 <br><br>
 <!-- UI UX -->

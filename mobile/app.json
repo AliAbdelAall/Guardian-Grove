@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "mobile",
-    "slug": "mobile",
+    "slug": "guardian-grove",
     "scheme": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,9 +20,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,9 +34,15 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "photosPermission": "The app accesses your photos to let change your profile picture"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7a429193-c95f-45bc-83ce-365bc842d481"
+      }
+    },
+    "owner": "aliabdelaal"
   }
 }

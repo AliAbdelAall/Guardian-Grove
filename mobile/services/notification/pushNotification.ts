@@ -27,8 +27,11 @@ export async function registerForPushNotificationsAsync() {
 		return;
 	}
 
-	const token = (await Notifications.getExpoPushTokenAsync()).data;
-	console.log("FCM Token:", token);
+	const token = (
+		await Notifications.getExpoPushTokenAsync({
+			projectId: "7a429193-c95f-45bc-83ce-365bc842d481",
+		})
+	).data;
 
 	return token ? token : "";
 }

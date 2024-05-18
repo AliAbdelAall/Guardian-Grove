@@ -38,6 +38,10 @@ const Login = () => {
 		message: "",
 	});
 
+	const isAxiosError = (error: unknown): error is AxiosError => {
+		return (error as AxiosError).isAxiosError !== undefined;
+	};
+
 	console.log(credentials);
 
 	const handleInputChange = (value: string, field: string) => {
@@ -75,13 +79,20 @@ const Login = () => {
 					navigate("/main");
 				}
 			})
-			.catch((error: AxiosError) => {
-				if (error.response?.status === 400) {
-					setError({
-						...error,
-						status: true,
-						message: error.response.statusText,
-					});
+			.catch((error: unknown) => {
+				if (isAxiosError(error)) {
+					const status = error.response?.status;
+					if (status === 400) {
+						const errorMessage =
+							(error.response?.data as { error?: string })
+								?.error ?? "Unknown error";
+						setError({
+							status: true,
+							message: errorMessage,
+						});
+					}
+				} else {
+					console.error("An unknown error occurred:", error);
 				}
 			});
 	};

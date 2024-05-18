@@ -11,6 +11,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Layouts
 import Auth from "./pages/Auth";
+
+// Components
+import Login from "./pages/Auth/components/Login";
+
 const App = () => {
 	return (
 		<BrowserRouter>
@@ -28,8 +32,8 @@ const App = () => {
 			/>
 			<Routes>
 				<Route path="/" element={<Auth />}>
-          
-        </Route>
+					<Route index element={<Login />} />
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	);

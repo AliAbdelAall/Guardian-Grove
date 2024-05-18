@@ -3,11 +3,11 @@ import { FC } from "react";
 // Styles
 import "./style.css";
 type props = {
-	id: number
-	label: string
-	placeholder: string
-  type?: string
-	handleChange: () => void;
+	id: string;
+	label: string;
+	placeholder: string;
+	type?: string;
+	handleChange: (e: any) => void;
 };
 const LoginInput: FC<props> = ({
 	id,

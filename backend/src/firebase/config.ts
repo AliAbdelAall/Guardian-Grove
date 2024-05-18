@@ -18,10 +18,8 @@ export const sendNotificationToParent = async (
 		const message = {
 			to: deviceToken,
 			sound: "default",
-			notification: {
-				title,
-				body,
-			},
+			title,
+			body,
 			data: {
 				screen,
 				childId,

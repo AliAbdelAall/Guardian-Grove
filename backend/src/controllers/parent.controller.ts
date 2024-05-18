@@ -413,7 +413,7 @@ export const saveToken = async (req: Request, res: Response) => {
 		if (existingToken) {
 			await prismaClient.deviceToken.update({
 				where: { userId: id },
-				data: token,
+				data: {token},
 			});
 		} else {
 			const newToken = await prismaClient.deviceToken.create({

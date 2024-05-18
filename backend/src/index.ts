@@ -9,7 +9,7 @@ import { socketConnection } from "./socket/connection";
 const app: Express = express();
 
 dotenv.config();
-const port = process.env.PORT;
+const port = parseInt(process.env.PORT!);
 
 app.use(cors());
 app.use(express.json());

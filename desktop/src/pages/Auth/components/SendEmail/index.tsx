@@ -34,6 +34,39 @@ const SendEmail = () => {
 		setError({ status: false, message: "" });
 	};
 
+	const handleSendEmail = () => {
+		const regex =
+			/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+		if (!regex.test(email)) {
+			setError({ ...error, status: true, message: "Invalid email" });
+			return;
+		}
+
+		sendRequest(requestMethods.POST, "api/otp/send-otp", {
+			email,
+		})
+			.then((response) => {
+				if (response.status === 201) {
+					toast.success(response.data.message);
+					localStorage.setItem(
+						"id",
+						JSON.stringify(response.data.userId)
+					);
+					navigate("/verify-otp");
+				}
+			})
+			.catch((error) => {
+				if (error.response.status === 400) {
+					setError({
+						...error,
+						status: true,
+						message: error.response.data.error,
+					});
+				}
+			});
+	};
+
 	return (
 		<div className="flex column align-center login-container">
 			<img src={fullLogo} width={100} height={120} alt="logo" />

@@ -24,41 +24,11 @@ const Main: FC = () => {
 	const navigate = useNavigate();
 	const sendRequest = useSendRequest();
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		LoadData();
-	}, []);
-
-	const LoadData = () => {
-		navigate("/main/overview");
-		sendRequest(requestMethods.GET, "/api/admin/load-data")
-			.then((response) => {
-				if (response.status === 200) {
-					const {
-						parents,
-						teachers,
-						psychologists,
-						reviews,
-						childrenCount,
-					} = response.data;
-					dispatch(setParents(parents));
-					dispatch(setTeachers(teachers));
-					dispatch(setPsycologists(psychologists));
-					dispatch(setChildrenCount(childrenCount));
-					if (reviews) {
-						dispatch(setReviews(reviews));
-					}
-				}
-			})
-			.catch((error) => {
-				console.log(error.response);
-				toast.error("something went wrong...");
-			});
-	};
+	let admin = "Admin";
 
 	return (
 		<div className="flex ">
-			<Sidebar />
+			<Sidebar admin={admin} />
 			<Outlet />
 		</div>
 	);

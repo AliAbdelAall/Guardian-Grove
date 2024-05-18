@@ -25,6 +25,38 @@ const Main: FC = () => {
 	const sendRequest = useSendRequest();
 	const dispatch = useDispatch();
 	let admin = "Admin";
+	useEffect(() => {
+		LoadData();
+	}, []);
+
+	const LoadData = () => {
+		navigate("/main/overview");
+		sendRequest(requestMethods.GET, "/api/admin/load-data")
+			.then((response) => {
+				if (response.status === 200) {
+					const {
+						parents,
+						teachers,
+						psychologists,
+						reviews,
+						childrenCount,
+						adminName,
+					} = response.data;
+					admin = adminName;
+					dispatch(setParents(parents));
+					dispatch(setTeachers(teachers));
+					dispatch(setPsycologists(psychologists));
+					dispatch(setChildrenCount(childrenCount));
+					if (reviews) {
+						dispatch(setReviews(reviews));
+					}
+				}
+			})
+			.catch((error) => {
+				console.log(error.response);
+				toast.error("something went wrong...");
+			});
+	};
 
 	return (
 		<div className="flex ">

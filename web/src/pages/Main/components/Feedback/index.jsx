@@ -13,12 +13,16 @@ const Feedback = () => {
 	const { reviews } = useSelector((global) => global[reviewsSliceName]);
 	console.log(parents);
 	console.log(reviews);
-	const parentReviews = parents.map((parent) => {
-		const parentReview = reviews.find(
-			(review) => review.parentId == parent.id
-		);
-		return { ...parent, review: parentReview };
-	});
+	const parentReviews = parents
+		.filter((parent) =>
+			reviews.some((review) => review.parentId === parent.id)
+		)
+		.map((parent) => {
+			const parentReview = reviews.find(
+				(review) => review.parentId === parent.id
+			);
+			return { ...parent, review: parentReview };
+		});
 
 	console.log(parentReviews);
 

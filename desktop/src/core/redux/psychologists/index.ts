@@ -4,6 +4,7 @@ interface psycologist {
 	id: number;
 	name: string;
 	email: string;
+	profilePic: string;
 	speciality: string;
 	rating: number;
 }

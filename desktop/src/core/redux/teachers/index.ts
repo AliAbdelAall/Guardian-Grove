@@ -4,6 +4,7 @@ interface teacher {
 	id: number;
 	name: string;
 	email: string;
+	profilePic: string;
 	teachers: string[];
 }
 

@@ -4,6 +4,7 @@ interface parent {
 	id: number;
 	name: string;
 	email: string;
+	profilePic: string;
 	children: string[];
 }
 

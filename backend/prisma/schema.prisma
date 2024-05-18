@@ -62,6 +62,7 @@ model Review {
   id             Int          @id @default(autoincrement())
   rating         Float?
   review         String?
+  status         String       @default("Pending")
   psychologistId Int
   psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
   parentId       Int

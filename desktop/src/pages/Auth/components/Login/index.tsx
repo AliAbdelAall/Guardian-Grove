@@ -40,6 +40,52 @@ const Login = () => {
 
 	console.log(credentials);
 
+	const handleInputChange = (value: string, field: string) => {
+		setCredetials({ ...credentials, [field]: value });
+		setError({ status: false, message: "" });
+	};
+
+	const handleLoginValidation = () => {
+		const { username, password } = credentials;
+
+		if (username.length < 3 || username.length > 20) {
+			setError({
+				...error,
+				status: true,
+				message: "Username must be 3->20 charachters",
+			});
+			return;
+		}
+		if (password.length < 8) {
+			setError({
+				...error,
+				status: true,
+				message: "Password must be at least 8 characters long",
+			});
+			return;
+		}
+
+		sendRequest(requestMethods.POST, "/api/auth/login", {
+			...credentials,
+		})
+			.then((response: AxiosResponse) => {
+				if (response.status === 200) {
+					setLocalUser(response.data.token);
+					console.log(response.data);
+					navigate("/main");
+				}
+			})
+			.catch((error: AxiosError) => {
+				if (error.response?.status === 400) {
+					setError({
+						...error,
+						status: true,
+						message: error.response.statusText,
+					});
+				}
+			});
+	};
+
 	return (
 		<div className="flex column align-center login-container">
 			<img src={fullLogo} width={100} height={120} alt="logo" />

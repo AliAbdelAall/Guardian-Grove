@@ -4,6 +4,13 @@ import { differenceInYears, isBefore } from "date-fns";
 
 export const loadData = async (req: Request, res: Response) => {
 	try {
+		const { id } = req.user!;
+
+		const Admin = await prismaClient.user.findFirst({
+			where: { id },
+			include: { profile: true },
+		});
+
 		const parents = await prismaClient.user.findMany({
 			where: { roleId: 1 },
 			include: {
@@ -53,17 +60,22 @@ export const loadData = async (req: Request, res: Response) => {
 				id: parent.id,
 				name: `${parent.profile?.firstName} ${parent.profile?.lastName}`,
 				email: parent.profile?.email,
+				profilePic: parent.profile?.profilePic,
 				children: childrenNames,
 			};
 		});
+
+		const formattedAdmin = `${Admin?.profile?.firstName} ${Admin?.profile?.lastName}`;
 
 		const formattedTeachers = teachers.map((teacher) => {
 			return {
 				id: teacher.id,
 				name: `${teacher.profile?.firstName} ${teacher.profile?.lastName}`,
 				email: teacher.profile?.email,
+				profilePic: teacher.profile?.profilePic,
 				speciality: teacher.profile?.Teacher?.speciality,
 				school: teacher.profile?.Teacher?.School?.name,
+				Admin: formattedAdmin,
 			};
 		});
 
@@ -80,6 +92,7 @@ export const loadData = async (req: Request, res: Response) => {
 				id: psychologist.id,
 				name: `${psychologist.profile?.firstName} ${psychologist.profile?.lastName}`,
 				email: psychologist.profile?.email,
+				profilePic: psychologist.profile?.profilePic,
 				speciality: psychologist.profile?.Psychologist?.speciality,
 				rating: avarageRating,
 			};
@@ -129,6 +142,7 @@ export const loadData = async (req: Request, res: Response) => {
 			psychologists: formattedPsychologists,
 			reviews,
 			childrenCount: childrenCountPerAge(),
+			adminName: formattedAdmin,
 		});
 	} catch (error) {
 		console.error("Error:", error);

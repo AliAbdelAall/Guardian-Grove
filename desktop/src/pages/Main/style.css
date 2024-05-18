@@ -1,0 +1,39 @@
+.sidebar-container{
+  min-width: 250px;
+  height: 100vh;
+  box-shadow: 4px 0 4px #D9D9D9;
+  padding-top: 30px;
+}
+
+.sidebar-container>img{
+  margin-bottom: 25px;
+}
+
+.sidebar-name{
+  margin-left: 80px;
+  gap: 5px;
+}
+
+.sidebar-btn{
+  padding: 15px 0 15px 40px;
+}
+
+.sidebar-active{
+  background-color: var(--primary-col);
+}
+
+.sidebar-btn:hover:not(.sidebar-active){
+  background-color: #67729431;
+}
+
+.sidebar-nav{
+  gap: 10px;
+  margin-top: 45px;
+}
+
+.sidebar-logout{
+  flex-grow: 1;
+  padding-bottom: 40px;
+}
+
+

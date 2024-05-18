@@ -1,0 +1,37 @@
+.bg-primary {
+  background-color: var(--primary-col);
+}
+.text-primary {
+  color: var(--primary-col);
+}
+.text-secondary {
+  color: var( --secondary-col);
+}
+
+.text-acient{
+  color: var(--acients-col);
+}
+
+.text-error{
+  color: var(--error-col);
+}
+
+.text-gray{
+  color: var(--gray-col);
+}
+  
+.bg-gray-col{
+  background-color: var(--gray-col)
+}
+
+.bg-dark-gray-col{
+  background-color: var(--dark-gray-col)
+}
+
+.white {
+  color: white;
+}
+
+.error-col{
+  color: var(--error-col);
+}

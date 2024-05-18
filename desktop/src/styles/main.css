@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+  --primary-col: #75AB19;
+  --secondary-col: #007dc5;
+  --acients-col: #677294;
+  --input-bor-col:#67729480;
+
+
+  --error-col: #dc2626;
+  --error-light-col: #fee2e2;
+
+  --success-col: #059669;
+  --success-light-col: #d1fae5;
+
+  --font-size-xsm: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2rem;
+  --font-size-5xl: 2.5rem;
+
+  --font-weight-light: 300;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-xsm: 0.75rem;
+  --line-height-sm: 1rem;
+  --line-height-base: 1.5rem;
+  --line-height-lg: 1.75rem;
+  --line-height-xl: 2.25rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-sm);
+  font-weight:400;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+h1 {
+  font-size: var(--font-size-4xl);
+  line-height: var(--line-height-xl);
+}
+h2 {
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-xl);
+}
+h3 {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-lg);
+}
+h4 {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
+.user-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 80px;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .container {
+    max-width: 1024px;
+    
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+
+  .user-container {
+    padding: 20px 40px;
+  }
+}
+
+@media (max-width: 480px){
+  .user-container {
+    padding: 20px;
+  }
+}

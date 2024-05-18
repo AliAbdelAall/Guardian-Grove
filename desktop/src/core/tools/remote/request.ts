@@ -8,7 +8,7 @@ export const useSendRequest = () => {
 	const token = getLocalUser() ?? "";
 	const navigate = useNavigate();
 
-	const sendRequest = async (method: string, route: string, body: any) => {
+	const sendRequest = async (method: string, route: string, body?: any) => {
 		const headers = {
 			Authorization: `bearer ${token}`,
 			"Content-Type":

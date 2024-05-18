@@ -16,6 +16,7 @@ import Auth from "./pages/Auth";
 import Login from "./pages/Auth/components/Login";
 import SendEmail from "./pages/Auth/components/SendEmail";
 import VerifyOTP from "./pages/Auth/components/VerifyOTP";
+import ResetPassword from "./pages/Auth/components/ResetPassword";
 
 const App = () => {
 	return (
@@ -37,6 +38,7 @@ const App = () => {
 					<Route index element={<Login />} />
 					<Route path="send-email" element={<SendEmail />} />
 					<Route path="verify-otp" element={<VerifyOTP />} />
+					<Route path="reset-password" element={<ResetPassword />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -32,6 +32,49 @@ const ResetPassword = () => {
 		setError({ status: false, message: "" });
 	};
 
+	const handleResetPassword = () => {
+		const { password, confirmPassword } = credentials;
+
+		if (password.length < 8) {
+			setError({
+				...error,
+				status: true,
+				message: "Password must be at least 8 characters long",
+			});
+			return;
+		}
+		if (password !== confirmPassword) {
+			setError({
+				...error,
+				status: true,
+				message: "Password don't match",
+			});
+			return;
+		}
+		const id = JSON.parse(localStorage.getItem("id") ?? "");
+		sendRequest(requestMethods.POST, "api/otp/reset-password", {
+			id,
+			newPassword: password,
+			confirmNewPassword: confirmPassword,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					toast.success("Reset password success!");
+					localStorage.removeItem("id");
+					navigate("/");
+				}
+			})
+			.catch((error) => {
+				if (error.response.status === 400) {
+					setError({
+						...error,
+						status: true,
+						message: error.response.data.error,
+					});
+				}
+			});
+	};
+
 	return (
 		<div className="flex column align-center login-container">
 			<img src={fullLogo} width={100} height={120} alt="logo" />

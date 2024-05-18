@@ -34,6 +34,34 @@ const VerifyOTP = () => {
 		setError({ status: false, message: "" });
 	};
 
+	const handleOtpVerification = () => {
+		const id = JSON.parse(localStorage.getItem("id") ?? "");
+
+		if (!otp || otp.length > 4) {
+			setError({ ...error, status: true, message: "Invalid OTP" });
+		}
+
+		sendRequest(requestMethods.POST, "api/otp/verify-otp", {
+			id,
+			userOTP: otp,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					toast.success(response.data.message);
+					navigate("/reset-password");
+				}
+			})
+			.catch((error) => {
+				if (error.response.status === 400) {
+					setError({
+						...error,
+						status: true,
+						message: error.response.data.error,
+					});
+				}
+			});
+	};
+
 	return (
 		<div className="flex column align-center login-container">
 			<img src={fullLogo} width={100} height={120} alt="logo" />

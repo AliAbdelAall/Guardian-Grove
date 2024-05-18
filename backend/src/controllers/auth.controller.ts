@@ -117,3 +117,54 @@ export const login = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const registerAdmin = async (req: Request, res: Response) => {
+	try {
+		const { firstName, lastName, username, email, password, roleId } =
+			req.body;
+
+		const admin = await prismaClient.user.findFirst({
+			where: { username },
+		});
+		if (admin) {
+			return res.status(400).json({ error: "Username already exist!" });
+		}
+
+		const profile = await prismaClient.profile.findFirst({
+			where: { email },
+		});
+		if (profile) {
+			return res.status(400).json({ error: "Email already exist!" });
+		}
+
+		await prismaClient.user.create({
+			data: {
+				username,
+				password: hashSync(password, 10),
+				roleId,
+				profile: {
+					create: {
+						firstName,
+						lastName,
+						email,
+						dob: null,
+					},
+				},
+			},
+		});
+
+		const newAdmin = await prismaClient.user.findFirst({
+			where: { username },
+			include: { profile: true },
+		});
+		const token = jwt.sign({ id: newAdmin!.id }, process.env.JWT_SECRET!);
+
+		return res.status(201).json({
+			message: "user created successfully",
+			token,
+		});
+	} catch (error) {
+		console.error("Error:", error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

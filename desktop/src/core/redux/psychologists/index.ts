@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface psycologist {
+interface psychologist {
 	id: number;
 	name: string;
 	email: string;
@@ -10,31 +10,31 @@ interface psycologist {
 }
 
 type sliceState = {
-	psycologists: psycologist[];
+	psychologists: psychologist[];
 	count: number;
 };
 
 const initialState: sliceState = {
-	psycologists: [],
+	psychologists: [],
 	count: 0,
 };
 
-const psycologistsSlice = createSlice({
+const psychologistsSlice = createSlice({
 	initialState,
-	name: "psycologistsSlice",
+	name: "psychologistsSlice",
 	reducers: {
-		setPsycologists: (state, action: PayloadAction<psycologist[]>) => {
+		setPsychologists: (state, action: PayloadAction<psychologist[]>) => {
 			let count = 0;
 
 			action.payload.forEach((_) => {
 				count += 1;
 			});
 
-			return { ...state, psycologists: [...action.payload], count };
+			return { ...state, psychologists: [...action.payload], count };
 		},
 	},
 });
 
-export const { setPsycologists } = psycologistsSlice.actions;
-export const psycologistsSliceName = psycologistsSlice.name;
-export default psycologistsSlice.reducer;
+export const { setPsychologists } = psychologistsSlice.actions;
+export const psychologistsSliceName = psychologistsSlice.name;
+export default psychologistsSlice.reducer;

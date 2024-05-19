@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 // Slices
 import parentsReducer, { parentsSliceName } from "./parents";
-import psychologistsReducer, { psycologistsSliceName } from "./psychologists";
+import psychologistsReducer, { psychologistsSliceName } from "./psychologists";
 import teachersReducer, { teachersSliceName } from "./teachers";
 import reviewsReducer, { reviewsSliceName } from "./reviews";
 import childrenCountReducer, { childrenCountSliceName } from "./childrenCount";
@@ -13,7 +13,7 @@ import logger from "redux-logger";
 export const store = configureStore({
 	reducer: {
 		[parentsSliceName]: parentsReducer,
-		[psycologistsSliceName]: psychologistsReducer,
+		[psychologistsSliceName]: psychologistsReducer,
 		[teachersSliceName]: teachersReducer,
 		[reviewsSliceName]: reviewsReducer,
 		[childrenCountSliceName]: childrenCountReducer,

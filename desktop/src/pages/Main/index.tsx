@@ -17,7 +17,7 @@ import { requestMethods } from "../../core/enums/requestMethods";
 // Toastify
 import { toast } from "react-toastify";
 import { setTeachers } from "../../core/redux/teachers";
-import { setPsycologists } from "../../core/redux/psychologists";
+import { setPsychologists } from "../../core/redux/psychologists";
 import Sidebar from "./components/Sidebar";
 
 const Main: FC = () => {
@@ -45,7 +45,7 @@ const Main: FC = () => {
 					setAdmin(adminName);
 					dispatch(setParents(parents));
 					dispatch(setTeachers(teachers));
-					dispatch(setPsycologists(psychologists));
+					dispatch(setPsychologists(psychologists));
 					dispatch(setChildrenCount(childrenCount));
 					if (reviews) {
 						dispatch(setReviews(reviews));

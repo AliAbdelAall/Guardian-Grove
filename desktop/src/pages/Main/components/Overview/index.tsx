@@ -21,7 +21,7 @@ const Overview: FC = () => {
 	);
 	const parents = useSelector((global: RootState) => global.parentsSlice);
 	const psycologists = useSelector(
-		(global: RootState) => global.psycologistsSlice
+		(global: RootState) => global.psychologistsSlice
 	);
 	const teachers = useSelector((global: RootState) => global.teachersSlice);
 

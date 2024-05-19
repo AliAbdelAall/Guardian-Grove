@@ -34,14 +34,10 @@ const psychologistsSlice = createSlice({
 			return { ...state, psychologists: [...action.payload], count };
 		},
 		deletePsychologist: (state, action: PayloadAction<number>) => {
-			const filteredPsychologists = state.psychologists.filter(
+			state.psychologists = state.psychologists.filter(
 				(psychologist) => psychologist.id !== action.payload
 			);
-			return {
-				...state,
-				psychologists: [...filteredPsychologists],
-				count: state.count - 1,
-			};
+			state.count -= 1;
 		},
 	},
 });

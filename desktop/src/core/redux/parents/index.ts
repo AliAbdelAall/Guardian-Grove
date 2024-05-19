@@ -32,14 +32,10 @@ const parentsSlice = createSlice({
 			return { ...state, parents: [...action.payload], count };
 		},
 		deleteParent: (state, action: PayloadAction<number>) => {
-			const filteredParents = state.parents.filter(
+			state.parents = state.parents.filter(
 				(parent) => parent.id !== action.payload
 			);
-			return {
-				...state,
-				parents: [...filteredParents],
-				count: state.count - 1,
-			};
+			state.count -= 1;
 		},
 	},
 });

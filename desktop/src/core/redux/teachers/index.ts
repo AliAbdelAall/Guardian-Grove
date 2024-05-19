@@ -33,14 +33,10 @@ const teachersSlice = createSlice({
 			return { ...state, teachers: [...action.payload], count };
 		},
 		deleteTeacher: (state, action: PayloadAction<number>) => {
-			const filteredTeachers = state.teachers.filter(
+			state.teachers = state.teachers.filter(
 				(teacher) => teacher.id !== action.payload
 			);
-			return {
-				...state,
-				teachers: [...filteredTeachers],
-				count: state.count - 1,
-			};
+			state.count -= 1;
 		},
 	},
 });

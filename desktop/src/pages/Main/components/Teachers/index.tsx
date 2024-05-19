@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
 import DeleteButton from "../../../../components/DelelteButton";
@@ -7,11 +7,33 @@ const Teachers: FC = () => {
 	const { teachers } = useSelector(
 		(global: RootState) => global.teachersSlice
 	);
+	const [filterdTeachers, setFilterdTeachers] = useState(teachers);
+
+	const handleTeachersSearch = (value: string) => {
+		const userSearch = value.toLowerCase();
+		setFilterdTeachers(
+			teachers.filter(
+				(teacher) =>
+					teacher.name.toLowerCase().includes(userSearch) ||
+					teacher.email.toLowerCase().includes(userSearch) ||
+					teacher.speciality?.toLowerCase().includes(userSearch) ||
+					teacher.school?.toLowerCase().includes(userSearch)
+			)
+		);
+	};
 
 	return (
 		<div className="feedback-container full-width">
 			<h2 className="text-acient page-header">Teachers</h2>
-			{teachers.length !== 0 ? (
+			<div>
+				<input
+					className="search-input "
+					placeholder="Search"
+					type="text"
+					onChange={(e: any) => handleTeachersSearch(e.target.value)}
+				/>
+			</div>
+			{filterdTeachers.length !== 0 ? (
 				<table className="table full-width">
 					<thead>
 						<tr className="text-acient">
@@ -24,7 +46,7 @@ const Teachers: FC = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{teachers?.map((teacher) => {
+						{filterdTeachers?.map((teacher) => {
 							const {
 								id,
 								name,
@@ -59,7 +81,11 @@ const Teachers: FC = () => {
 				</table>
 			) : (
 				<div className="flex full-width center">
-					<h3>You have no Teachers yet.</h3>
+					<h3>{`${
+						teachers
+							? "No teachers with filter"
+							: "You have no teachers yet."
+					}`}</h3>
 				</div>
 			)}
 		</div>

@@ -1,7 +1,11 @@
 import { FC, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
 import DeleteButton from "../../../../components/DelelteButton";
+import { deleteTeacher } from "../../../../core/redux/teachers";
+import { useSendRequest } from "../../../../core/tools/remote/request";
+import { requestMethods } from "../../../../core/enums/requestMethods";
+import { toast } from "react-toastify";
 
 const Teachers: FC = () => {
 	const { teachers } = useSelector(
@@ -9,6 +13,27 @@ const Teachers: FC = () => {
 	);
 	const [filterdTeachers, setFilterdTeachers] = useState(teachers);
 
+	const sendRequest = useSendRequest();
+	const dispatch = useDispatch();
+
+	const [deletedId, setDeletedId] = useState<number>(0);
+	console.log(deletedId);
+
+	const handleDeleteTeacher = (id: number) => {
+		sendRequest(requestMethods.POST, "api/admin/delete-user", {
+			userId: id,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(deleteTeacher(id));
+					setDeletedId(id);
+				}
+			})
+			.catch((error: any) => {
+				console.log(error);
+				toast.error(error.response.error);
+			});
+	};
 	const handleTeachersSearch = (value: string) => {
 		const userSearch = value.toLowerCase();
 		setFilterdTeachers(
@@ -72,7 +97,11 @@ const Teachers: FC = () => {
 									<td className="tr-middle">{speciality}</td>
 									<td className="tr-middle">{school}</td>
 									<td className="tr-end">
-										<DeleteButton handleClick={() => {}} />
+										<DeleteButton
+											handleClick={() =>
+												handleDeleteTeacher(id)
+											}
+										/>
 									</td>
 								</tr>
 							);

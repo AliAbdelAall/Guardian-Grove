@@ -32,9 +32,19 @@ const teachersSlice = createSlice({
 
 			return { ...state, teachers: [...action.payload], count };
 		},
+		deleteTeacher: (state, action: PayloadAction<number>) => {
+			const filteredTeachers = state.teachers.filter(
+				(teacher) => teacher.id !== action.payload
+			);
+			return {
+				...state,
+				teachers: [...filteredTeachers],
+				count: state.count - 1,
+			};
+		},
 	},
 });
 
-export const { setTeachers } = teachersSlice.actions;
+export const { setTeachers, deleteTeacher } = teachersSlice.actions;
 export const teachersSliceName = teachersSlice.name;
 export default teachersSlice.reducer;

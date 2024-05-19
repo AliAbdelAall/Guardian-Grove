@@ -9,14 +9,28 @@ interface psycologist {
 	rating: number;
 }
 
-const initialState: psycologist[] = [];
+type sliceState = {
+	psycologists: psycologist[];
+	count: number;
+};
+
+const initialState: sliceState = {
+	psycologists: [],
+	count: 0,
+};
 
 const psycologistsSlice = createSlice({
 	initialState,
 	name: "psycologistsSlice",
 	reducers: {
 		setPsycologists: (state, action: PayloadAction<psycologist[]>) => {
-			return action.payload;
+			let count = 0;
+
+			action.payload.forEach((_) => {
+				count += 1;
+			});
+
+			return { ...state, psycologists: [...action.payload], count };
 		},
 	},
 });

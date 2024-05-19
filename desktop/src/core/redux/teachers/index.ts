@@ -8,14 +8,28 @@ interface teacher {
 	teachers: string[];
 }
 
-const initialState: teacher[] = [];
+type sliceState = {
+	teachers: teacher[];
+	count: number;
+};
+
+const initialState: sliceState = {
+	teachers: [],
+	count: 0,
+};
 
 const teachersSlice = createSlice({
 	initialState,
 	name: "teachersSlice",
 	reducers: {
 		setTeachers: (state, action: PayloadAction<teacher[]>) => {
-			return action.payload;
+			let count = 0;
+
+			action.payload.forEach((_) => {
+				count += 1;
+			});
+
+			return { ...state, teachers: [...action.payload], count };
 		},
 	},
 });

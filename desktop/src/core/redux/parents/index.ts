@@ -7,15 +7,28 @@ interface parent {
 	profilePic: string;
 	children: string[];
 }
+type sliceState = {
+	parents: parent[];
+	count: number;
+};
 
-const initialState: parent[] = [];
+const initialState: sliceState = {
+	parents: [],
+	count: 0,
+};
 
 const parentsSlice = createSlice({
 	initialState,
 	name: "parentsSlice",
 	reducers: {
 		setParents: (state, action: PayloadAction<parent[]>) => {
-			return action.payload;
+			let count = 0;
+
+			action.payload.forEach((_) => {
+				count += 1;
+			});
+
+			return { ...state, parents: [...action.payload], count };
 		},
 	},
 });

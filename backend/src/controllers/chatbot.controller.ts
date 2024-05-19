@@ -53,7 +53,9 @@ export const generateResponse = async (req: Request, res: Response) => {
 			messages: [
 				{
 					role: "user",
-					content: `Act as a psychologist to assist the parent with their request. We have collected data on the parent, including their profile and their children, as well as instructions from the psychologist and teacher reports.make the response seem more friendly as if you are talking to a friend but keep your posture as a professional psychologist, and make it short and make sure to response with what the parent really asked for, make every word count, and remember that this is a chat.
+					content: `Act as a psychologist to assist the parent with their request. We have collected data on the parent, including their profile, their children, psychologist instructions, and teacher reports. Make the response friendly and conversational, as if talking to a friend, but maintain a professional tone. Keep the response short, ensuring it directly addresses the parent's request. Make every word count, and remember that this is a chat.
+
+					If the parent asks for something unrelated to your role as a psychologist, politely inform them that it is outside your expertise and gently steer the conversation back to how you can help as a psychologist.
 
           Parent Data:
           - Name: ${user!.firstName} ${user!.lastName}

@@ -10,7 +10,7 @@ const Psychologists: FC = () => {
 
 	return (
 		<div className="feedback-container full-width">
-			<h2 className="text-acient page-header">Parens</h2>
+			<h2 className="text-acient page-header">Psychologists</h2>
 			{psychologists.length !== 0 ? (
 				<table className="table full-width">
 					<thead>
@@ -59,7 +59,7 @@ const Psychologists: FC = () => {
 				</table>
 			) : (
 				<div className="flex full-width center">
-					<h3>You have no Feedback yet.</h3>
+					<h3>You have no Psychologists yet.</h3>
 				</div>
 			)}
 		</div>

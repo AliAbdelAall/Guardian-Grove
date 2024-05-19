@@ -8,7 +8,7 @@ const Parents: FC = () => {
 
 	return (
 		<div className="feedback-container full-width">
-			<h2 className="text-acient page-header">Parens</h2>
+			<h2 className="text-acient page-header">Parents</h2>
 			{parents.length !== 0 ? (
 				<table className="table full-width">
 					<thead>
@@ -38,7 +38,7 @@ const Parents: FC = () => {
 									</td>
 									<td className="tr-middle">{name}</td>
 									<td className="tr-middle">{email}</td>
-									<td className="tr-end">
+									<td className="tr-middle">
 										{children.join(", ")}
 									</td>
 									<td className="tr-end">
@@ -51,7 +51,7 @@ const Parents: FC = () => {
 				</table>
 			) : (
 				<div className="flex full-width center">
-					<h3>You have no Feedback yet.</h3>
+					<h3>You have no Parents yet.</h3>
 				</div>
 			)}
 		</div>

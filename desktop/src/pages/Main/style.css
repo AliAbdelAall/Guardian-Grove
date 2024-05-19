@@ -36,4 +36,18 @@
   padding-bottom: 40px;
 }
 
+.overview-container{
+  padding: 40px;
+
+}
+
+.count-wrapper{
+  gap: 25px;
+}
+
+.page-header{
+  margin-bottom: 40px;
+  margin-top: 10px;
+}
+
 

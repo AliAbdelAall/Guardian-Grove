@@ -75,7 +75,7 @@
 
 ###  Architecting Data Excellence: Innovative Database Design Strategies:
 
-- Insert ER Diagram here
+![Diagram](./readme/diagram/Guardian%20Grove.png)
 
 
 <br><br>

@@ -64,9 +64,9 @@
 
 
 ### Mockups
-| Home screen  | Menu Screen | Order Screen |
+| Sign Up Screen | Home Screen | Psycologist Profile Screen |
 | ---| ---| ---|
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+| ![Sign Up](./readme/figma/Signup.png) | ![Landing](./readme/figma/Landing.png) | ![fsdaf](./readme/figma/Psycologist%20Profile.png) |
 
 <br><br>
 

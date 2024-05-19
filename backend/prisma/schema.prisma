@@ -40,7 +40,7 @@ model Profile {
   email        String        @unique
   dob          DateTime?
   userId       Int           @unique
-  user         User          @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parent       Parent?
   Psychologist Psychologist?
   Teacher      Teacher?
@@ -64,9 +64,9 @@ model Review {
   review         String?
   status         String       @default("Pending")
   psychologistId Int
-  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+  psychologist   Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId       Int
-  parent         Parent       @relation(fields: [parentId], references: [id])
+  parent         Parent       @relation(fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Psychologist {
@@ -74,7 +74,7 @@ model Psychologist {
   speciality        String?
   yearsOfExperience Int?
   profileId         Int                @unique
-  profile           Profile            @relation(fields: [profileId], references: [id])
+  profile           Profile            @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   clients           Parent[]
   Reviews           Review[]
   ScheduledMeeting  ScheduledMeeting[]
@@ -86,9 +86,9 @@ model Teacher {
   id            Int             @id @default(autoincrement())
   speciality    String?
   profileId     Int             @unique
-  profile       Profile         @relation(fields: [profileId], references: [id])
+  profile       Profile         @relation(fields: [profileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   students      Child[]
-  School        School?         @relation(fields: [schoolId], references: [id])
+  School        School?         @relation(fields: [schoolId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   schoolId      Int?
   TeacherReport TeacherReport[]
   Conversation  Conversation[]
@@ -99,7 +99,7 @@ model Child {
   name          String
   dob           DateTime
   profilePic    String          @default("default-profile.png")
-  parent        Parent          @relation(fields: [parentId], references: [id])
+  parent        Parent          @relation(fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId      Int
   teacher       Teacher?        @relation(fields: [teacherId], references: [id])
   teacherId     Int?
@@ -113,7 +113,7 @@ model PasswordReset {
   id        Int      @id @default(autoincrement())
   otp       String   @unique
   userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt DateTime @default(now())
   expiresAt DateTime
 }
@@ -130,9 +130,9 @@ model ScheduledMeeting {
   title          String
   start          DateTime
   end            DateTime
-  Psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+  Psychologist   Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   psychologistId Int
-  parent         Parent?      @relation(fields: [parentId], references: [id])
+  parent         Parent?      @relation(fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId       Int?
 }
 
@@ -140,9 +140,9 @@ model TeacherReport {
   id        Int      @id @default(autoincrement())
   report    String
   teacherId Int
-  teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  teacher   Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   childId   Int
-  child     Child    @relation(fields: [childId], references: [id])
+  child     Child    @relation(fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt DateTime @default(now())
 }
 
@@ -150,19 +150,19 @@ model Instruction {
   id             Int          @id @default(autoincrement())
   Instruction    String
   psychologistId Int
-  psychologist   Psychologist @relation(fields: [psychologistId], references: [id])
+  psychologist   Psychologist @relation(fields: [psychologistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   childId        Int
-  child          Child        @relation(fields: [childId], references: [id])
+  child          Child        @relation(fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt      DateTime     @default(now())
 }
 
 model Conversation {
   id             Int           @id @default(autoincrement())
-  parent         Parent        @relation(fields: [parentId], references: [id])
+  parent         Parent        @relation(fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId       Int
-  teacher        Teacher?      @relation(fields: [teacherId], references: [id])
+  teacher        Teacher?      @relation(fields: [teacherId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   teacherId      Int?
-  psychologist   Psychologist? @relation(fields: [psychologistId], references: [id])
+  psychologist   Psychologist? @relation(fields: [psychologistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   psychologistId Int?
   Message        Message[]
 }
@@ -170,16 +170,16 @@ model Conversation {
 model Message {
   id             Int          @id @default(autoincrement())
   text           String
-  sender         Profile      @relation(fields: [senderId], references: [id])
+  sender         Profile      @relation(fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   senderId       Int
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   conversationId Int
   createdAt      DateTime     @default(now())
 }
 
 model DeviceToken {
   id     Int    @id @default(autoincrement())
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId Int    @unique
   token  String
 }

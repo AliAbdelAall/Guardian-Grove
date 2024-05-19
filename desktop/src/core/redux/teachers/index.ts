@@ -5,7 +5,8 @@ interface teacher {
 	name: string;
 	email: string;
 	profilePic: string;
-	teachers: string[];
+	speciality: string;
+	school: string;
 }
 
 type sliceState = {

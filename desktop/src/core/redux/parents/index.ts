@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface parent {
 	id: number;
+	parentId: number;
 	name: string;
 	email: string;
 	profilePic: string;

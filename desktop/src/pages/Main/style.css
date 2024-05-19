@@ -97,3 +97,15 @@
 .user-image-name{
   gap: 10px;
 }
+
+.search-input{
+  width: 280px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid var(--input-bor-col);
+  outline: none;
+}
+
+.search-input::placeholder{
+  color: var(--input-bor-col);
+}

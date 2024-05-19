@@ -33,9 +33,20 @@ const psychologistsSlice = createSlice({
 
 			return { ...state, psychologists: [...action.payload], count };
 		},
+		deletePsychologist: (state, action: PayloadAction<number>) => {
+			const filteredPsychologists = state.psychologists.filter(
+				(psychologist) => psychologist.id !== action.payload
+			);
+			return {
+				...state,
+				psychologists: [...filteredPsychologists],
+				count: state.count - 1,
+			};
+		},
 	},
 });
 
-export const { setPsychologists } = psychologistsSlice.actions;
+export const { setPsychologists, deletePsychologist } =
+	psychologistsSlice.actions;
 export const psychologistsSliceName = psychologistsSlice.name;
 export default psychologistsSlice.reducer;

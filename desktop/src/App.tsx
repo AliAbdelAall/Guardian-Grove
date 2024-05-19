@@ -23,6 +23,9 @@ import ResetPassword from "./pages/Auth/components/ResetPassword";
 import Main from "./pages/Main";
 import Overview from "./pages/Main/components/Overview";
 import Parents from "./pages/Main/components/Parents";
+import Psychologists from "./pages/Main/components/Psychologists";
+import Teachers from "./pages/Main/components/Teachers";
+import Feedback from "./pages/Main/components/Feedback";
 
 const App = () => {
 	return (
@@ -54,6 +57,12 @@ const App = () => {
 					<Route path="/main/" element={<Main />}>
 						<Route path="overview" element={<Overview />} />
 						<Route path="parents" element={<Parents />} />
+						<Route
+							path="psychologists"
+							element={<Psychologists />}
+						/>
+						<Route path="teachers" element={<Teachers />} />
+						<Route path="feedback" element={<Feedback />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

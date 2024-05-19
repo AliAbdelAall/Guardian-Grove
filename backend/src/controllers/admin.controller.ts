@@ -173,3 +173,27 @@ export const deleteUser = async (req: Request, res: Response) => {
 		return res.status(500).json({ error: "Internal server error!" });
 	}
 };
+
+export const approveReview = async (req: Request, res: Response) => {
+	try {
+		const { reviewId } = req.body;
+
+		const review = await prismaClient.review.findFirst({
+			where: { id: reviewId },
+		});
+		if (!review) {
+			return res.status(400).json({ error: "Review does not exist" });
+		}
+		await prismaClient.review.update({
+			where: { id: reviewId },
+			data: { status: "Approved" },
+		});
+
+		return res
+			.status(200)
+			.json({ message: "review approved successfully" });
+	} catch (error) {
+		console.error("Error:", error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};

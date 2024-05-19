@@ -1,0 +1,11 @@
+.delete-button{
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--error-col);
+}
+
+.delete-button:hover{
+  cursor: pointer;
+  opacity: 70%;
+}

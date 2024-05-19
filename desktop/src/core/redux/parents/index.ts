@@ -31,9 +31,19 @@ const parentsSlice = createSlice({
 
 			return { ...state, parents: [...action.payload], count };
 		},
+		deleteParent: (state, action: PayloadAction<number>) => {
+			const filteredParents = state.parents.filter(
+				(parent) => parent.id !== action.payload
+			);
+			return {
+				...state,
+				parents: [...filteredParents],
+				count: state.count - 1,
+			};
+		},
 	},
 });
 
-export const { setParents } = parentsSlice.actions;
+export const { setParents, deleteParent } = parentsSlice.actions;
 export const parentsSliceName = parentsSlice.name;
 export default parentsSlice.reducer;

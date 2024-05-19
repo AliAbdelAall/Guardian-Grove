@@ -58,6 +58,7 @@ export const loadData = async (req: Request, res: Response) => {
 			);
 			return {
 				id: parent.id,
+				parentId: parent.profile?.parent?.id,
 				name: `${parent.profile?.firstName} ${parent.profile?.lastName}`,
 				email: parent.profile?.email,
 				profilePic: parent.profile?.profilePic,
@@ -70,6 +71,7 @@ export const loadData = async (req: Request, res: Response) => {
 		const formattedTeachers = teachers.map((teacher) => {
 			return {
 				id: teacher.id,
+				teacherId: teacher.profile?.Teacher?.id,
 				name: `${teacher.profile?.firstName} ${teacher.profile?.lastName}`,
 				email: teacher.profile?.email,
 				profilePic: teacher.profile?.profilePic,
@@ -90,6 +92,7 @@ export const loadData = async (req: Request, res: Response) => {
 
 			return {
 				id: psychologist.id,
+				psychologistId: psychologist.profile?.Psychologist?.id,
 				name: `${psychologist.profile?.firstName} ${psychologist.profile?.lastName}`,
 				email: psychologist.profile?.email,
 				profilePic: psychologist.profile?.profilePic,
@@ -144,6 +147,27 @@ export const loadData = async (req: Request, res: Response) => {
 			childrenCount: childrenCountPerAge(),
 			adminName: formattedAdmin,
 		});
+	} catch (error) {
+		console.error("Error:", error);
+		return res.status(500).json({ error: "Internal server error!" });
+	}
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+	try {
+		const { userId } = req.body;
+
+		const user = await prismaClient.user.findFirst({
+			where: { id: userId },
+		});
+
+		if (!user) {
+			return res.status(400).json({ error: "User does not exist" });
+		}
+
+		await prismaClient.user.delete({ where: { id: userId } });
+
+		return res.status(200).json({ message: "User deleted successfully" });
 	} catch (error) {
 		console.error("Error:", error);
 		return res.status(500).json({ error: "Internal server error!" });

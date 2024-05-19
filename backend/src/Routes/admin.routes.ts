@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { auth } from "firebase-admin";
 import authMiddleware from "../middlewares/auth.middleware";
 import adminMiddleware from "../middlewares/admin.middleware";
-import { loadData } from "../controllers/admin.controller";
+import { deleteUser, loadData } from "../controllers/admin.controller";
 
 const adminRoutes = Router();
 
 adminRoutes.get("/load-data", authMiddleware, adminMiddleware, loadData);
+adminRoutes.post("/delete-user", authMiddleware, adminMiddleware, deleteUser);
 
 export default adminRoutes;

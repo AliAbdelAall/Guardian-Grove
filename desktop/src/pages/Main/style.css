@@ -72,17 +72,20 @@
 .table th, .table td {
   padding: 15px;
 }
-
-.tr-start {
+.tr-start, .tr-middle, .tr-end{
   background-color: #ebebeb;
+}
+.tr-start {
   border-radius:10px 0 0 10px;
+  text-align: left;
 }
 .tr-middle{
-  background-color: #ebebeb;
+  text-align: left;
 }
 .tr-end {
-  background-color: #ebebeb;
   border-radius: 0 10px 10px 0;
+  width: 100px;
+  text-align: right;
 }
 
 .user-image{
@@ -91,4 +94,6 @@
   border-radius: 25px;
 }
 
-
+.user-image-name{
+  gap: 10px;
+}

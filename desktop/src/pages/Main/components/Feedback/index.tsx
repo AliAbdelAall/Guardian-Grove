@@ -43,6 +43,22 @@ const Feedback: FC = () => {
 	const [deletedId, setDeletedId] = useState<number>(0);
 	console.log(deletedId);
 
+	const handleApproveReview = (id: number) => {
+		sendRequest(requestMethods.POST, "api/admin/approve-review", {
+			reviewId: id,
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					dispatch(deleteReview(id));
+					setDeletedId(id);
+				}
+			})
+			.catch((error: any) => {
+				console.log(error);
+				toast.error(error.response.error);
+			});
+	};
+
 	const handleReviewsSearch = (value: string) => {
 		const userSearch = value.toLowerCase();
 		setFilteredReviews(

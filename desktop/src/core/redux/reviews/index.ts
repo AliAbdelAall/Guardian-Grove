@@ -15,12 +15,20 @@ const reviewsSlice = createSlice({
 	initialState,
 	name: "reviewsSlice",
 	reducers: {
-		setReviews: (state, action: PayloadAction<review[]>) => {
+		setReviews: (_state, action: PayloadAction<review[]>) => {
 			return action.payload;
+		},
+		deleteReview: (state, action: PayloadAction<number>) => {
+			const index = state.findIndex(
+				(review) => review.id === action.payload
+			);
+			if (index !== -1) {
+				state.splice(index, 1);
+			}
 		},
 	},
 });
 
-export const { setReviews } = reviewsSlice.actions;
+export const { setReviews, deleteReview } = reviewsSlice.actions;
 export const reviewsSliceName = reviewsSlice.name;
 export default reviewsSlice.reducer;

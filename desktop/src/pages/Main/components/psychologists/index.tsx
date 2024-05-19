@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
 import DeleteButton from "../../../../components/DelelteButton";
@@ -8,10 +8,35 @@ const Psychologists: FC = () => {
 		(global: RootState) => global.psychologistsSlice
 	);
 
+	const [filterdPsychologists, setFilterdPsychologists] =
+		useState(psychologists);
+
+	const handlePsychologistsSearch = (value: string) => {
+		const userSearch = value.toLowerCase();
+		setFilterdPsychologists(
+			psychologists.filter(
+				(psychologist) =>
+					psychologist.name.toLowerCase().includes(userSearch) ||
+					psychologist.email.toLowerCase().includes(userSearch) ||
+					psychologist.speciality?.toLowerCase().includes(userSearch)
+			)
+		);
+	};
+
 	return (
 		<div className="feedback-container full-width">
 			<h2 className="text-acient page-header">Psychologists</h2>
-			{psychologists.length !== 0 ? (
+			<div>
+				<input
+					className="search-input "
+					placeholder="Search"
+					type="text"
+					onChange={(e: any) =>
+						handlePsychologistsSearch(e.target.value)
+					}
+				/>
+			</div>
+			{filterdPsychologists.length !== 0 ? (
 				<table className="table full-width">
 					<thead>
 						<tr className="text-acient">
@@ -24,7 +49,7 @@ const Psychologists: FC = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{psychologists?.map((psychologist) => {
+						{filterdPsychologists?.map((psychologist) => {
 							const {
 								id,
 								name,
@@ -59,7 +84,11 @@ const Psychologists: FC = () => {
 				</table>
 			) : (
 				<div className="flex full-width center">
-					<h3>You have no Psychologists yet.</h3>
+					<h3>{`${
+						psychologists
+							? "No Psychologists with filter"
+							: "You have no Psychologists yet."
+					}`}</h3>
 				</div>
 			)}
 		</div>

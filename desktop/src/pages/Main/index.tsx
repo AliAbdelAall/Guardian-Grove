@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 // Styles
@@ -24,7 +24,7 @@ const Main: FC = () => {
 	const navigate = useNavigate();
 	const sendRequest = useSendRequest();
 	const dispatch = useDispatch();
-	let admin = "Admin";
+	const [admin, setAdmin] = useState("Admin");
 	useEffect(() => {
 		LoadData();
 	}, []);
@@ -42,7 +42,7 @@ const Main: FC = () => {
 						childrenCount,
 						adminName,
 					} = response.data;
-					admin = adminName;
+					setAdmin(adminName);
 					dispatch(setParents(parents));
 					dispatch(setTeachers(teachers));
 					dispatch(setPsycologists(psychologists));

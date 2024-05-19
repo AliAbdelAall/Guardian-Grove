@@ -22,6 +22,7 @@ import VerifyOTP from "./pages/Auth/components/VerifyOTP";
 import ResetPassword from "./pages/Auth/components/ResetPassword";
 import Main from "./pages/Main";
 import Overview from "./pages/Main/components/Overview";
+import Parents from "./pages/Main/components/Parents";
 
 const App = () => {
 	return (
@@ -52,6 +53,7 @@ const App = () => {
 
 					<Route path="/main/" element={<Main />}>
 						<Route path="overview" element={<Overview />} />
+						<Route path="parents" element={<Parents />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

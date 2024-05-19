@@ -1,0 +1,11 @@
+.approve-button{
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--primary-col);
+}
+
+.approve-button:hover{
+  cursor: pointer;
+  opacity: 70%;
+}

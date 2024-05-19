@@ -1,8 +1,18 @@
-import { FC } from "react";
-import { useSelector } from "react-redux";
+import { FC, useEffect, useState } from "react";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
+import { deleteReview } from "../../../../core/redux/reviews";
+
+// Components
 import DeleteButton from "../../../../components/DelelteButton";
 import ApproveButton from "../../../../components/ApproveButton";
+
+// Tools
+import { toast } from "react-toastify";
+import { useSendRequest } from "../../../../core/tools/remote/request";
+import { requestMethods } from "../../../../core/enums/requestMethods";
 
 const Feedback: FC = () => {
 	const { parents } = useSelector((global: RootState) => global.parentsSlice);
@@ -10,6 +20,9 @@ const Feedback: FC = () => {
 		(global: RootState) => global.psychologistsSlice
 	);
 	const reviews = useSelector((global: RootState) => global.reviewsSlice);
+
+	const sendRequest = useSendRequest();
+	const dispatch = useDispatch();
 
 	const mappedReviews = reviews.map((review) => {
 		const psychologist = psychologists.find(
@@ -25,11 +38,39 @@ const Feedback: FC = () => {
 			psychologist,
 		};
 	});
+	const [filteredReviews, setFilteredReviews] = useState(mappedReviews);
+
+	const [deletedId, setDeletedId] = useState<number>(0);
+	console.log(deletedId);
+
+	const handleReviewsSearch = (value: string) => {
+		const userSearch = value.toLowerCase();
+		setFilteredReviews(
+			mappedReviews.filter(
+				(mappedReview) =>
+					mappedReview.parent?.name
+						.toLowerCase()
+						.includes(userSearch) ||
+					mappedReview.psychologist?.name
+						.toLowerCase()
+						.includes(userSearch) ||
+					mappedReview.review.toLowerCase().includes(userSearch)
+			)
+		);
+	};
 
 	return (
 		<div className="feedback-container full-width">
 			<h2 className="text-acient page-header">Parents</h2>
-			{mappedReviews.length !== 0 ? (
+			<div>
+				<input
+					className="search-input "
+					placeholder="Search"
+					type="text"
+					onChange={(e: any) => handleReviewsSearch(e.target.value)}
+				/>
+			</div>
+			{filteredReviews.length !== 0 ? (
 				<table className="table full-width">
 					<thead>
 						<tr className="text-acient">
@@ -42,7 +83,7 @@ const Feedback: FC = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{mappedReviews?.map((mappedReview) => {
+						{filteredReviews?.map((mappedReview) => {
 							const { id, rating, review, parent, psychologist } =
 								mappedReview;
 							return (
@@ -76,10 +117,18 @@ const Feedback: FC = () => {
 									<td className="tr-middle">{rating}</td>
 									<td className="tr-middle">{review}</td>
 									<td className="tr-end">
-										<ApproveButton handleClick={() => {}} />
+										<ApproveButton
+											handleClick={() =>
+												handleApproveReview(id)
+											}
+										/>
 									</td>
 									<td className="tr-end">
-										<DeleteButton handleClick={() => {}} />
+										<DeleteButton
+											handleClick={() =>
+												handleDeleteReview(id)
+											}
+										/>
 									</td>
 								</tr>
 							);

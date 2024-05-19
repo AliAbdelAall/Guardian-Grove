@@ -1,11 +1,17 @@
 import { FC, useEffect, useState } from "react";
+
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
+import { deleteParent } from "../../../../core/redux/parents";
+
+// Components
 import DeleteButton from "../../../../components/DelelteButton";
+
+// Tools
+import { toast } from "react-toastify";
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
-import { toast } from "react-toastify";
-import { deleteParent } from "../../../../core/redux/parents";
 
 const Parents: FC = () => {
 	const { parents } = useSelector((global: RootState) => global.parentsSlice);

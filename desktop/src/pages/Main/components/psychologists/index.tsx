@@ -3,11 +3,15 @@ import { FC, useEffect, useState } from "react";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
+import { deletePsychologist } from "../../../../core/redux/psychologists";
+
+// Components
 import DeleteButton from "../../../../components/DelelteButton";
+
+// Tools
+import { toast } from "react-toastify";
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
-import { toast } from "react-toastify";
-import { deletePsychologist } from "../../../../core/redux/psychologists";
 
 const Psychologists: FC = () => {
 	const { psychologists } = useSelector(

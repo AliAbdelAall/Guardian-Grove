@@ -1,11 +1,17 @@
 import { FC, useState } from "react";
+
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../core/redux/store";
-import DeleteButton from "../../../../components/DelelteButton";
 import { deleteTeacher } from "../../../../core/redux/teachers";
+
+// Components
+import DeleteButton from "../../../../components/DelelteButton";
+
+// Tools
+import { toast } from "react-toastify";
 import { useSendRequest } from "../../../../core/tools/remote/request";
 import { requestMethods } from "../../../../core/enums/requestMethods";
-import { toast } from "react-toastify";
 
 const Teachers: FC = () => {
 	const { teachers } = useSelector(

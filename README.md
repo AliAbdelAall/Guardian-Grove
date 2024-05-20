@@ -114,9 +114,58 @@
 <!-- AWS Deployment -->
 <img src="./readme/title8.svg"/>
 
-###  Efficient AI Deployment: Unleashing the Potential with AWS Integration:
+### By following these steps, we deployed the backend with AWS Integration:
 
-- This project leverages AWS deployment strategies to seamlessly integrate and deploy natural language processing models. With a focus on scalability, reliability, and performance, we ensure that AI applications powered by these models deliver robust and responsive solutions for diverse use cases.
+
+Step 1: Update AWS Packages
+
+```sh 
+sudo apt update
+```
+
+Step 2: Install Required Stacks
+
+```sh 
+sudo apt install mysql-server nodejs npm
+```
+
+Step 3: Create The Database
+
+```sh 
+sudo mysql -u root -p
+CREATE DATABASE guardian_grove_db;
+```
+
+Step 4: Clone the Repository
+
+```sh 
+git clone https://github.com/AliAbdelAall/Guardian-Grove.git
+```
+
+Step 5: Install The Packages
+
+```sh 
+cd Guardian-Grove/backend/
+npm install
+```
+
+Step 6: Create Node Environment Configuration
+
+```sh 
+cp .env.example .env
+```
+
+Step 7: Migrate To Generate Tables In The Database
+
+```sh
+npx prisma migrate
+```
+
+step 8: start the server with the start script
+
+```sh
+npm start 
+```
 
 <br><br>
 

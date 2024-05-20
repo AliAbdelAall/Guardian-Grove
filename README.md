@@ -60,7 +60,7 @@
 
 > We designed Coffee Express using wireframes and mockups, iterating on the design until we reached the ideal layout for easy navigation and a seamless user experience.
 
-- Project Figma design [figma](https://www.figma.com/file/LsuOx5Wnh5YTGSEtrgvz4l/Purrfect-Pals?type=design&node-id=257%3A79&mode=design&t=adzbABt5hbb91ucZ-1)
+- Project Figma design [figma](https://www.figma.com/design/mbv8f9kFVYx5MgeCNJLrZY/Guardian-Grove?node-id=166%3A6085&t=PCbNeLkApEJQZ1aK-1)
 
 
 ### Mockups
@@ -208,30 +208,79 @@ npm start
 <!-- How to run -->
 <img src="./readme/title10.svg"/>
 
-> To set up Coffee Express locally, follow these steps:
+> To set up Guardian Grove locally, follow these steps:
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+step1: install Required Packages
   ```sh
-  npm install npm@latest -g
+npm install nodejs
   ```
 
-### Installation
+step2: Clone The Repo
+  ```sh
+git clone https://github.com/AliAbdelAall/Guardian-Grove.git
+  ```
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Step 3: Install Packages and Set Up Environment Variables
+  ```sh
+cd backend
+cp .env.example .env
+npm install
+  ```
+step 4: Create MySQL Database
 
-1. Get a free API Key at [example](https://example.com)
-2. Clone the repo
-   git clone [github](https://github.com/your_username_/Project-Name.git)
-3. Install NPM packages
+step 5: Connect To Database
+
+fill the data in te .env file, example:
+  ```sh
+DATABASE_URL="mysql://<root>:<yourpassword>@localhost:3306/<database_name>"
+PORT= 3000
+  ```
+step 6: Migrations
+  ```sh
+npx prisma migrate dev
+  ```
+step 6: Generate 
    ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+npx prisma generate
+  ```
+step 7: Install Packages and Set Up Environment Variables for each domain
 
-Now, you should be able to run Coffee Express locally and explore its features.
+Web
+
+  ```sh
+cd ../web
+cp .env.example .env
+npm install
+  ```
+
+Desktop
+
+  ```sh
+cd ../desktop
+cp .env.example .env
+npm install
+  ```
+
+Mobile
+
+  ```sh
+cd ../mobile
+cp .env.example .env
+npm install
+  ```
+
+step 8: Start The Project
+
+backend
+  ```sh
+  npm start
+  ```
+Web / Desktop
+  ```sh
+  npm run dev
+  ```
+Mobile
+  ```sh
+  npx expo start
+  ```
+Now, you should be able to run Guardian Grove locally and explore its features.

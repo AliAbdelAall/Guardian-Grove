@@ -85,12 +85,12 @@
 <img src="./readme/title6.svg"/>
 
 
-### User Screens (Mobile)
+### Parent Screens (Mobile)
 | Login screen  | Register screen | Landing screen | Loading screen |
 | ---| ---| ---| ---|
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| ![Login](./readme/mobileGIFs/login.gif) | ![Signup](./readme/mobileGIFs/signup.gif) | ![Profile](./readme/mobileGIFs/profile-children.gif) | ![Meetings](./readme/mobileGIFs/book-meeting.gif) |
 | Home screen  | Menu Screen | Order Screen | Checkout Screen |
-| ![Landing](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) | ![fsdaf](https://placehold.co/900x1600) |
+| ![Instructions](./readme/mobileGIFs/instructions.gif) | ![Reports](./readme/mobileGIFs/teacher-reports.gif) | ![fsdaf](./readme/mobileGIFs/chat.gif) | ![AI](./readme/mobileGIFs/AI-chat.gif) |
 
 ### Admin Screens (Web)
 | Login screen  | Register screen |  Landing screen |

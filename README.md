@@ -107,6 +107,17 @@
 
 <br><br>
 
+### Admin screens (Web)
+| Overview screen  | Feedback Screen |
+| ---| ---|
+ ![Instructions](./readme/desktopImages/overview-des.png) | ![Chat](./readme/desktopImages/feedback-des.png) 
+
+| parents screen  | Psychologists Screen | Teachers Screen |
+| ---| ---| ---|
+ ![Landing](./readme/desktopImages/parents-des.png) | ![Landing](./readme/desktopImages/psychologist-des.png) | ![Landing](./readme/desktopImages/teachers-des.png)
+
+<br><br>
+
 
 <!-- Prompt Engineering -->
 <img src="./readme/title7.svg"/>

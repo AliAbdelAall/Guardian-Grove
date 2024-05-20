@@ -107,6 +107,14 @@
 
 <br><br>
 
+### Teacher screens (Web)
+| Students screen  | Profile Screen |
+| ---| ---|
+ ![Students](./readme/webGIFs/students.gif) | ![Profile](./readme/webGIFs/profile-web-t.gif) 
+
+
+<br><br>
+
 ### Admin screens (Web)
 | Overview screen  | Feedback Screen |
 | ---| ---|

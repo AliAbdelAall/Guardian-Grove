@@ -131,6 +131,7 @@
 <img src="./readme/title7.svg"/>
 
 ###  Mastering AI Interaction: Unveiling the Power of Prompt Engineering:
+This prompt directs an AI to act as a psychologist in a friendly and professional manner, addressing a parent's request based on provided data. The AI should give concise, relevant responses and gently redirect any unrelated queries back to psychological topics, using specific information about the parent and their children to personalize the interaction.
 
 ![AI prompt](./readme/AI/AI-prompt.png)
 

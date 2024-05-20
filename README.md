@@ -86,18 +86,24 @@
 
 
 ### Parent Screens (Mobile)
-| Login screen  | Register screen | Landing screen | Loading screen |
+| Login screen  | Register screen | Profile screen | Book-Meeting screen |
 | ---| ---| ---| ---|
 | ![Login](./readme/mobileGIFs/login.gif) | ![Signup](./readme/mobileGIFs/signup.gif) | ![Profile](./readme/mobileGIFs/profile-children.gif) | ![Meetings](./readme/mobileGIFs/book-meeting.gif) |
-| Home screen  | Menu Screen | Order Screen | Checkout Screen |
+| Instructions screen  | Reports Screen | Chat Screen | AI Screen |
 | ![Instructions](./readme/mobileGIFs/instructions.gif) | ![Reports](./readme/mobileGIFs/teacher-reports.gif) | ![fsdaf](./readme/mobileGIFs/chat.gif) | ![AI](./readme/mobileGIFs/AI-chat.gif) |
 
-### Admin Screens (Web)
-| Login screen  | Register screen |  Landing screen |
-| ---| ---| ---|
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
-| Home screen  | Menu Screen | Order Screen |
-| ![Landing](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) | ![fsdaf](./readme/demo/1440x1024.png) |
+### Common screens (Web)
+
+| Login screen  | Register screen |
+| ---| ---|
+ ![Login](./readme/webGIFs/login-web.gif) | ![Registewr](./readme/webGIFs/signup-web.gif) | ![Instruction](./readme/webGIFs/Instruction.gif) |
+
+### Psychologist screens (Web)
+| Instructions screen  | Chat Screen |
+| ---| ---|
+ ![Instructions](./readme/webGIFs/Instruction.gif) | ![Chat](./readme/webGIFs/chat-web.gif) 
+| Schedules screen  | Profile Screen |
+ ![Landing](./readme/webGIFs/schedules-web.gif) | ![Landing](./readme/webGIFs/profile-web-p.gif) 
 
 <br><br>
 

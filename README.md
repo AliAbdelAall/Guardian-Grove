@@ -192,7 +192,7 @@ step 8: start the server with the start script
 ```sh
 npm start 
 ```
-
+![Postman API test](./readme/aws/postman-test.png)
 <br><br>
 
 <!-- Unit Testing -->

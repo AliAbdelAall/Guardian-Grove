@@ -243,12 +243,20 @@ step 6: Generate
    ```sh
 npx prisma generate
   ```
-step 7: Install Packages and Set Up Environment Variables for each domain
+step 7: Create a New Project on [Firebase Console](https://console.firebase.google.com/) and get a service account key
+
+step 8: Create a new file 'serviceAccountKey.json' at the root of backend folder and paste your service account key
+```sh
+touch serviceAccountKey.json
+```
+
+
+step 9: Install Packages and Set Up Environment Variables for each domain
 
 Web
 
   ```sh
-cd ../web
+cd web
 cp .env.example .env
 npm install
   ```
@@ -256,7 +264,7 @@ npm install
 Desktop
 
   ```sh
-cd ../desktop
+cd desktop
 cp .env.example .env
 npm install
   ```
@@ -264,12 +272,12 @@ npm install
 Mobile
 
   ```sh
-cd ../mobile
+cd mobile
 cp .env.example .env
 npm install
   ```
 
-step 8: Start The Project
+step 10: Start The Project
 
 backend
   ```sh
